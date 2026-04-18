@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SK Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="font-family: Arial; text-align: center; padding: 20px;">
+
+  <h1>SK WEBSITE 🚀</h1>
+  <p>Welcome to Sangguniang Kabataan Portal</p>
+
+  <hr>
+
+  <h2>📌 Projects</h2>
+  <ul id="projects"></ul>
+
+  <h2>📅 Events</h2>
+  <ul id="events"></ul>
+
+  <script>
+    fetch("/projects")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("projects").innerHTML =
+          data.map(p => `<li>${p.name}</li>`).join("");
+      });
+
+    fetch("/events")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("events").innerHTML =
+          data.map(e => `<li>${e.title}</li>`).join("");
+      });
+  </script>
+
+</body>
+</html>
