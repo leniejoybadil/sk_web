@@ -9,61 +9,95 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-[Inter]">
 
-<div class="max-w-3xl mx-auto bg-white p-6 mt-6 rounded shadow">
+<div class="max-w-4xl mx-auto bg-white p-6 mt-6 rounded shadow">
 
 <h2 class="text-center font-bold text-purple-900">
+Republic of the Philippines<br>
+Office of the Sangguniang Kabataan<br>
+Barangay Dalagdag, Calinan District, Davao City<br><br>
 KK Survey Questionnaire / Youth Profiling Form
 </h2>
 
 <div class="grid md:grid-cols-2 gap-3 mt-4">
 
 <input id="name" placeholder="Full Name" class="border p-2 rounded">
-<input id="house" placeholder="Household #" class="border p-2 rounded">
-<input id="address" placeholder="Address" class="border p-2 rounded md:col-span-2">
+<input id="household" placeholder="Household #" class="border p-2 rounded">
+<input id="address" placeholder="Street Address" class="border p-2 rounded md:col-span-2">
 
 <select id="gender" class="border p-2 rounded">
 <option>Male</option>
 <option>Female</option>
 </select>
 
-<input id="age" placeholder="Age" class="border p-2 rounded">
+<input id="age" type="number" placeholder="Age" class="border p-2 rounded">
 <input id="dob" type="date" class="border p-2 rounded">
 
 <select id="civil" class="border p-2 rounded">
 <option>Single</option>
 <option>Married</option>
+<option>Widowed</option>
 </select>
 
-<select id="edu" class="border p-2 rounded">
+<select id="education" class="border p-2 rounded">
 <option>Elementary</option>
 <option>High School</option>
 <option>College</option>
 </select>
 
-<select id="emp" class="border p-2 rounded">
+<select id="employment" class="border p-2 rounded">
 <option>Student</option>
 <option>Employed</option>
 <option>Unemployed</option>
 </select>
 
+<select id="kkmember" class="border p-2 rounded">
+<option>KK Member?</option>
+<option>Yes</option>
+<option>No</option>
+</select>
+
+<select id="voter" class="border p-2 rounded">
+<option>Registered Voter?</option>
+<option>Yes</option>
+<option>No</option>
+</select>
+
 </div>
 
-<button onclick="pdf()" class="bg- light brown-900 text-white p-2 mt-4 w-full rounded">
-Generate PDF
+<button onclick="generatePDF()" class="bg-purple-900 text-white p-3 mt-4 w-full rounded">
+📄 Generate PDF
 </button>
 
 </div>
 
 <script>
-function pdf(){
+function generatePDF(){
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-doc.text("KK PROFILING FORM",10,10);
-doc.text("Name: "+document.getElementById("name").value,10,30);
-doc.text("Age: "+document.getElementById("age").value,10,40);
+let y = 10;
+function add(t){ doc.text(t,10,y); y+=10; }
+
+add("KK PROFILING FORM");
+add("---------------------");
+
+add("Name: "+name.value);
+add("Household: "+household.value);
+add("Address: "+address.value);
+
+add("Gender: "+gender.value);
+add("Age: "+age.value);
+add("DOB: "+dob.value);
+
+add("Civil Status: "+civil.value);
+add("Education: "+education.value);
+add("Employment: "+employment.value);
+
+add("KK Member: "+kkmember.value);
+add("Voter: "+voter.value);
+
 doc.save("KK_Form.pdf");
 }
 </script>

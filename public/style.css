@@ -11,13 +11,12 @@ header {
   padding: 20px;
 }
 
-/* LOGO */
 .logo {
   width: 80px;
   border-radius: 50%;
 }
 
-/* SPIN EFFECT */
+/* SPIN LOGO */
 .spin {
   animation: spin360 2s ease-in-out;
 }
@@ -67,7 +66,7 @@ input, textarea {
   margin-top: 5px;
 }
 
-/* Suggestions style */
+/* Suggestions */
 .suggestion-item {
   background: #e8f5e9;
   padding: 10px;
