@@ -15,14 +15,14 @@
 
   <!-- BUTTONS -->
   <div class="nav-buttons">
-    <button onclick="show('committee')">👥 SK Committee</button>
-    <button onclick="show('projects')">📌 Projects</button>
-    <button onclick="show('events')">📅 Events</button>
-    <button onclick="show('kk')">🧾 KK Profiling</button>
-    <button onclick="show('budget')">💰 SK Budget 2026</button>
-    <button onclick="show('announcements')">📢 Announcements</button>
-    <button onclick="show('suggestions')">💬 Suggestions Box</button>
-    <button onclick="show('throwback')">📸 Throwback Pictures</button>
+    <button class="btn committee" onclick="show('committee')">👥 SK Committee</button>
+    <button class="btn projects" onclick="show('projects')">📌 Projects</button>
+    <button class="btn events" onclick="show('events')">📅 Events</button>
+    <button class="btn kk" onclick="show('kk')">🧾 KK Profiling</button>
+    <button class="btn budget" onclick="show('budget')">💰 SK Budget 2026</button>
+    <button class="btn announcements" onclick="show('announcements')">📢 Announcements</button>
+    <button class="btn suggestions" onclick="show('suggestions')">💬 Suggestions Box</button>
+    <button class="btn throwback" onclick="show('throwback')">📸 Throwback Pictures</button>
   </div>
 </header>
 
@@ -30,8 +30,76 @@
 
   <!-- SK COMMITTEE -->
   <div id="committee" class="card section">
+
     <h2>SK Committee</h2>
-    <p>To be followed</p>
+
+    <div class="member">
+      <img src="aquilino.jpg">
+      <p><b>AQUILINO ORTIZ III</b><br>SK Chairman</p>
+    </div>
+
+    <div class="member">
+      <img src="lenie.jpg">
+      <p><b>LENIE JOY BADIL</b><br>SK Kagawad – Head of Committee on Equitable Access to Quality Education Program</p>
+    </div>
+
+    <div class="member">
+      <img src="christofil.jpg">
+      <p><b>CHRISTOFIL MANAY</b><br>SK Kagawad – Head of Committee on Sports Development Program</p>
+    </div>
+
+    <div class="member">
+      <img src="kiendrex.jpg">
+      <p><b>KIENDREX BANAC</b><br>SK Kagawad – Head of Committee on Agricultural Program</p>
+    </div>
+
+    <div class="member">
+      <img src="irish.jpg">
+      <p><b>IRISH HUYONG</b><br>SK Kagawad – Head of Committee on Environmental Protection Program</p>
+    </div>
+
+    <div class="member">
+      <img src="vea.jpg">
+      <p><b>VEA ORA</b><br>SK Kagawad – Head of Committee on Health and Anti-Drug Abuse Program</p>
+    </div>
+
+    <div class="member">
+      <img src="clarrise.jpg">
+      <p><b>CLARRISE ALMENDEZ</b><br>SK Kagawad – Head of Committee on Youth Employment and Livelihood Program</p>
+    </div>
+
+    <div class="member">
+      <img src="jayson.jpg">
+      <p><b>JAYSON VIVA</b><br>SK Kagawad – Head of Committee on Disaster Risk Reduction and Resiliency Program</p>
+    </div>
+
+    <div class="member">
+      <img src="geramie.jpg">
+      <p><b>GERAMIE CASES</b><br>SK Secretary</p>
+    </div>
+
+    <div class="member">
+      <img src="treasurer.jpg">
+      <p><b>SK Treasurer</b></p>
+    </div>
+
+    <h3>Youth Sector Representatives</h3>
+
+    <div class="member">
+      <img src="sydney.jpg">
+      <p><b>SYDNEY CLAIR MANOMBE</b></p>
+    </div>
+
+    <div class="member">
+      <img src="marlo.jpg">
+      <p><b>MARLO TOMANGGONG</b></p>
+    </div>
+
+    <div class="member">
+      <img src="jefferson.jpg">
+      <p><b>JEFFERSON ALMENDEZ</b></p>
+    </div>
+
   </div>
 
   <!-- PROJECTS -->
@@ -46,7 +114,7 @@
     <p>23rd Araw ng Barangay Dalagdag Youth Activities (To be announced)</p>
   </div>
 
-  <!-- KK PROFILING -->
+  <!-- KK -->
   <div id="kk" class="card section">
     <h2>KK Profiling</h2>
     <p>To be followed</p>
@@ -60,26 +128,22 @@
 
   <!-- ANNOUNCEMENTS -->
   <div id="announcements" class="card section">
-    <h2>Announcements & Schedules</h2>
+    <h2>Announcements</h2>
     <p>KK Assembly Schedule</p>
     <p>Linggo ng Kabataan</p>
-    <p>(To be announced)</p>
   </div>
 
   <!-- SUGGESTIONS -->
   <div id="suggestions" class="card section">
-    <h2>SK Suggestions Box</h2>
-    <p>Nickname:</p>
-    <input placeholder="Enter nickname">
-
-    <p>Suggestions:</p>
-    <textarea placeholder="Write your suggestion"></textarea>
+    <h2>Suggestions Box</h2>
+    <input placeholder="Nickname">
+    <textarea placeholder="Suggestions"></textarea>
   </div>
 
   <!-- THROWBACK -->
   <div id="throwback" class="card section">
-    <h2>SK Throwback Pictures</h2>
-    <p>Activities gallery (to be added)</p>
+    <h2>Throwback Pictures</h2>
+    <p>Activities Gallery (to be uploaded)</p>
   </div>
 
 </div>
@@ -88,11 +152,8 @@
 function show(id) {
   let sections = document.querySelectorAll(".section");
   sections.forEach(sec => sec.style.display = "none");
-
   document.getElementById(id).style.display = "block";
 }
-
-// default view
 show("committee");
 </script>
 
