@@ -2,85 +2,121 @@
 <html>
 <head>
   <title>KK Profiling Form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { font-family: Arial; }
-    .box { border: 1px solid black; padding: 6px; }
+    body {
+      font-family: Arial;
+      background: #eee;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border: 1px solid black;
+    }
+
+    .box {
+      border: 1px solid black;
+      padding: 6px;
+      font-size: 12px;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 5px;
+    }
+
+    label {
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 12px;
+    }
   </style>
 </head>
 
-<body class="p-4 bg-white">
+<body>
 
-<!-- HEADER WITH LOGOS -->
-<div class="flex justify-between items-center mb-4">
+<div class="page">
 
-  <!-- LEFT LOGO -->
-  <div class="w-20 h-20 border border-black flex items-center justify-center">
-    <img src="logo.jpg" class="w-full h-full object-cover" />
+<!-- HEADER -->
+<div class="grid2 items-center mb-4">
+
+  <div class="box flex items-center justify-center">
+    <img src="logo.jpg" style="width:60px;height:60px;">
   </div>
 
-  <!-- CENTER TEXT -->
   <div class="text-center">
-    <p class="text-sm">Republic of the Philippines</p>
-    <p class="text-sm">Province of Davao del Sur</p>
-    <p class="text-sm">City of Davao</p>
-    <p class="text-sm font-bold">Barangay DALAGDAG</p>
+    <p>Republic of the Philippines</p>
+    <p>Province of Davao del Sur</p>
+    <p>City of Davao</p>
+    <p><b>Barangay DALAGDAG</b></p>
 
-    <h1 class="font-bold mt-2">
-      KATIPUNAN NG KABATAAN (KK) PROFILING FORM
-    </h1>
+    <h3><b>KK PROFILING FORM</b></h3>
   </div>
 
-  <!-- RIGHT LOGO -->
-  <div class="w-20 h-20 border border-black flex items-center justify-center">
-    <img src="sklogo.jpg" class="w-full h-full object-cover" />
-  </div>
-
+</div>
 
 <!-- PERSONAL INFO -->
-<div class="grid grid-cols-2 gap-2">
+<h4><b>PERSONAL INFORMATION</b></h4>
+
+<div class="grid2">
 
   <div class="box">
-    <label>Full Name</label>
-    <input id="fullname" class="w-full border p-1">
+    <label>FULL NAME</label>
+    <input id="fullname">
   </div>
 
   <div class="box">
-    <label>Contact Number</label>
-    <input id="contact" class="w-full border p-1">
+    <label>CONTACT</label>
+    <input id="contact">
   </div>
 
   <div class="box">
-    <label>Email</label>
-    <input id="email" class="w-full border p-1">
+    <label>EMAIL</label>
+    <input id="email">
   </div>
 
   <div class="box">
-    <label>Address</label>
-    <input id="address" class="w-full border p-1">
+    <label>ADDRESS</label>
+    <input id="address">
   </div>
 
 </div>
 
 <!-- DEMOGRAPHICS -->
-<h2 class="font-bold mt-4">DEMOGRAPHICS</h2>
+<h4><b>DEMOGRAPHICS</b></h4>
 
-<div class="grid grid-cols-3 gap-2">
+<div class="grid3">
 
   <div class="box">
-    <label>Gender</label>
-    <select id="gender" class="w-full border">
+    <label>GENDER</label>
+    <select id="gender">
       <option>Male</option>
       <option>Female</option>
-    
     </select>
   </div>
 
   <div class="box">
-    <label>Civil Status</label>
-    <select id="civil" class="w-full border">
+    <label>CIVIL STATUS</label>
+    <select id="civil">
       <option>Single</option>
       <option>Married</option>
       <option>Widowed</option>
@@ -88,15 +124,15 @@
   </div>
 
   <div class="box">
-    <label>Birthdate</label>
-    <input type="date" id="birthdate" class="w-full border" onchange="calcAge()">
+    <label>BIRTHDATE</label>
+    <input type="date" id="birthdate" onchange="calcAge()">
   </div>
 
 </div>
 
 <div class="box mt-2">
-  <label>Age</label>
-  <input id="age" class="w-full border" readonly>
+  <label>AGE</label>
+  <input id="age" readonly>
 </div>
 
 <script>
@@ -107,10 +143,21 @@ function calcAge(){
 }
 </script>
 
-<!-- EDUCATION -->
-<h2 class="font-bold mt-4">EDUCATION</h2>
+<!-- YOUTH -->
+<h4><b>YOUTH CLASSIFICATION</b></h4>
 
-<select id="education" class="border w-full">
+<div class="grid2">
+  <label><input type="checkbox"> In-School Youth</label>
+  <label><input type="checkbox"> Out-of-School Youth</label>
+  <label><input type="checkbox"> Working Youth</label>
+  <label><input type="checkbox"> PWD</label>
+</div>
+
+<!-- EDUCATION -->
+<h4><b>EDUCATIONAL ATTAINMENT</b></h4>
+
+<div class="box">
+<select id="education">
   <option>Elementary Level</option>
   <option>Elementary Graduate</option>
   <option>High School Level</option>
@@ -124,40 +171,56 @@ function calcAge(){
   <option>Doctorate Graduate</option>
   <option>No Educational Attainment</option>
 </select>
+</div>
 
 <!-- EMPLOYMENT -->
-<h2 class="font-bold mt-4">EMPLOYMENT STATUS</h2>
+<h4><b>EMPLOYMENT STATUS</b></h4>
 
-<select id="employment" class="border w-full">
+<div class="box">
+<select id="employment">
   <option>Employed</option>
   <option>Unemployed</option>
   <option>Self-Employed</option>
-  <option>Currently Looking for Job</option>
+  <option>Currently Looking</option>
   <option>Not Interested</option>
 </select>
+</div>
 
 <!-- VOTING -->
-<h2 class="font-bold mt-4">VOTING STATUS</h2>
+<h4><b>VOTING STATUS</b></h4>
 
-<select id="skVoter" class="border w-full">
-  <option>Registered SK Voter - Yes</option>
-  <option>No</option>
-</select>
+<div class="grid3">
 
-<select id="skVote" class="border w-full mt-1">
-  <option>Voted Last SK Election - Yes</option>
-  <option>No</option>
-</select>
+  <div class="box">
+    <label>SK VOTER</label>
+    <select id="skVoter">
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+  </div>
 
-<select id="nationalVoter" class="border w-full mt-1">
-  <option>Registered National Voter - Yes</option>
-  <option>No</option>
-</select>
+  <div class="box">
+    <label>VOTED SK ELECTION</label>
+    <select id="skVote">
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+  </div>
+
+  <div class="box">
+    <label>NATIONAL VOTER</label>
+    <select id="nationalVoter">
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+  </div>
+
+</div>
 
 <!-- SUBMIT -->
-<div class="mt-6 text-center">
-  <button onclick="submitForm()" class="bg-green-700 text-white px-6 py-2">
-    Submit to Google Sheets
+<div class="text-center mt-4">
+  <button onclick="submitForm()" style="background:green;color:white;padding:10px 20px;">
+    SUBMIT
   </button>
 </div>
 
@@ -185,10 +248,12 @@ fetch("https://script.google.com/a/macros/hcdc.edu.ph/s/AKfycbx7BU0PCsjI9rLqsHyA
   body: JSON.stringify(data)
 })
 .then(res => res.text())
-.then(res => alert("✅ Saved to Google Sheets!"));
+.then(res => alert("Saved to Google Sheets!"));
 
 }
 </script>
+
+</div>
 
 </body>
 </html>
