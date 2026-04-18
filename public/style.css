@@ -1,46 +1,60 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   margin: 0;
   background: #eef2f7;
 }
 
-/* HEADER */
 header {
   background: #2e7d32;
   color: white;
   text-align: center;
-  padding: 25px;
-}
-
-/* LOGO */
-.logo {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  display: block;
-  margin: 0 auto 10px auto;
-}
-
-/* CONTAINER */
-.container {
-  max-width: 800px;
-  margin: auto;
   padding: 20px;
 }
 
-/* CARDS */
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 20px;
+}
+
 .card {
   background: white;
   padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-top: 15px;
+  border-radius: 10px;
 }
 
-h2 {
+/* BUTTONS */
+.nav-buttons {
+  margin-top: 10px;
+}
+
+.nav-buttons button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
   color: #2e7d32;
+  font-weight: bold;
 }
 
-ul {
-  padding-left: 20px;
+.nav-buttons button:hover {
+  background: #c8e6c9;
+}
+
+/* hide sections by default */
+.section {
+  display: none;
+}
+
+input, textarea {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px;
 }

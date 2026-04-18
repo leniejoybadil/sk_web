@@ -3,48 +3,97 @@
 <head>
   <title>SK Website</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- CSS LINK -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-  <!-- LOGO (IMPORTANT: logo.jpg) -->
-  <img src="./logo.jpg" alt="SK Logo" class="logo">
+  <img src="logo.jpg" class="logo">
   <h1>SK WEBSITE 🚀</h1>
   <p>Sangguniang Kabataan Portal</p>
+
+  <!-- BUTTONS -->
+  <div class="nav-buttons">
+    <button onclick="show('committee')">👥 SK Committee</button>
+    <button onclick="show('projects')">📌 Projects</button>
+    <button onclick="show('events')">📅 Events</button>
+    <button onclick="show('kk')">🧾 KK Profiling</button>
+    <button onclick="show('budget')">💰 SK Budget 2026</button>
+    <button onclick="show('announcements')">📢 Announcements</button>
+    <button onclick="show('suggestions')">💬 Suggestions Box</button>
+    <button onclick="show('throwback')">📸 Throwback Pictures</button>
+  </div>
 </header>
 
 <div class="container">
 
-  <div class="card">
-    <h2>📌 Projects</h2>
-    <ul id="projects"></ul>
+  <!-- SK COMMITTEE -->
+  <div id="committee" class="card section">
+    <h2>SK Committee</h2>
+    <p>To be followed</p>
   </div>
 
-  <div class="card">
-    <h2>📅 Events</h2>
-    <ul id="events"></ul>
+  <!-- PROJECTS -->
+  <div id="projects" class="card section">
+    <h2>Projects</h2>
+    <p>To be announced</p>
+  </div>
+
+  <!-- EVENTS -->
+  <div id="events" class="card section">
+    <h2>Events</h2>
+    <p>23rd Araw ng Barangay Dalagdag Youth Activities (To be announced)</p>
+  </div>
+
+  <!-- KK PROFILING -->
+  <div id="kk" class="card section">
+    <h2>KK Profiling</h2>
+    <p>To be followed</p>
+  </div>
+
+  <!-- BUDGET -->
+  <div id="budget" class="card section">
+    <h2>SK Budget 2026</h2>
+    <p>P520,768.90</p>
+  </div>
+
+  <!-- ANNOUNCEMENTS -->
+  <div id="announcements" class="card section">
+    <h2>Announcements & Schedules</h2>
+    <p>KK Assembly Schedule</p>
+    <p>Linggo ng Kabataan</p>
+    <p>(To be announced)</p>
+  </div>
+
+  <!-- SUGGESTIONS -->
+  <div id="suggestions" class="card section">
+    <h2>SK Suggestions Box</h2>
+    <p>Nickname:</p>
+    <input placeholder="Enter nickname">
+
+    <p>Suggestions:</p>
+    <textarea placeholder="Write your suggestion"></textarea>
+  </div>
+
+  <!-- THROWBACK -->
+  <div id="throwback" class="card section">
+    <h2>SK Throwback Pictures</h2>
+    <p>Activities gallery (to be added)</p>
   </div>
 
 </div>
 
 <script>
-fetch("/projects")
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("projects").innerHTML =
-      data.map(p => `<li>${p.name}</li>`).join("");
-  });
+function show(id) {
+  let sections = document.querySelectorAll(".section");
+  sections.forEach(sec => sec.style.display = "none");
 
-fetch("/events")
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("events").innerHTML =
-      data.map(e => `<li>${e.title}</li>`).join("");
-  });
+  document.getElementById(id).style.display = "block";
+}
+
+// default view
+show("committee");
 </script>
 
 </body>
