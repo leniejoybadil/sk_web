@@ -1,26 +1,17 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
+// Serve frontend
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req, res) => {
-  res.send("SK Website Server is running 🚀");
-});
-
-app.get("/projects", (req, res) => {
-  res.json([
-    { id: 1, name: "Clean and Green Program" },
-    { id: 2, name: "Youth Leadership Training" }
-  ]);
-});
-
-app.get("/events", (req, res) => {
-  res.json([
-    { id: 1, title: "Climate Change Seminar" },
-    { id: 2, title: "Youth Day Celebration" }
-  ]);
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
