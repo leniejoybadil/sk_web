@@ -11,35 +11,21 @@ header {
   padding: 20px;
 }
 
+/* LOGO */
 .logo {
   width: 80px;
-  height: 80px;
   border-radius: 50%;
 }
 
-/* BUTTONS */
-.nav-buttons {
-  margin-top: 10px;
+/* SPIN EFFECT */
+.spin {
+  animation: spin360 2s ease-in-out;
 }
 
-.btn {
-  padding: 10px;
-  margin: 5px;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
+@keyframes spin360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
-
-.committee { background: #1e88e5; }
-.projects { background: #43a047; }
-.events { background: #e53935; }
-.kk { background: #8e24aa; }
-.budget { background: #f9a825; color: black; }
-.announcements { background: #fb8c00; }
-.suggestions { background: #00acc1; }
-.throwback { background: #6d4c41; }
 
 .container {
   padding: 20px;
@@ -52,21 +38,39 @@ header {
   border-radius: 10px;
 }
 
-/* MEMBERS */
-.member {
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
+/* BUTTON COLORS */
+.btn {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
 }
 
-.member img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-right: 10px;
-  background: #ccc;
-}
+.committee { background: #1e88e5; }
+.projects { background: #43a047; }
+.events { background: #e53935; }
+.kk { background: #8e24aa; }
+.budget { background: #f9a825; color: black; }
+.announcements { background: #fb8c00; }
+.suggestions { background: #00acc1; }
+.throwback { background: #6d4c41; }
 
 .section {
   display: none;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+/* Suggestions style */
+.suggestion-item {
+  background: #e8f5e9;
+  padding: 10px;
+  margin-top: 10px;
+  border-left: 5px solid #2e7d32;
 }
