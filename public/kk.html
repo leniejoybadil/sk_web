@@ -77,7 +77,7 @@
   </div>
 
   <div class="box">
-    <label>CONTACT</label>
+    <label>CONTACT NUMBER</label>
     <input id="contact">
   </div>
 
@@ -135,7 +135,7 @@ function calcAge(){
 }
 </script>
 
-<!-- YOUTH CLASSIFICATION -->
+<!-- YOUTH -->
 <h3><b>YOUTH CLASSIFICATION</b></h3>
 
 <div class="grid grid-cols-2 gap-2 text-sm">
@@ -194,7 +194,7 @@ function calcAge(){
   </div>
 
   <div class="box">
-    <label>SK VOTED</label>
+    <label>VOTED SK ELECTION</label>
     <select id="skVote">
       <option>Yes</option>
       <option>No</option>
@@ -211,11 +211,29 @@ function calcAge(){
 
 </div>
 
-<!-- SUBMIT -->
+<!-- KK ASSEMBLY -->
+<h3><b>KK ASSEMBLY ATTENDANCE</b></h3>
+
+<div class="grid grid-cols-2 gap-2 text-sm">
+
+  <label class="flex items-center gap-2"><input type="radio" name="kkAssembly" value="No Attendance"> No Attendance</label>
+  <label class="flex items-center gap-2"><input type="radio" name="kkAssembly" value="1-2 Times"> 1–2 Times</label>
+  <label class="flex items-center gap-2"><input type="radio" name="kkAssembly" value="3-5 Times"> 3–5 Times</label>
+  <label class="flex items-center gap-2"><input type="radio" name="kkAssembly" value="Above 5 Times"> Above 5 Times</label>
+
+</div>
+
+<!-- BUTTONS -->
 <div class="text-center mt-4">
+
   <button onclick="submitForm()" class="bg-green-700 text-white px-6 py-2">
     SUBMIT
   </button>
+
+  <button onclick="exportExcel()" class="bg-blue-700 text-white px-6 py-2 ml-2">
+    EXPORT TO EXCEL
+  </button>
+
 </div>
 
 <script>
@@ -234,16 +252,21 @@ const data = {
   employment: employment.value,
   skVoter: skVoter.value,
   skVote: skVote.value,
-  nationalVoter: nationalVoter.value
+  nationalVoter: nationalVoter.value,
+  kkAssembly: document.querySelector('input[name="kkAssembly"]:checked')?.value
 };
 
-fetch("https://script.google.com/a/macros/hcdc.edu.ph/s/AKfycbx7BU0PCsjI9rLqsHyAUwlmPUVU2v_0MIjTgP2wCKCYMis7pcJVe1hF6gHfdCV5nHXn/exec", {
+fetch("https://script.google.com/macros/s/AKfycbwMmUZJAQTbbi2GQiC2m-BngIgPIbNBub7z355UJu_71L8MzqDQKxJVV404p5Vk6KRm/exec", {
   method: "POST",
   body: JSON.stringify(data)
 })
 .then(res => res.text())
 .then(res => alert("Saved to Google Sheets!"));
 
+}
+
+function exportExcel(){
+  alert("Connect your Google Sheet link here for export");
 }
 </script>
 
