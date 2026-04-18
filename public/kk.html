@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>KK Profiling Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -26,20 +27,8 @@
       font-size: 12px;
     }
 
-    .grid2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5px;
-    }
-
-    .grid3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 5px;
-    }
-
     label {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: bold;
     }
 
@@ -57,10 +46,10 @@
 <div class="page">
 
 <!-- HEADER -->
-<div class="grid2 items-center mb-4">
+<div class="flex justify-between items-center mb-4">
 
-  <div class="box flex items-center justify-center">
-    <img src="logo.jpg" style="width:60px;height:60px;">
+  <div class="box w-20 h-20 flex items-center justify-center">
+    <img src="logo.jpg" class="w-full h-full object-cover">
   </div>
 
   <div class="text-center">
@@ -68,16 +57,19 @@
     <p>Province of Davao del Sur</p>
     <p>City of Davao</p>
     <p><b>Barangay DALAGDAG</b></p>
-
     <h3><b>KK PROFILING FORM</b></h3>
+  </div>
+
+  <div class="box w-20 h-20 flex items-center justify-center">
+    <img src="sklogo.jpg" class="w-full h-full object-cover">
   </div>
 
 </div>
 
 <!-- PERSONAL INFO -->
-<h4><b>PERSONAL INFORMATION</b></h4>
+<h3><b>PERSONAL INFORMATION</b></h3>
 
-<div class="grid2">
+<div class="grid grid-cols-2 gap-2">
 
   <div class="box">
     <label>FULL NAME</label>
@@ -102,9 +94,9 @@
 </div>
 
 <!-- DEMOGRAPHICS -->
-<h4><b>DEMOGRAPHICS</b></h4>
+<h3><b>DEMOGRAPHICS</b></h3>
 
-<div class="grid3">
+<div class="grid grid-cols-3 gap-2">
 
   <div class="box">
     <label>GENDER</label>
@@ -143,18 +135,20 @@ function calcAge(){
 }
 </script>
 
-<!-- YOUTH -->
-<h4><b>YOUTH CLASSIFICATION</b></h4>
+<!-- YOUTH CLASSIFICATION -->
+<h3><b>YOUTH CLASSIFICATION</b></h3>
 
-<div class="grid2">
-  <label><input type="checkbox"> In-School Youth</label>
-  <label><input type="checkbox"> Out-of-School Youth</label>
-  <label><input type="checkbox"> Working Youth</label>
-  <label><input type="checkbox"> PWD</label>
+<div class="grid grid-cols-2 gap-2 text-sm">
+
+  <label class="flex items-center gap-2"><input type="checkbox"> In-School Youth</label>
+  <label class="flex items-center gap-2"><input type="checkbox"> Out-of-School Youth</label>
+  <label class="flex items-center gap-2"><input type="checkbox"> Working Youth</label>
+  <label class="flex items-center gap-2"><input type="checkbox"> PWD</label>
+
 </div>
 
 <!-- EDUCATION -->
-<h4><b>EDUCATIONAL ATTAINMENT</b></h4>
+<h3><b>EDUCATIONAL ATTAINMENT</b></h3>
 
 <div class="box">
 <select id="education">
@@ -174,22 +168,22 @@ function calcAge(){
 </div>
 
 <!-- EMPLOYMENT -->
-<h4><b>EMPLOYMENT STATUS</b></h4>
+<h3><b>EMPLOYMENT STATUS</b></h3>
 
 <div class="box">
 <select id="employment">
   <option>Employed</option>
   <option>Unemployed</option>
   <option>Self-Employed</option>
-  <option>Currently Looking</option>
+  <option>Currently Looking for Job</option>
   <option>Not Interested</option>
 </select>
 </div>
 
 <!-- VOTING -->
-<h4><b>VOTING STATUS</b></h4>
+<h3><b>VOTING STATUS</b></h3>
 
-<div class="grid3">
+<div class="grid grid-cols-3 gap-2">
 
   <div class="box">
     <label>SK VOTER</label>
@@ -200,7 +194,7 @@ function calcAge(){
   </div>
 
   <div class="box">
-    <label>VOTED SK ELECTION</label>
+    <label>SK VOTED</label>
     <select id="skVote">
       <option>Yes</option>
       <option>No</option>
@@ -219,7 +213,7 @@ function calcAge(){
 
 <!-- SUBMIT -->
 <div class="text-center mt-4">
-  <button onclick="submitForm()" style="background:green;color:white;padding:10px 20px;">
+  <button onclick="submitForm()" class="bg-green-700 text-white px-6 py-2">
     SUBMIT
   </button>
 </div>
