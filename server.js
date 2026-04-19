@@ -3,10 +3,6 @@ const path = require("path");
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/login.html"));
-});
-
 // ✅ Serve all static files from /public
 app.use(express.static(path.join(__dirname, "public")));
 
