@@ -1,213 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SK DALAGDAG</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: Arial; background:#f3f4f6; }
 
-  <style>
-    body { font-family: Arial; }
+#intro {
+  position: fixed;
+  inset: 0;
+  background: white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:999;
+}
 
-    /* INTRO */
-    #intro {
-      position: fixed;
-      inset: 0;
-      background: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
+.spin {
+  width:140px;
+  animation: rotate 3s linear infinite;
+}
 
-    @keyframes spinSlow {
-      from {transform: rotate(0deg);}
-      to {transform: rotate(360deg);}
-    }
+@keyframes rotate {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
 
-    .spin-logo {
-      animation: spinSlow 3s linear infinite;
-      width: 150px;
-    }
+.btn {
+  height:85px;
+  border-radius:14px;
+  color:white;
+  font-weight:bold;
+}
 
-    /* FALLING */
-    .leaf {
-      position: fixed;
-      top: -20px;
-      width: 15px;
-      height: 15px;
-      background: green;
-      opacity: 0.6;
-      animation: fall linear infinite;
-    }
+.section { display:none; padding:10px; }
 
-    @keyframes fall {
-      to { transform: translateY(100vh); }
-    }
-
-    /* SECTIONS */
-    .section { display: none; }
-
-  </style>
+.card {
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+}
+</style>
 </head>
 
 <body>
 
 <!-- INTRO -->
 <div id="intro">
-  <img src="logo.jpg" class="spin-logo">
-  <h2>SK DALAGDAG</h2>
+  <img src="sklogo.png" class="spin">
+  <p class="font-bold mt-2">SK DALAGDAG</p>
 </div>
 
 <script>
-setTimeout(()=>{
-  document.getElementById("intro").style.display="none";
-},3000);
-
-// falling leaves
-for(let i=0;i<15;i++){
-  let leaf = document.createElement("div");
-  leaf.className="leaf";
-  leaf.style.left=Math.random()*100+"%";
-  leaf.style.animationDuration=(3+Math.random()*5)+"s";
-  document.body.appendChild(leaf);
-}
+setTimeout(()=>document.getElementById("intro").style.display="none",2500);
 </script>
 
-<!-- MENU -->
-<div class="p-4 grid grid-cols-2 gap-3">
-
-<button onclick="showSection('kk')" class="bg-green-600 text-white h-24">KK PROFILING</button>
-<button onclick="showSection('event')" class="bg-blue-600 text-white h-24">EVENT REGISTRATION</button>
-
+<!-- HEADER -->
+<div class="flex justify-between items-center p-2 bg-white shadow">
+  <img src="davao.png" class="w-12">
+  <h2 class="font-bold">SK DALAGDAG SYSTEM</h2>
+  <img src="sklogo.png" class="w-12">
 </div>
 
-<script>
-function showSection(id){
-  document.querySelectorAll('.section').forEach(s=>s.style.display='none');
-  document.getElementById(id).style.display='block';
-}
-</script>
+<!-- BUTTONS -->
+<div class="grid grid-cols-2 gap-2 p-3">
 
-<!-- KK FORM -->
-<div id="kk" class="section p-4">
+<button onclick="window.location.href='committees.html'" class="btn bg-green-700">SK COMMITTEES</button>
+<button onclick="window.location.href='budget.html'" class="btn bg-green-600">SK BUDGET 2026</button>
+<button onclick="window.location.href='announcements.html'" class="btn bg-yellow-600">ANNOUNCEMENTS</button>
+<button onclick="window.location.href='schedule.html'" class="btn bg-blue-600">SCHEDULES</button>
+<button onclick="window.location.href='projects.html'" class="btn bg-blue-700">PROJECTS 2026</button>
+<button onclick="window.location.href='registration.html'" class="btn bg-purple-600">REGISTRATION</button>
+<button onclick="window.location.href='suggestion.html'" class="btn bg-pink-600">SUGGESTION BOX</button>
+<button onclick="window.location.href='kk.html'" class="btn bg-green-800">KK PROFILING</button>
 
-<h3>KK PROFILING</h3>
-
-<input id="fullname" placeholder="Full Name" class="border p-2 w-full mb-2">
-<input id="contact" placeholder="Contact" class="border p-2 w-full mb-2">
-<input id="email" placeholder="Email" class="border p-2 w-full mb-2">
-<input id="address" placeholder="Address" class="border p-2 w-full mb-2">
-
-<input type="date" id="birthdate" class="border p-2 w-full mb-2" onchange="calcAge()">
-<input id="age" readonly class="border p-2 w-full mb-2">
-
-<script>
-function calcAge(){
-  let b=new Date(birthdate.value);
-  let t=new Date();
-  age.value=t.getFullYear()-b.getFullYear();
-}
-</script>
-
-<!-- CHECKBOX FIX -->
-<div class="grid grid-cols-2 gap-2 mb-3">
-
-<label class="flex items-center gap-2">
-<input type="checkbox"> In-School Youth
-</label>
-
-<label class="flex items-center gap-2">
-<input type="checkbox"> Out-of-School Youth
-</label>
-
-<label class="flex items-center gap-2">
-<input type="checkbox"> Working Youth
-</label>
-
-<label class="flex items-center gap-2">
-<input type="checkbox"> PWD
-</label>
-
-</div>
-
-<button onclick="submitKK()" class="bg-green-700 text-white px-4 py-2">Submit</button>
-<button onclick="window.print()" class="bg-red-600 text-white px-4 py-2 ml-2">PDF</button>
-
-</div>
-
-<!-- EVENT -->
-<div id="event" class="section p-4">
-
-<h3>EVENT REGISTRATION</h3>
-
-<select id="eventName" class="border p-2 w-full mb-2">
-<option>Basketball League</option>
-</select>
-
-<input id="participant" placeholder="Participant Name" class="border p-2 w-full mb-2">
-
-<select id="purok" class="border p-2 w-full mb-2">
-<option>Purok 1</option>
-<option>Purok 2</option>
-<option>Purok 3</option>
-<option>Purok 4</option>
-<option>Purok 5</option>
-<option>Purok 6</option>
-<option>Purok 7</option>
-<option>Purok 8</option>
-<option>Purok 9</option>
-</select>
-
-<input type="file" id="file" class="mb-2">
-
-<button onclick="submitEvent()" class="bg-blue-700 text-white px-4 py-2">
-Register
-</button>
-
-</div>
-
-<!-- BACKEND CONNECTION -->
-<script>
-function submitKK(){
-
-const formData = new FormData();
-formData.append("fullname", fullname.value);
-formData.append("address", address.value);
-
-fetch("http://localhost:3000/submit",{
-  method:"POST",
-  body: formData
-})
-.then(res=>res.text())
-.then(res=>alert(res));
-
-}
-
-function submitEvent(){
-
-const formData = new FormData();
-formData.append("event", eventName.value);
-formData.append("fullname", participant.value);
-formData.append("purok", purok.value);
-formData.append("validID", file.files[0]);
-
-fetch("http://localhost:3000/submit",{
-  method:"POST",
-  body: formData
-})
-.then(res=>res.text())
-.then(res=>alert(res));
-
-}
-</script>
-
-<!-- EXPORT -->
-<div class="p-4">
-<button onclick="window.open('http://localhost:3000/export')" class="bg-purple-700 text-white px-4 py-2">
-Export Excel
-</button>
 </div>
 
 </body>
