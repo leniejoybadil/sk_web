@@ -1,24 +1,73 @@
-body {
-  font-family: Arial;
+
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
   margin: 0;
-  background: #eef2f7;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* =========================
+   BODY (MODERN BACKGROUND)
+========================= */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #e8f5e9, #eef2f7);
+  color: #333;
+  min-height: 100vh;
+}
+
+/* decorative soft shapes */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  filter: blur(45px);
+  z-index: -1;
+}
+
+body::before {
+  top: -120px;
+  left: -120px;
+  background: rgba(46, 125, 50, 0.15);
+}
+
+body::after {
+  bottom: -120px;
+  right: -120px;
+  background: rgba(27, 94, 32, 0.12);
+}
+
+/* =========================
+   HEADER (ELEGANT UPGRADE)
+========================= */
 header {
-  background: #2e7d32;
+  background: rgba(46, 125, 50, 0.95);
   color: white;
   text-align: center;
-  padding: 20px;
+  padding: 25px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
+/* =========================
+   LOGO
+========================= */
 .logo {
   width: 80px;
   border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* SPIN LOGO */
+/* SPIN ANIMATION */
 .spin {
-  animation: spin360 2s ease-in-out;
+  animation: spin360 1.5s ease-in-out;
 }
 
 @keyframes spin360 {
@@ -26,50 +75,112 @@ header {
   to { transform: rotate(360deg); }
 }
 
+/* =========================
+   CONTAINER
+========================= */
 .container {
   padding: 20px;
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
 }
 
+/* =========================
+   CARDS (MODERNIZED)
+========================= */
 .card {
   background: white;
-  padding: 20px;
+  padding: 22px;
   margin-top: 15px;
-  border-radius: 10px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* BUTTON COLORS */
+/* decorative shape */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: rgba(46, 125, 50, 0.12);
+  border-radius: 50%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   BUTTON SYSTEM (UPGRADED)
+========================= */
 .btn {
-  padding: 10px;
-  margin: 5px;
+  padding: 12px 16px;
+  margin: 6px;
   border: none;
-  border-radius: 8px;
+  border-radius: 30px;
   color: white;
   cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
 }
 
-.committee { background: #1e88e5; }
-.projects { background: #43a047; }
-.events { background: #e53935; }
-.kk { background: #8e24aa; }
-.budget { background: #f9a825; color: black; }
-.announcements { background: #fb8c00; }
-.suggestions { background: #00acc1; }
-.throwback { background: #6d4c41; }
+/* hover effect for ALL buttons */
+.btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
 
+/* =========================
+   BUTTON COLORS (REFINED)
+========================= */
+.committee { background: linear-gradient(135deg, #1e88e5, #1565c0); }
+.projects { background: linear-gradient(135deg, #43a047, #2e7d32); }
+.events { background: linear-gradient(135deg, #e53935, #c62828); }
+.kk { background: linear-gradient(135deg, #8e24aa, #6a1b9a); }
+.budget { background: linear-gradient(135deg, #f9a825, #f57f17); color: black; }
+.announcements { background: linear-gradient(135deg, #fb8c00, #ef6c00); }
+.suggestions { background: linear-gradient(135deg, #c1005d, #880e4f); }
+.throwback { background: linear-gradient(135deg, #6d4c41, #4e342e); }
+
+/* =========================
+   SECTIONS
+========================= */
 .section {
   display: none;
 }
 
+/* =========================
+   INPUTS
+========================= */
 input, textarea {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
 }
 
-/* Suggestions */
+input:focus, textarea:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 5px rgba(46,125,50,0.3);
+}
+
+/* =========================
+   SUGGESTIONS BOX
+========================= */
 .suggestion-item {
   background: #e8f5e9;
-  padding: 10px;
+  padding: 12px;
   margin-top: 10px;
   border-left: 5px solid #2e7d32;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
