@@ -4,13 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 
-<title>SK LGU System</title>
-
-<script>
-if(!localStorage.getItem("skAdmin")){
-  window.location.href = "login.html";
-}
-</script>
+<title>SK Dalagdag System</title>
 
 <style>
 body {
@@ -18,13 +12,13 @@ body {
   background: #f4f6f8;
 }
 
-/* ===== SIDEBAR ===== */
+/* SIDEBAR */
 .sidebar {
-  width: 250px;
-  background: linear-gradient(180deg, #1b5e20, #2e7d32);
-  color: white;
+  width: 260px;
   height: 100vh;
   position: fixed;
+  background: linear-gradient(180deg, #1b5e20, #2e7d32);
+  color: white;
   padding: 20px;
 }
 
@@ -35,11 +29,11 @@ body {
 
 .sidebar a {
   display: block;
-  color: white;
-  text-decoration: none;
   padding: 10px;
-  margin: 5px 0;
+  margin: 6px 0;
   border-radius: 8px;
+  text-decoration: none;
+  color: white;
   transition: 0.2s;
 }
 
@@ -47,73 +41,65 @@ body {
   background: rgba(255,255,255,0.15);
 }
 
-/* ===== MAIN ===== */
+/* MAIN */
 .main {
-  margin-left: 250px;
+  margin-left: 260px;
   padding: 20px;
 }
 
-/* ===== TOP BAR ===== */
+/* TOPBAR */
 .topbar {
   background: white;
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
-/* ===== CARDS ===== */
+/* HERO */
+.hero {
+  margin-top: 20px;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  color: white;
+  padding: 20px;
+  border-radius: 18px;
+}
+
+/* GRID */
 .grid {
+  margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 15px;
-  margin-top: 20px;
 }
 
+/* CARD */
 .card {
   background: white;
   padding: 20px;
   border-radius: 14px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  cursor: pointer;
   transition: 0.2s;
-  position: relative;
-  overflow: hidden;
+  border-left: 5px solid transparent;
 }
 
 .card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
-/* glow circle */
-.card::before {
-  content: "";
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  background: rgba(46,125,50,0.1);
-  border-radius: 50%;
-  top: -40px;
-  right: -40px;
-}
+/* COLORS */
+.green { border-color: #2e7d32; }
+.yellow { border-color: #f9a825; }
+.blue { border-color: #1976d2; }
+.orange { border-color: #ef6c00; }
+.purple { border-color: #8e24aa; }
+.pink { border-color: #c2185b; }
 
-/* ===== BUTTON ===== */
-.btn {
-  display: inline-block;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: #2e7d32;
-  color: white;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-.btn:hover {
-  background: #1b5e20;
-}
-
-/* ===== MOBILE ===== */
+/* RESPONSIVE */
 @media(max-width:768px){
   .sidebar{
     position: relative;
@@ -132,13 +118,13 @@ body {
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <h2>SK DALAGDAG</h2>
+  <h2>🏛 SK DALAGDAG</h2>
 
   <a href="index.html">Dashboard</a>
   <a href="committees.html">Committees</a>
   <a href="budget.html">Budget 2026</a>
   <a href="announcements.html">Announcements</a>
-  <a href="events.html">Events</a>
+  <a href="schedule.html">Schedules</a>
   <a href="projects.html">Projects</a>
   <a href="registration.html">Registration</a>
   <a href="suggestion.html">Suggestions</a>
@@ -157,31 +143,43 @@ body {
     <img src="sklogo.png" class="w-12">
   </div>
 
-  <!-- CARDS -->
+  <!-- HERO -->
+  <div class="hero">
+    <h2 class="text-2xl font-bold">Welcome SK Officials</h2>
+    <p>Manage programs, budget, announcements, and youth development efficiently.</p>
+  </div>
+
+  <!-- GRID CARDS -->
   <div class="grid">
 
-    <div class="card">
+    <div onclick="location.href='budget.html'" class="card yellow">
       <h3 class="font-bold">SK Budget 2026</h3>
       <p>₱520,768.90</p>
-      <a href="budget.html" class="btn">View</a>
     </div>
 
-    <div class="card">
+    <div onclick="location.href='announcements.html'" class="card orange">
       <h3 class="font-bold">Announcements</h3>
-      <p>Latest updates from SK Council</p>
-      <a href="announcements.html" class="btn">Open</a>
+      <p>Official updates</p>
     </div>
 
-    <div class="card">
+    <div onclick="location.href='events.html'" class="card blue">
       <h3 class="font-bold">Events</h3>
-      <p>Upcoming SK activities</p>
-      <a href="events.html" class="btn">Check</a>
+      <p>Upcoming activities</p>
     </div>
 
-    <div class="card">
+    <div onclick="location.href='projects.html'" class="card green">
       <h3 class="font-bold">Projects</h3>
-      <p>SK Development Programs</p>
-      <a href="projects.html" class="btn">View</a>
+      <p>SK programs</p>
+    </div>
+
+    <div onclick="location.href='kk.html'" class="card purple">
+      <h3 class="font-bold">KK Profiling</h3>
+      <p>Youth database</p>
+    </div>
+
+    <div onclick="location.href='registration.html'" class="card pink">
+      <h3 class="font-bold">Registration</h3>
+      <p>Youth records</p>
     </div>
 
   </div>
