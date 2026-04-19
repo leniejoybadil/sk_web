@@ -1,276 +1,206 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>KK Profiling Form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{font-family:Arial;background:#f3f3f3}
 
-  <style>
-    body {
-      font-family: Arial;
-      background: #eee;
-    }
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+padding:10px;
+}
 
-    .page {
-      width: 210mm;
-      min-height: 297mm;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border: 1px solid black;
-    }
+.header img{width:55px}
 
-    .box {
-      border: 1px solid black;
-      padding: 6px;
-      font-size: 12px;
-    }
+.box{
+background:white;
+border:1px solid #000;
+padding:8px;
+margin-top:8px;
+}
 
-    label {
-      font-size: 11px;
-      font-weight: bold;
-    }
+.label{font-size:10px;color:#555}
 
-    input, select {
-      width: 100%;
-      border: none;
-      outline: none;
-      font-size: 12px;
-    }
-  </style>
+.option{
+display:flex;
+align-items:center;
+gap:8px;
+margin:3px 0;
+}
+
+@media print{
+button{display:none}
+body{background:white}
+.box{break-inside:avoid}
+}
+</style>
 </head>
 
 <body>
 
-<div class="page">
-
 <!-- HEADER -->
-<div class="flex justify-between items-center mb-4">
+<div class="header">
+<img src="davao.png">
 
-  <div class="box w-20 h-20 flex items-center justify-center">
-    <img src="logo.jpg" class="w-full h-full object-cover">
-  </div>
-
-  <div class="text-center">
-    <p>Republic of the Philippines</p>
-    <p>Province of Davao del Sur</p>
-    <p>City of Davao</p>
-    <p><b>Barangay DALAGDAG</b></p>
-    <h3><b>KK PROFILING FORM</b></h3>
-  </div>
-
-  <div class="box w-20 h-20 flex items-center justify-center">
-    <img src="sklogo.jpg" class="w-full h-full object-cover">
-  </div>
-
+<div class="text-center font-bold text-sm">
+REPUBLIC OF THE PHILIPPINES<br>
+BARANGAY DALAGDAG<br>
+SK KK PROFILING FORM
 </div>
 
-<!-- PERSONAL INFO -->
-<h3><b>PERSONAL INFORMATION</b></h3>
-
-<div class="grid grid-cols-2 gap-2">
-
-  <div class="box">
-    <label>FULL NAME</label>
-    <input id="fullname">
-  </div>
-
-  <div class="box">
-    <label>CONTACT NUMBER</label>
-    <input id="contact">
-  </div>
-
-  <div class="box">
-    <label>EMAIL</label>
-    <input id="email">
-  </div>
-
-  <div class="box">
-    <label>ADDRESS</label>
-    <input id="address">
-  </div>
-
+<img src="sklogo.png">
 </div>
 
-<!-- DEMOGRAPHICS -->
-<h3><b>DEMOGRAPHICS</b></h3>
+<div class="p-3">
 
-<div class="grid grid-cols-3 gap-2">
+<!-- BASIC INFO -->
+<div class="box">
+<div class="label">FULL NAME</div>
+<input id="fullname" class="w-full outline-none">
 
-  <div class="box">
-    <label>GENDER</label>
-    <select id="gender">
-      <option>Male</option>
-      <option>Female</option>
-    </select>
-  </div>
+<div class="label mt-2">CONTACT NUMBER</div>
+<input id="contact" class="w-full outline-none">
 
-  <div class="box">
-    <label>CIVIL STATUS</label>
-    <select id="civil">
-      <option>Single</option>
-      <option>Married</option>
-      <option>Widowed</option>
-    </select>
-  </div>
+<div class="label mt-2">EMAIL</div>
+<input id="email" class="w-full outline-none">
 
-  <div class="box">
-    <label>BIRTHDATE</label>
-    <input type="date" id="birthdate" onchange="calcAge()">
-  </div>
-
+<div class="label mt-2">ADDRESS</div>
+<input id="address" class="w-full outline-none">
 </div>
 
-<div class="box mt-2">
-  <label>AGE</label>
-  <input id="age" readonly>
+<!-- BIRTHDATE -->
+<div class="box">
+<div class="label">BIRTHDATE</div>
+<input type="date" id="birthdate" class="w-full" onchange="calcAge()">
+
+<div class="label mt-2">AGE</div>
+<input id="age" class="w-full outline-none" readonly>
 </div>
 
 <script>
 function calcAge(){
-  let b = new Date(document.getElementById("birthdate").value);
-  let t = new Date();
-  document.getElementById("age").value = t.getFullYear() - b.getFullYear();
+let b=new Date(birthdate.value);
+let t=new Date();
+age.value=t.getFullYear()-b.getFullYear();
 }
 </script>
 
-<!-- YOUTH -->
-<h3><b>YOUTH CLASSIFICATION</b></h3>
+<!-- YOUTH TYPE -->
+<div class="box">
+<div class="label">YOUTH TYPE</div>
 
-<div class="grid grid-cols-2 gap-2 text-sm">
-
-  <label class="flex items-center gap-2"><input type="checkbox"> In-School Youth</label>
-  <label class="flex items-center gap-2"><input type="checkbox"> Out-of-School Youth</label>
-  <label class="flex items-center gap-2"><input type="checkbox"> Working Youth</label>
-  <label class="flex items-center gap-2"><input type="checkbox"> PWD</label>
+<label class="option"><input type="checkbox"> In-School Youth</label>
+<label class="option"><input type="checkbox"> Out-of-School Youth</label>
+<label class="option"><input type="checkbox"> Working Youth</label>
+<label class="option"><input type="checkbox"> PWD</label>
 
 </div>
 
-<!-- EDUCATION -->
-<h3><b>EDUCATIONAL ATTAINMENT</b></h3>
-
+<!-- EDUCATIONAL ATTAINMENT (RESTORED FULL LIST) -->
 <div class="box">
-<select id="education">
-  <option>Elementary Level</option>
-  <option>Elementary Graduate</option>
-  <option>High School Level</option>
-  <option>High School Graduate</option>
-  <option>College Level</option>
-  <option>College Graduate</option>
-  <option>Vocational Graduate</option>
-  <option>Masters Level</option>
-  <option>Masters Graduate</option>
-  <option>Doctorate Level</option>
-  <option>Doctorate Graduate</option>
-  <option>No Educational Attainment</option>
-</select>
+<div class="label">EDUCATIONAL ATTAINMENT</div>
+
+<label class="option"><input type="radio" name="edu"> Elementary Level</label>
+<label class="option"><input type="radio" name="edu"> Elementary Graduate</label>
+<label class="option"><input type="radio" name="edu"> High School Level</label>
+<label class="option"><input type="radio" name="edu"> High School Graduate</label>
+<label class="option"><input type="radio" name="edu"> College Level</label>
+<label class="option"><input type="radio" name="edu"> College Graduate</label>
+<label class="option"><input type="radio" name="edu"> Vocational Graduate</label>
+<label class="option"><input type="radio" name="edu"> Masters Level</label>
+<label class="option"><input type="radio" name="edu"> Masters Graduate</label>
+<label class="option"><input type="radio" name="edu"> Doctorate Level</label>
+<label class="option"><input type="radio" name="edu"> Doctorate Graduate</label>
+<label class="option"><input type="radio" name="edu"> No Educational Attainment</label>
+
 </div>
 
 <!-- EMPLOYMENT -->
-<h3><b>EMPLOYMENT STATUS</b></h3>
-
 <div class="box">
-<select id="employment">
-  <option>Employed</option>
-  <option>Unemployed</option>
-  <option>Self-Employed</option>
-  <option>Currently Looking for Job</option>
-  <option>Not Interested</option>
-</select>
-</div>
+<div class="label">EMPLOYMENT STATUS</div>
 
-<!-- VOTING -->
-<h3><b>VOTING STATUS</b></h3>
-
-<div class="grid grid-cols-3 gap-2">
-
-  <div class="box">
-    <label>SK VOTER</label>
-    <select id="skVoter">
-      <option>Yes</option>
-      <option>No</option>
-    </select>
-  </div>
-
-  <div class="box">
-    <label>VOTED SK ELECTION</label>
-    <select id="skVote">
-      <option>Yes</option>
-      <option>No</option>
-    </select>
-  </div>
-
-  <div class="box">
-    <label>NATIONAL VOTER</label>
-    <select id="nationalVoter">
-      <option>Yes</option>
-      <option>No</option>
-    </select>
-  </div>
+<label class="option"><input type="radio" name="emp"> Employed</label>
+<label class="option"><input type="radio" name="emp"> Not Employed</label>
+<label class="option"><input type="radio" name="emp"> Self-Employed</label>
+<label class="option"><input type="radio" name="emp"> Currently Looking for Job</label>
+<label class="option"><input type="radio" name="emp"> Not Interested in Looking for Job</label>
 
 </div>
 
-<!-- KK ASSEMBLY -->
-<h3><b>KK ASSEMBLY ATTENDANCE</b></h3>
+<!-- SK PARTICIPATION -->
+<div class="box">
+<div class="label">SK PARTICIPATION</div>
 
-<div class="grid grid-cols-2 gap-2 text-sm">
+<p><b>Registered SK Voter?</b></p>
+<label class="option"><input type="radio" name="v1"> Yes</label>
+<label class="option"><input type="radio" name="v1"> No</label>
 
-  <label class="flex items-center gap-2"><input type="radio" name="kkAssembly" value="No Attendance"> No Attendance</label>
-  <label class="flex items-center gap-2"><input type="radio" name="kkAssembly" value="1-2 Times"> 1–2 Times</label>
-  <label class="flex items-center gap-2"><input type="radio" name="kkAssembly" value="3-5 Times"> 3–5 Times</label>
-  <label class="flex items-center gap-2"><input type="radio" name="kkAssembly" value="Above 5 Times"> Above 5 Times</label>
+<p><b>Did you vote last SK Election?</b></p>
+<label class="option"><input type="radio" name="v2"> Yes</label>
+<label class="option"><input type="radio" name="v2"> No</label>
 
+<p><b>Did you attend KK Assembly?</b></p>
+<label class="option"><input type="radio" name="v3" onclick="show(true)"> Yes</label>
+<label class="option"><input type="radio" name="v3" onclick="show(false)"> No</label>
+
+<div id="kktimes" style="display:none">
+<p><b>If YES, how many times?</b></p>
+<label class="option"><input type="radio" name="t">1-2</label>
+<label class="option"><input type="radio" name="t">3-5</label>
+<label class="option"><input type="radio" name="t">More than 5</label>
 </div>
-
-<!-- BUTTONS -->
-<div class="text-center mt-4">
-
-  <button onclick="submitForm()" class="bg-green-700 text-white px-6 py-2">
-    SUBMIT
-  </button>
-
-  <button onclick="exportExcel()" class="bg-blue-700 text-white px-6 py-2 ml-2">
-    EXPORT TO EXCEL
-  </button>
 
 </div>
 
 <script>
-function submitForm(){
-
-const data = {
-  fullname: fullname.value,
-  contact: contact.value,
-  email: email.value,
-  address: address.value,
-  gender: gender.value,
-  civil: civil.value,
-  birthdate: birthdate.value,
-  age: age.value,
-  education: education.value,
-  employment: employment.value,
-  skVoter: skVoter.value,
-  skVote: skVote.value,
-  nationalVoter: nationalVoter.value,
-  kkAssembly: document.querySelector('input[name="kkAssembly"]:checked')?.value
-};
-
-fetch("https://script.google.com/macros/s/AKfycbwMmUZJAQTbbi2GQiC2m-BngIgPIbNBub7z355UJu_71L8MzqDQKxJVV404p5Vk6KRm/exec", {
-  method: "POST",
-  body: JSON.stringify(data)
-})
-.then(res => res.text())
-.then(res => alert("Saved to Google Sheets!"));
-
-}
-
-function exportExcel(){
-  alert("Connect your Google Sheet link here for export");
+function show(v){
+kktimes.style.display=v?"block":"none";
 }
 </script>
 
+<!-- BUTTONS -->
+<button onclick="submitForm()" class="bg-green-600 text-white w-full p-2 mt-3">
+SUBMIT
+</button>
+
+<button onclick="window.print()" class="bg-red-600 text-white w-full p-2 mt-2">
+DOWNLOAD PDF
+</button>
+
 </div>
+
+<!-- SUBMIT -->
+<script>
+function submitForm(){
+
+fetch("https://script.google.com/macros/s/AKfycbwMmUZJAQTbbi2GQiC2m-BngIgPIbNBub7z355UJu_71L8MzqDQKxJVV404p5Vk6KRm/exec",{
+method:"POST",
+mode:"no-cors",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+fullname:fullname.value,
+contact:contact.value,
+email:email.value,
+address:address.value,
+birthdate:birthdate.value,
+age:age.value,
+edu:document.querySelector('input[name="edu"]:checked')?.value,
+emp:document.querySelector('input[name="emp"]:checked')?.value,
+sk_voter:document.querySelector('input[name="v1"]:checked')?.value,
+sk_vote:document.querySelector('input[name="v2"]:checked')?.value,
+kk_attend:document.querySelector('input[name="v3"]:checked')?.value,
+kk_times:document.querySelector('input[name="t"]:checked')?.value
+})
+});
+
+alert("Submitted to SK Google Sheets!");
+}
+</script>
 
 </body>
 </html>
