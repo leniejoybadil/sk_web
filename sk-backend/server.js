@@ -1,60 +1,59 @@
 const express = require("express");
 const cors = require("cors");
-const multer = require("multer");
-const XLSX = require("xlsx");
-const fs = require("fs");
 
 const app = express();
 
+// MIDDLEWARE
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// ensure uploads folder exists
-if (!fs.existsSync("uploads")) {
-  fs.mkdirSync("uploads");
-}
-
-let dataStore = [];
-
-// file upload setup
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
+/* =========================
+   HEALTH CHECK (IMPORTANT)
+========================= */
+app.get("/", (req, res) => {
+  res.send("SK DALAGDAG SYSTEM IS RUNNING");
 });
 
-const upload = multer({ storage });
+/* =========================
+   KK FORM SUBMISSION (SAFE)
+   (temporary local + ready for Google Sheets)
+========================= */
+app.post("/submit-kk", async (req, res) => {
+  try {
+    const data = req.body;
 
-// SUBMIT DATA
-app.post("/submit", upload.single("validID"), (req, res) => {
-  const data = {
-    fullname: req.body.fullname,
-    contact: req.body.contact,
-    email: req.body.email,
-    address: req.body.address,
-    event: req.body.event || "",
-    purok: req.body.purok || "",
-    file: req.file ? req.file.filename : null
-  };
+    console.log("KK DATA RECEIVED:", data);
 
-  dataStore.push(data);
+    // OPTIONAL: SEND TO GOOGLE SHEETS
+    await fetch("https://script.google.com/macros/s/AKfycbwMmUZJAQTbbi2GQiC2m-BngIgPIbNBub7z355UJu_71L8MzqDQKxJVV404p5Vk6KRm/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
 
-  res.send("Saved Successfully");
+    res.json({
+      success: true,
+      message: "KK form submitted successfully"
+    });
+
+  } catch (error) {
+    console.error("ERROR:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message
+    });
+  }
 });
 
-// EXPORT EXCEL
-app.get("/export", (req, res) => {
-  const ws = XLSX.utils.json_to_sheet(dataStore);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "KK Data");
+/* =========================
+   SERVER START (DEPLOY FIX)
+========================= */
+const PORT = process.env.PORT || 3000;
 
-  const filePath = "kk_data.xlsx";
-  XLSX.writeFile(wb, filePath);
-
-  res.download(filePath);
-});
-
-// START SERVER
-app.listen(3000, () => {
-  console.log("SK Backend running on port 3000");
+app.listen(PORT, () => {
+  console.log("SK SYSTEM RUNNING ON PORT " + PORT);
 });
