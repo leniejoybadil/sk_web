@@ -4,108 +4,181 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 
+<title>SK LGU System</title>
+
 <style>
-body { font-family: Arial; background:#f3f4f6; }
+body {
+  font-family: Arial;
+  background: #f4f6f8;
+}
 
-#intro {
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #1b5e20, #2e7d32);
+  color: white;
+  height: 100vh;
   position: fixed;
-  inset: 0;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* ===== MAIN ===== */
+.main {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+/* ===== TOP BAR ===== */
+.topbar {
   background: white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  z-index:999;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.spin {
-  width:140px;
-  animation: rotate 3s linear infinite;
+/* ===== CARDS ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
 }
-
-@keyframes rotate {
-  from { transform: rotate(0); }
-  to { transform: rotate(360deg); }
-}
-
-.btn {
-  height:85px;
-  border-radius:14px;
-  color:white;
-  font-weight:bold;
-}
-
-.section { display:none; padding:10px; }
 
 .card {
-  background:white;
-  padding:10px;
-  border-radius:10px;
-  margin-top:10px;
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* glow circle */
+.card::before {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: rgba(46,125,50,0.1);
+  border-radius: 50%;
+  top: -40px;
+  right: -40px;
+}
+
+/* ===== BUTTON ===== */
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #2e7d32;
+  color: white;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #1b5e20;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+  .sidebar{
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  .main{
+    margin-left: 0;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-<!-- INTRO -->
-<div id="intro">
-  <div style="text-align:center;">
-    <img src="sklogo.png" style="width:140px;">
-    <h2 style="font-weight:bold; margin-top:10px;">SK DALAGDAG</h2>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>🏛 SK DALAGDAG</h2>
+
+  <a href="index.html">Dashboard</a>
+  <a href="committees.html">Committees</a>
+  <a href="budget.html">Budget 2026</a>
+  <a href="announcements.html">Announcements</a>
+  <a href="events.html">Events</a>
+  <a href="projects.html">Projects</a>
+  <a href="registration.html">Registration</a>
+  <a href="suggestion.html">Suggestions</a>
+  <a href="kk.html">KK Profiling</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div>
+      <h1 class="text-xl font-bold">Dashboard</h1>
+      <p class="text-gray-500">SK Management System</p>
+    </div>
+    <img src="sklogo.png" class="w-12">
   </div>
-</div>
 
-<style>
-#intro{
-  position:fixed;
-  inset:0;
-  background:rgb(255, 255, 255);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-  animation: fadeOut 2.5s forwards;
-}
+  <!-- CARDS -->
+  <div class="grid">
 
-@keyframes fadeOut{
-  0%{opacity:1;}
-  80%{opacity:1;}
-  100%{opacity:0; visibility:hidden;}
-}
-</style>
+    <div class="card">
+      <h3 class="font-bold">SK Budget 2026</h3>
+      <p>₱520,768.90</p>
+      <a href="budget.html" class="btn">View</a>
+    </div>
 
+    <div class="card">
+      <h3 class="font-bold">Announcements</h3>
+      <p>Latest updates from SK Council</p>
+      <a href="announcements.html" class="btn">Open</a>
+    </div>
 
-<script>
-setTimeout(()=> {
-  document.getElementById("intro").style.display="none";
-}, 2500);
+    <div class="card">
+      <h3 class="font-bold">Events</h3>
+      <p>Upcoming SK activities</p>
+      <a href="events.html" class="btn">Check</a>
+    </div>
 
-if(localStorage.getItem("skAdmin") !== "true"){
-  // optional: allow access but hide admin features
-  console.log("Guest mode");
-}
-</script>
+    <div class="card">
+      <h3 class="font-bold">Projects</h3>
+      <p>SK Development Programs</p>
+      <a href="projects.html" class="btn">View</a>
+    </div>
 
-<!-- HEADER -->
-<div class="flex justify-between items-center p-2 bg-white shadow">
-  <img src="davao.png" class="w-12">
-  <h2 class="font-bold">SK DALAGDAG SYSTEM</h2>
-  <img src="sklogo.png" class="w-12">
-</div>
-
-<!-- BUTTONS -->
-<div class="grid grid-cols-2 gap-2 p-3">
-
-<button onclick="window.location.href='committees.html'" class="btn bg-green-700">SK COMMITTEES</button>
-<button onclick="window.location.href='budget.html'" class="btn bg-green-600">SK BUDGET 2026</button>
-<button onclick="window.location.href='announcements.html'" class="btn bg-yellow-600">ANNOUNCEMENTS</button>
-<button onclick="window.location.href='schedule.html'" class="btn bg-blue-600">SCHEDULES</button>
-<button onclick="window.location.href='projects.html'" class="btn bg-blue-700">PROJECTS 2026</button>
-<button onclick="window.location.href='registration.html'" class="btn bg-purple-600">REGISTRATION</button>
-<button onclick="window.location.href='suggestion.html'" class="btn bg-pink-600">SUGGESTION BOX</button>
-<button onclick="window.location.href='kk.html'" class="btn bg-green-800">KK PROFILING</button>
+  </div>
 
 </div>
 
