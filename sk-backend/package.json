@@ -1,10 +1,10 @@
 {
   "name": "sk-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "SK Dalagdag Backend System",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,6 @@
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "multer": "^2.1.1",
-    "xlsx": "^0.18.5"
+    "multer": "^2.1.1"
   }
 }
