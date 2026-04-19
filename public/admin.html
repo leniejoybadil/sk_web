@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-100">
+
+<div class="bg-white p-6 rounded shadow w-80">
+
+<h2 class="font-bold text-center mb-4">SK ADMIN LOGIN</h2>
+
+<input id="user" placeholder="Username" class="border p-2 w-full my-2">
+<input id="pass" type="password" placeholder="Password" class="border p-2 w-full my-2">
+
+<button onclick="login()" class="bg-green-700 text-white w-full py-2 rounded">
+Login
+</button>
+
+<p id="msg" class="text-red-600 text-sm mt-2 text-center"></p>
+
+</div>
+
+<script>
+function login(){
+
+  const username = user.value;
+  const password = pass.value;
+
+  // SIMPLE CREDENTIALS (you can change this)
+  if(username === "lenie" && password === "sk2026"){
+
+    // store session
+    localStorage.setItem("skAdmin", "true");
+
+    // redirect to dashboard
+    window.location.href = "index.html";
+
+  } else {
+    msg.innerText = "Invalid login!";
+  }
+}
+</script>
+
+</body>
+</html>

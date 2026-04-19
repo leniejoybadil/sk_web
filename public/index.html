@@ -76,10 +76,16 @@ body { font-family: Arial; background:#f3f4f6; }
 }
 </style>
 
+
 <script>
 setTimeout(()=> {
   document.getElementById("intro").style.display="none";
 }, 2500);
+
+if(localStorage.getItem("skAdmin") !== "true"){
+  // optional: allow access but hide admin features
+  console.log("Guest mode");
+}
 </script>
 
 <!-- HEADER -->

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-3">
+
+<h2 class="font-bold text-lg">Event Registration</h2>
+
+<!-- EVENT -->
+<select id="event" class="border p-2 w-full my-2">
+  <option>Basketball League</option>
+</select>
+
+<!-- NAME -->
+<input id="name" placeholder="Full Name" class="border p-2 w-full my-2" required>
+
+<!-- ADDRESS -->
+<select id="address" class="border p-2 w-full my-2" required>
+  <option>Purok 1</option>
+  <option>Purok 2</option>
+  <option>Purok 3</option>
+  <option>Purok 4</option>
+  <option>Purok 5</option>
+  <option>Purok 6</option>
+  <option>Purok 7</option>
+  <option>Purok 8</option>
+  <option>Purok 9</option>
+</select>
+
+<!-- VALID ID -->
+<input type="file" id="validid" class="my-2" required>
+
+<button onclick="submitForm()" class="bg-blue-700 text-white px-4 py-2 rounded">
+Register
+</button>
+
+<script>
+function submitForm(){
+
+  let form = new FormData();
+  form.append("event", event.value);
+  form.append("name", name.value);
+  form.append("address", address.value);
+  form.append("validid", validid.files[0]);
+
+  fetch("https://script.google.com/macros/s/AKfycbyA5y1DrZZfEeJ0opBkcUZbBCej9dbGTmjKNx39gzv-JWZJuJAvdDrL69r4GHmZqdyQ/exec",{
+    method:"POST",
+    body:form
+  })
+  .then(r=>r.text())
+  .then(alert);
+}
+</script>
+
+</body>
+</html>

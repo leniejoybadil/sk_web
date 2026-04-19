@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-3">
+
+<h2 class="font-bold text-lg">Suggestion Box</h2>
+
+<input id="nickname" placeholder="Nickname" class="border p-2 w-full my-2">
+
+<textarea id="suggestion" placeholder="Suggest Activities..." class="border p-2 w-full my-2"></textarea>
+
+<button onclick="sendSuggestion()" class="bg-green-700 text-white px-4 py-2 rounded">
+Submit
+</button>
+
+<script>
+function sendSuggestion(){
+  fetch("YOUR_GOOGLE_SCRIPT_URL",{
+    method:"POST",
+    body: JSON.stringify({
+      nickname: nickname.value,
+      suggestion: suggestion.value
+    }),
+    headers:{ "Content-Type":"application/json" }
+  })
+  .then(r=>r.text())
+  .then(alert);
+}
+</script>
+
+</body>
+</html>
