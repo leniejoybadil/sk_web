@@ -49,13 +49,37 @@ body { font-family: Arial; background:#f3f4f6; }
 <body>
 
 <!-- INTRO -->
+<!-- INTRO -->
 <div id="intro">
-  <img src="sklogo.jpg" class="spin">
-  <p class="font-bold mt-2">SK DALAGDAG</p>
+  <div style="text-align:center;">
+    <img src="sklogo.png" style="width:140px;">
+    <h2 style="font-weight:bold; margin-top:10px;">SK DALAGDAG</h2>
+  </div>
 </div>
 
+<style>
+#intro{
+  position:fixed;
+  inset:0;
+  background:rgb(255, 255, 255);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  animation: fadeOut 2.5s forwards;
+}
+
+@keyframes fadeOut{
+  0%{opacity:1;}
+  80%{opacity:1;}
+  100%{opacity:0; visibility:hidden;}
+}
+</style>
+
 <script>
-setTimeout(()=>document.getElementById("intro").style.display="none",2500);
+setTimeout(()=> {
+  document.getElementById("intro").style.display="none";
+}, 2500);
 </script>
 
 <!-- HEADER -->
