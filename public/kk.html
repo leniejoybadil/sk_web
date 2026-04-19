@@ -178,29 +178,27 @@ DOWNLOAD PDF
 <script>
 function submitForm(){
 
-fetch("https://script.google.com/macros/s/AKfycbwMmUZJAQTbbi2GQiC2m-BngIgPIbNBub7z355UJu_71L8MzqDQKxJVV404p5Vk6KRm/exec",{
-method:"POST",
-mode:"no-cors",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-fullname:fullname.value,
-contact:contact.value,
-email:email.value,
-address:address.value,
-birthdate:birthdate.value,
-age:age.value,
-edu:document.querySelector('input[name="edu"]:checked')?.value,
-emp:document.querySelector('input[name="emp"]:checked')?.value,
-sk_voter:document.querySelector('input[name="v1"]:checked')?.value,
-sk_vote:document.querySelector('input[name="v2"]:checked')?.value,
-kk_attend:document.querySelector('input[name="v3"]:checked')?.value,
-kk_times:document.querySelector('input[name="t"]:checked')?.value
-})
+const data = {
+fullname: fullname.value,
+contact: contact.value,
+email: email.value,
+address: address.value,
+birthdate: birthdate.value,
+age: age.value,
+
+sk_voter: document.querySelector('input[name="v1"]:checked')?.value,
+sk_vote: document.querySelector('input[name="v2"]:checked')?.value,
+kk_attend: document.querySelector('input[name="v3"]:checked')?.value,
+kk_times: document.querySelector('input[name="t"]:checked')?.value
+};
+
+fetch("https://script.google.com/macros/s/AKfycbwMmUZJAQTbbi2GQiC2m-BngIgPIbNBub7z355UJu_71L8MzqDQKxJVV404p5Vk6KRm/exec", {
+method: "POST",
+mode: "no-cors",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify(data)
 });
 
-alert("Submitted to SK Google Sheets!");
+alert("Submitted to Google Sheets!");
 }
 </script>
-
-</body>
-</html>
