@@ -41,7 +41,7 @@ Binhi ng Pag-asa: Gardening Activity
 </div>
 
 <!-- =========================
-POPUP MODAL
+MODAL FORM
 ========================= -->
 <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
 
@@ -49,11 +49,13 @@ POPUP MODAL
 
 <h3 id="eventTitle" class="font-bold mb-2"></h3>
 
-<!-- COMMON FIELDS -->
+<!-- NAME -->
 <input id="name" placeholder="Full Name" class="border p-2 w-full mb-2">
 
+<!-- AGE -->
 <input id="age" type="number" placeholder="Age" class="border p-2 w-full mb-2">
 
+<!-- PUROK (USED FOR INTERPUROK TEAM SUBSTITUTE) -->
 <select id="purok" class="border p-2 w-full mb-2">
   <option>Purok 1</option>
   <option>Purok 2</option>
@@ -66,7 +68,7 @@ POPUP MODAL
   <option>Purok 9</option>
 </select>
 
-<!-- TEAM FIELD -->
+<!-- TEAM ONLY FOR BASKETBALL -->
 <select id="team" class="border p-2 w-full mb-2 hidden">
   <option>Team 1</option>
   <option>Team 2</option>
@@ -74,7 +76,7 @@ POPUP MODAL
   <option>Team 4</option>
 </select>
 
-<!-- ⚠ VALID ID WARNING -->
+<!-- WARNING -->
 <p id="idWarning" class="text-red-600 font-bold hidden mb-2">
 ⚠ VALID ID REQUIRED FOR THIS EVENT
 </p>
@@ -112,19 +114,20 @@ function openForm(eventName){
 
   let needID = false;
 
-  // CONDITIONS
+  // 🏀 BASKETBALL
   if(eventName.includes("Basketball")){
     document.getElementById("team").classList.remove("hidden");
     document.getElementById("validid").classList.remove("hidden");
     needID = true;
   }
 
+  // 🏀 INTERPUROK (NO TEAM, PUROK = TEAM)
   if(eventName.includes("Interpurok")){
-    document.getElementById("team").classList.remove("hidden");
     document.getElementById("validid").classList.remove("hidden");
     needID = true;
   }
 
+  // MOSQUITO DIVISION
   if(eventName.includes("Mosquito")){
     document.getElementById("validid").classList.remove("hidden");
     needID = true;
@@ -136,23 +139,23 @@ function openForm(eventName){
   }
 }
 
-// CLOSE
+// CLOSE FORM
 function closeForm(){
   document.getElementById("modal").classList.add("hidden");
 }
 
-// SUBMIT
+// SUBMIT FORM
 function submitForm(){
 
   let file = document.getElementById("validid").files[0];
 
-  // VALIDATION
   if(!name.value || !age.value || !purok.value){
     alert("Complete all required fields");
     return;
   }
 
-  if(document.getElementById("validid").classList.contains("hidden") === false && !file){
+  // VALID ID CHECK
+  if(!document.getElementById("validid").classList.contains("hidden") && !file){
     alert("Valid ID is required");
     return;
   }
@@ -161,7 +164,11 @@ function submitForm(){
   formData.append("event", selectedEvent);
   formData.append("name", name.value);
   formData.append("age", age.value);
+
+  // INTERPUROK = PUROK AS TEAM
   formData.append("purok", purok.value);
+
+  // ONLY BASKETBALL USES TEAM
   formData.append("team", team.value);
 
   if(file){
