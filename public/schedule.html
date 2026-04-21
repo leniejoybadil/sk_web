@@ -1,14 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<div class="section">
+  <h2>Schedule of Events</h2>
 
-<body class="p-3">
+  <input type="date" id="calendar" onchange="showEvent()">
 
-<h2 class="font-bold">Schedules of Activities</h2>
+  <div id="eventDisplay" class="event-box">
+    To be announced
+  </div>
+</div>
 
-<p class="mt-3">To be announced soon...</p>
+<style>
+.event-box {
+  margin-top: 15px;
+  padding: 15px;
+  background: #fff;
+  border-left: 5px solid #1e3a8a;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+</style>
 
-</body>
-</html>
+<script>
+function showEvent() {
+  document.getElementById("eventDisplay").innerText = "To be announced";
+}
+</script>

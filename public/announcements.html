@@ -1,34 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.tailwindcss.com"></script>
-<title>Announcements</title>
-</head>
+<div class="section">
+  <h2>Announcements</h2>
 
-<body class="bg-gray-100 p-5">
+  <div id="announcementBox" class="announcement-box">
+    No announcement.
+  </div>
 
-<h1 class="text-2xl font-bold mb-4">Announcements</h1>
+  <!-- ADMIN PANEL (hidden in real system later) -->
+  <div id="adminPanel">
+    <input type="text" id="announcementInput" placeholder="Post announcement">
+    <button onclick="postAnnouncement()">Post</button>
+  </div>
+</div>
 
-<div id="list"></div>
+<style>
+.section {
+  padding: 20px;
+}
+
+.announcement-box {
+  background: #fff;
+  padding: 20px;
+  border-left: 5px solid #1e3a8a;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+}
+
+#adminPanel input {
+  width: 70%;
+  padding: 10px;
+}
+
+#adminPanel button {
+  padding: 10px;
+  background: #1e3a8a;
+  color: white;
+  border: none;
+}
+</style>
 
 <script>
-let data = JSON.parse(localStorage.getItem("announcements") || "[]");
+function postAnnouncement() {
+  const text = document.getElementById("announcementInput").value;
 
-let html = "";
+  if (text.trim() === "") return;
 
-data.forEach(a => {
-  html += `
-    <div class="bg-white p-4 rounded shadow mb-3">
-      <h2 class="font-bold text-green-700">${a.title}</h2>
-      <p>${a.message}</p>
-      <small class="text-gray-500">${a.date}</small>
-    </div>
-  `;
-});
-
-document.getElementById("list").innerHTML = html;
+  document.getElementById("announcementBox").innerText = text;
+  document.getElementById("announcementInput").value = "";
+}
 </script>
-
-</body>
-</html>
