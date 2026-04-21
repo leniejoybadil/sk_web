@@ -7,18 +7,54 @@
 
 <body class="bg-gray-100 p-3">
 
-<h2 class="font-bold text-lg">Event Registration</h2>
+<h2 class="font-bold text-lg mb-3">Event Registration</h2>
 
-<!-- EVENT -->
-<select id="event" class="border p-2 w-full my-2">
-  <option>Araw ng Brgy. Dalgdag Basketball League</option>
-</select>
+<!-- =========================
+EVENT BUTTONS
+========================= -->
+<div class="grid gap-2">
 
-<!-- NAME -->
-<input id="name" placeholder="Full Name" class="border p-2 w-full my-2" required>
+<button onclick="openForm('KK Assembly 2026')" class="bg-green-700 text-white p-2 rounded">
+KK Assembly 2026
+</button>
 
-<!-- ADDRESS -->
-<select id="address" class="border p-2 w-full my-2" required>
+<button onclick="openForm('Linggo ng Kabataan 2026')" class="bg-green-700 text-white p-2 rounded">
+Linggo ng Kabataan 2026
+</button>
+
+<button onclick="openForm('Basketball Mosquito Division')" class="bg-green-700 text-white p-2 rounded">
+Basketball League Mosquito Division
+</button>
+
+<button onclick="openForm('Interpurok Basketball')" class="bg-green-700 text-white p-2 rounded">
+Interpurok Basketball League
+</button>
+
+<button onclick="openForm('Sepak Takraw')" class="bg-green-700 text-white p-2 rounded">
+Sepak Takraw Tournament
+</button>
+
+<button onclick="openForm('Gardening Activity')" class="bg-green-700 text-white p-2 rounded">
+Binhi ng Pag-asa: Gardening Activity
+</button>
+
+</div>
+
+<!-- =========================
+POPUP MODAL
+========================= -->
+<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+
+<div class="bg-white p-4 rounded w-full max-w-md">
+
+<h3 id="eventTitle" class="font-bold mb-2"></h3>
+
+<!-- COMMON FIELDS -->
+<input id="name" placeholder="Full Name" class="border p-2 w-full mb-2">
+
+<input id="age" type="number" placeholder="Age" class="border p-2 w-full mb-2">
+
+<select id="purok" class="border p-2 w-full mb-2">
   <option>Purok 1</option>
   <option>Purok 2</option>
   <option>Purok 3</option>
@@ -30,29 +66,120 @@
   <option>Purok 9</option>
 </select>
 
-<!-- VALID ID -->
-<input type="file" id="validid" class="my-2" required>
+<!-- TEAM FIELD -->
+<select id="team" class="border p-2 w-full mb-2 hidden">
+  <option>Team 1</option>
+  <option>Team 2</option>
+  <option>Team 3</option>
+  <option>Team 4</option>
+</select>
 
-<button onclick="submitForm()" class="bg-blue-700 text-white px-4 py-2 rounded">
-Register
+<!-- ⚠ VALID ID WARNING -->
+<p id="idWarning" class="text-red-600 font-bold hidden mb-2">
+⚠ VALID ID REQUIRED FOR THIS EVENT
+</p>
+
+<!-- VALID ID UPLOAD -->
+<input type="file" id="validid" class="mb-2 hidden">
+
+<!-- SUBMIT -->
+<button onclick="submitForm()" class="bg-blue-700 text-white w-full p-2 rounded">
+Submit
 </button>
 
+<button onclick="closeForm()" class="mt-2 w-full bg-gray-400 p-2 rounded">
+Cancel
+</button>
+
+</div>
+</div>
+
 <script>
+
+let selectedEvent = "";
+
+// OPEN FORM
+function openForm(eventName){
+
+  selectedEvent = eventName;
+  document.getElementById("eventTitle").innerText = eventName;
+  document.getElementById("modal").classList.remove("hidden");
+
+  // RESET
+  document.getElementById("team").classList.add("hidden");
+  document.getElementById("validid").classList.add("hidden");
+  document.getElementById("idWarning").classList.add("hidden");
+
+  let needID = false;
+
+  // CONDITIONS
+  if(eventName.includes("Basketball")){
+    document.getElementById("team").classList.remove("hidden");
+    document.getElementById("validid").classList.remove("hidden");
+    needID = true;
+  }
+
+  if(eventName.includes("Interpurok")){
+    document.getElementById("team").classList.remove("hidden");
+    document.getElementById("validid").classList.remove("hidden");
+    needID = true;
+  }
+
+  if(eventName.includes("Mosquito")){
+    document.getElementById("validid").classList.remove("hidden");
+    needID = true;
+  }
+
+  // SHOW WARNING
+  if(needID){
+    document.getElementById("idWarning").classList.remove("hidden");
+  }
+}
+
+// CLOSE
+function closeForm(){
+  document.getElementById("modal").classList.add("hidden");
+}
+
+// SUBMIT
 function submitForm(){
 
-  let form = new FormData();
-  form.append("event", event.value);
-  form.append("name", name.value);
-  form.append("address", address.value);
-  form.append("validid", validid.files[0]);
+  let file = document.getElementById("validid").files[0];
 
-  fetch("https://script.google.com/macros/s/AKfycbyA5y1DrZZfEeJ0opBkcUZbBCej9dbGTmjKNx39gzv-JWZJuJAvdDrL69r4GHmZqdyQ/exec",{
-    method:"POST",
-    body:form
+  // VALIDATION
+  if(!name.value || !age.value || !purok.value){
+    alert("Complete all required fields");
+    return;
+  }
+
+  if(document.getElementById("validid").classList.contains("hidden") === false && !file){
+    alert("Valid ID is required");
+    return;
+  }
+
+  let formData = new FormData();
+  formData.append("event", selectedEvent);
+  formData.append("name", name.value);
+  formData.append("age", age.value);
+  formData.append("purok", purok.value);
+  formData.append("team", team.value);
+
+  if(file){
+    formData.append("validid", file);
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbzeyql6hVgTJiio8NLBsa2gzbGSB_WzFLXQNJ1i_sX3_4JR3P1a9HcJVx2T6rxJ-VQi/exec", {
+    method: "POST",
+    body: formData
   })
-  .then(r=>r.text())
-  .then(alert);
+  .then(res => res.text())
+  .then(data => {
+    alert("Successfully Registered!");
+    closeForm();
+  });
+
 }
+
 </script>
 
 </body>
