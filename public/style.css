@@ -200,7 +200,7 @@ header {
   background: linear-gradient(135deg, #8e24aa, #6a1b9a);
 }
 
-.budget {
+.schedule {
   background: linear-gradient(135deg, #f9a825, #f57f17);
   color: #111;
 }
@@ -209,13 +209,10 @@ header {
   background: linear-gradient(135deg, #fb8c00, #ef6c00);
 }
 
-.suggestions {
+.suggestion {
   background: linear-gradient(135deg, #c1005d, #880e4f);
 }
 
-.schedule {
-  background: linear-gradient(135deg, #6d4c41, #4e342e);
-}
 ========================= */
 .section {
   display: none;
