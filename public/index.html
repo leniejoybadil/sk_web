@@ -7,176 +7,144 @@
     <title>SK Dalagdag | Dashboard</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; margin: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; margin: 0; overflow-x: hidden; }
         
-        /* Material Stats Card Wrapper */
+        /* Sidebar Logic */
+        .sidebar { 
+            width: 260px; height: 100vh; position: fixed; 
+            background: #1b5e20; color: white; padding: 20px; 
+            z-index: 100; transition: 0.3s; 
+        }
+        .main-content { margin-left: 260px; transition: 0.3s; }
+
+        /* Material Stats Card */
         .stats-card {
-            background: white;
-            border-radius: 8px;
-            position: relative;
-            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            background: white; border-radius: 8px;
+            position: relative; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease; margin-top: 20px;
         }
-        .stats-card:hover { transform: translateY(-5px); }
 
-        /* Floating Icon Box from Screenshot */
+        /* Floating Icon Box */
         .card-icon {
-            position: absolute;
-            top: -20px;
-            left: 15px;
-            width: 70px;
-            height: 70px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            box-shadow: 0 4px 20px 0 rgba(0,0,0,0.14), 0 7px 10px -5px rgba(0,0,0,0.2);
+            position: absolute; top: -15px; left: 15px;
+            width: 60px; height: 60px; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-
-        .sidebar { width: 260px; height: 100vh; position: fixed; background: #1b5e20; color: white; padding: 20px; z-index: 100; transition: 0.3s; }
-        .main-content { margin-left: 260px; padding: 0; transition: 0.3s; }
 
         @media(max-width:768px) {
-            .sidebar { transform: translateX(-100%); width: 0; padding: 0; }
+            .sidebar { transform: translateX(-260px); }
+            .sidebar.active { transform: translateX(0); }
             .main-content { margin-left: 0; }
+            .grid-container { grid-template-columns: 1fr !important; gap: 40px !important; }
+            .hero-img { max-height: 180px; }
         }
     </style>
-    <script>
-        if (!sessionStorage.getItem('role')) { window.location.href = "login.html"; }
-    </script>
 </head>
 <body class="flex">
 
-<aside class="sidebar shadow-2xl">
-    <div class="text-center py-4 border-b border-white/20 mb-6">
-        <h2 class="text-xl font-black tracking-tighter">SK DALAGDAG</h2>
-        <p class="text-[10px] opacity-60 uppercase tracking-widest">Youth Portal</p>
+<aside id="sidebar" class="sidebar shadow-2xl">
+    <div class="flex justify-between items-center mb-6 border-b border-white/20 pb-4">
+        <h2 class="text-xl font-black">SK DALAGDAG</h2>
+        <button onclick="toggleMenu()" class="md:hidden text-2xl">✕</button>
     </div>
-    <nav class="space-y-2">
-        <a href="index.html" class="flex items-center gap-4 p-3 bg-white/20 rounded-lg shadow-inner"><span>📊</span> Dashboard</a>
+    <nav class="space-y-1">
+        <a href="index.html" class="flex items-center gap-4 p-3 bg-white/20 rounded-lg"><span>📊</span> Dashboard</a>
         <a href="announcements.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📢</span> Announcements</a>
         <a href="committees.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>👥</span> Committees</a>
         <a href="schedules.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📅</span> Schedules</a>
-        <a href="events.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>🏆</span> Event Registration</a>
-        
-        <div class="pt-10">
-            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 p-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold shadow-lg transition">
-                🚪 Logout
-            </button>
-        </div>
+        <a href="events.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>🏆</span> Events</a>
+        <button onclick="logout()" class="w-full text-left flex items-center gap-4 p-3 mt-10 text-red-300 font-bold"><span>🚪</span> Logout</button>
     </nav>
 </aside>
 
 <main class="main-content flex-1">
     
-    <header class="sticky top-0 bg-white/80 backdrop-blur-md p-4 px-8 flex justify-between items-center z-50 border-b border-gray-200">
-        <div>
-            <h1 class="text-gray-500 text-sm font-medium">Dashboard / <span id="displayRole" class="text-green-700 font-bold uppercase">User</span></h1>
+    <header class="sticky top-0 bg-white/90 backdrop-blur-md p-4 px-6 flex justify-between items-center z-50 border-b border-gray-200">
+        <div class="flex items-center gap-4">
+            <button onclick="toggleMenu()" class="md:hidden text-2xl text-green-800">☰</button>
+            <h1 class="text-gray-500 text-xs md:text-sm font-medium uppercase">Dashboard / <span id="displayRole" class="text-green-700 font-bold">User</span></h1>
         </div>
-        <div id="adminBadge" class="hidden bg-yellow-400 text-yellow-900 text-[10px] font-black px-3 py-1 rounded-full shadow-sm">ADMIN ACCESS</div>
+        <div id="adminBadge" class="hidden bg-yellow-400 text-yellow-900 text-[10px] font-black px-2 py-1 rounded shadow-sm uppercase">Admin</div>
     </header>
 
-    <div class="p-8">
-        <div class="mb-12 rounded-2xl overflow-hidden shadow-xl">
-            <img src="cover.png" class="w-full h-auto object-cover max-h-[300px]" alt="Cover">
+    <div class="p-4 md:p-8">
+        <div class="mb-10 rounded-xl overflow-hidden shadow-lg bg-black">
+            <img src="cover.png" class="w-full h-auto hero-img object-cover opacity-90" alt="Cover">
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-10">
+        <div class="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             
             <div onclick="location.href='announcements.html'" class="stats-card p-6 text-right cursor-pointer">
                 <div class="card-icon bg-orange-500">📢</div>
-                <p class="text-gray-500 text-sm">Updates</p>
-                <h3 class="text-lg font-bold text-gray-800">Announcements</h3>
-                <div class="mt-4 pt-4 border-t border-gray-100 text-left text-[10px] text-gray-400">View latest news</div>
+                <p class="text-gray-500 text-xs uppercase">News</p>
+                <h3 class="text-lg font-bold">Announcements</h3>
             </div>
 
             <div onclick="location.href='committees.html'" class="stats-card p-6 text-right cursor-pointer">
                 <div class="card-icon bg-[#795548]">👥</div>
-                <p class="text-gray-500 text-sm">Organization</p>
-                <h3 class="text-lg font-bold text-gray-800">Committees</h3>
-                <div class="mt-4 pt-4 border-t border-gray-100 text-left text-[10px] text-gray-400">Officer list</div>
+                <p class="text-gray-500 text-xs uppercase">Council</p>
+                <h3 class="text-lg font-bold">Committees</h3>
             </div>
 
             <div onclick="location.href='kk.html'" class="stats-card p-6 text-right cursor-pointer">
                 <div class="card-icon bg-green-600">📋</div>
-                <p class="text-gray-500 text-sm">Youth Registry</p>
-                <h3 class="text-lg font-bold text-gray-800">KK Profiling</h3>
-                <div class="mt-4 pt-4 border-t border-gray-100 text-left text-[10px] text-gray-400">Register now</div>
+                <p class="text-gray-500 text-xs uppercase">Registry</p>
+                <h3 class="text-lg font-bold">KK Profiling</h3>
             </div>
 
             <div onclick="location.href='events.html'" class="stats-card p-6 text-right cursor-pointer">
                 <div class="card-icon bg-blue-600">🏆</div>
-                <p class="text-gray-500 text-sm">Programs</p>
-                <h3 class="text-lg font-bold text-gray-800">Events</h3>
-                <div class="mt-4 pt-4 border-t border-gray-100 text-left text-[10px] text-gray-400">Active registration</div>
+                <p class="text-gray-500 text-xs uppercase">Programs</p>
+                <h3 class="text-lg font-bold">Events</h3>
             </div>
 
             <div onclick="location.href='schedules.html'" class="stats-card p-6 text-right cursor-pointer">
                 <div class="card-icon bg-amber-700">📅</div>
-                <p class="text-gray-500 text-sm">Planning</p>
-                <h3 class="text-lg font-bold text-gray-800">Schedules</h3>
-                <div class="mt-4 pt-4 border-t border-gray-100 text-left text-[10px] text-gray-400">Official Calendar</div>
-            </div>
-
-            <div onclick="location.href='projects.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-purple-600">🚀</div>
-                <p class="text-gray-500 text-sm">Initiatives</p>
-                <h3 class="text-lg font-bold text-gray-800">Projects</h3>
-                <div class="mt-4 pt-4 border-t border-gray-100 text-left text-[10px] text-gray-400">SK Programs</div>
+                <p class="text-gray-500 text-xs uppercase">Planner</p>
+                <h3 class="text-lg font-bold">Schedules</h3>
             </div>
 
             <div onclick="location.href='suggestions.html'" class="stats-card p-6 text-right cursor-pointer">
                 <div class="card-icon bg-red-600">💡</div>
-                <p class="text-gray-500 text-sm">Feedback</p>
-                <h3 class="text-lg font-bold text-gray-800">Suggestions</h3>
-                <div class="mt-4 pt-4 border-t border-gray-100 text-left text-[10px] text-gray-400">Share your ideas</div>
+                <p class="text-gray-500 text-xs uppercase">Feedback</p>
+                <h3 class="text-lg font-bold">Community Wall</h3>
             </div>
+
         </div>
 
-        <footer class="bg-[#1b5e20] text-white pt-12 pb-6 px-10 mt-20 rounded-3xl shadow-2xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-sm">
+        <footer class="bg-[#1b5e20] text-white p-8 mt-16 rounded-2xl shadow-xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
                 <div>
-                    <h3 class="font-bold mb-4 uppercase tracking-widest text-green-300">Visit Us</h3>
-                    <ul class="space-y-1 opacity-80">
-                        <li class="font-bold text-white">Barangay Hall of Dalagdag</li>
-                        <li>SK Office, 2nd Floor</li>
-                        <li>Calinan District, Davao City</li>
-                    </ul>
+                    <h3 class="font-bold text-green-300 uppercase mb-2">Visit Us</h3>
+                    <p class="opacity-80">Barangay Hall of Dalagdag, SK Office</p>
+                    <p class="opacity-80">Calinan District, Davao City</p>
                 </div>
                 <div>
-                    <h3 class="font-bold mb-4 uppercase tracking-widest text-green-300">Contact</h3>
+                    <h3 class="font-bold text-green-300 uppercase mb-2">Connect</h3>
                     <p class="opacity-80">0931 159 4097</p>
-                    <a href="mailto:skdalagdag@gmail.com" class="underline hover:text-yellow-400">skdalagdag@gmail.com</a>
-                </div>
-                <div>
-                    <h3 class="font-bold mb-4 uppercase tracking-widest text-green-300">Quick Links</h3>
-                    <ul class="space-y-1 opacity-80">
-                        <li><a href="committees.html" class="hover:underline">SK Committees</a></li>
-                        <li><a href="kk.html" class="hover:underline">KK Registry</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-bold mb-4 uppercase tracking-widest text-green-300">Social</h3>
-                    <a href="#" class="hover:text-yellow-400 font-bold">Facebook</a>
+                    <p class="opacity-80">skdalagdag@gmail.com</p>
                 </div>
             </div>
-            <div class="mt-10 pt-6 border-t border-white/10 text-center text-[10px] opacity-40 uppercase tracking-widest">
-                © 2026 SANGGUNIANG KABATAAN OF BARANGAY DALAGDAG.
+            <div class="mt-8 pt-4 border-t border-white/10 text-center text-[10px] opacity-40 uppercase tracking-widest">
+                © 2026 SK BARANGAY DALAGDAG
             </div>
         </footer>
     </div>
 </main>
 
 <script>
+    function toggleMenu() {
+        document.getElementById('sidebar').classList.toggle('active');
+    }
+
     const role = sessionStorage.getItem('role');
     if(role) {
         document.getElementById('displayRole').innerText = role;
-        if (role === 'admin') {
-            document.getElementById('adminBadge').classList.remove('hidden');
-        }
+        if (role === 'admin') document.getElementById('adminBadge').classList.remove('hidden');
     }
+    
     function logout() { sessionStorage.clear(); window.location.href = "login.html"; }
 </script>
 </body>
