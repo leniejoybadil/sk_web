@@ -59,7 +59,7 @@
     <nav class="space-y-2">
         <a href="index.html" class="block p-3 bg-white/10 rounded">Dashboard</a>
         <a href="announcements.html" class="block p-3 hover:bg-white/10 rounded">Announcements</a>
-        <a href="schedule.html" class="block p-3 hover:bg-white/10 rounded">Schedules</a>
+        <a href="schedules.html" class="block p-3 hover:bg-white/10 rounded">Schedules</a>
         <a href="events.html" class="block p-3 hover:bg-white/10 rounded">Event Registration</a>
         <a href="#" onclick="logout()" class="block p-3 mt-10 bg-red-700 hover:bg-red-800 rounded text-center font-bold">Logout</a>
     </nav>
@@ -112,7 +112,73 @@
             <p class="text-sm text-gray-500">Share your ideas</p>
         </div>
     </div>
+
+    <footer class="bg-[#1b5e20] text-white pt-12 pb-6 px-10 mt-16 rounded-t-3xl shadow-2xl">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 text-sm">
+        
+        <div>
+            <h3 class="font-bold mb-4 uppercase tracking-widest text-green-300">Visit Us</h3>
+            <ul class="space-y-1 opacity-90">
+                <li class="font-bold">Barangay Hall of Dalagdag</li>
+                <li>SK Office, 2nd Floor</li>
+                <li>Barangay Dalagdag, Calinan District, Davao City</li>
+                <li>Davao del Sur, 8000</li>
+                <li>Philippines</li>
+            </ul>
+            
+            <h3 class="font-bold mt-10 mb-4 uppercase tracking-widest text-green-300">Contact Us</h3>
+            <ul class="space-y-1 opacity-90">
+                <li>Tel No.: 0931 159 4097</li>
+                <li>Email Address:</li>
+                <li><a href="mailto:skdalagdag@gmail.com" class="underline hover:text-yellow-400">skdalagdag@gmail.com</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="font-bold mb-4 uppercase tracking-widest text-green-300">About SK</h3>
+            <ul class="space-y-2 opacity-90">
+                <li><a href="#" class="hover:underline hover:text-yellow-400">SK Official Website</a></li>
+              
+            </ul>
+
+            
+        </div>
+
+        <div>
+            <h3 class="font-bold mb-4 uppercase tracking-widest text-green-300">Programs</h3>
+            <ul class="space-y-2 opacity-90">
+                <li><a href="kk.html" class="hover:underline hover:text-yellow-400">KK Profiling & Registration</a></li>
+                <li><a href="events.html" class="hover:underline hover:text-yellow-400">Sports & Socio-Cultural</a></li>
+                <li><a href="#" class="hover:underline hover:text-yellow-400">Educational Assistance</a></li>
+                <li><a href="#" class="hover:underline hover:text-yellow-400">Environmental Protection</a></li>
+                <li><a href="#" class="hover:underline hover:text-yellow-400">Livelihood Training</a></li>
+            </ul>
+
+            <h3 class="font-bold mt-10 mb-4 uppercase tracking-widest text-green-300">SK Governance</h3>
+            <ul class="space-y-2 opacity-90">
+              
+                <li><a href="#" class="hover:underline hover:text-yellow-400">Katipunan ng Kabataan</a></li>
+            </ul>
+        </div>
+
+        <div>
+      
+
+            <h3 class="font-bold mt-10 mb-4 uppercase tracking-widest text-green-300">Follow Us</h3>
+            <div class="flex gap-4 opacity-90">
+                <a href="#" class="hover:text-yellow-400">Facebook</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-12 pt-6 border-t border-white/10 text-center text-xs opacity-60">
+        © 2026 Sangguniang Kabataan of Barangay Dalagdag. 
+        <br class="md:hidden"> 
+        Powered by SK Dalagdag Official.
+    </div>
+</footer>
 </div>
+
 
 <script>
     const role = sessionStorage.getItem('role');
