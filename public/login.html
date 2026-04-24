@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SK Dalagdag Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>body { background: linear-gradient(135deg, #1b5e20, #2e7d32); }</style>
+</head>
+<body class="flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
+        <div class="text-center mb-6">
+            <img src="sklogo.png" alt="Logo" class="w-16 mx-auto mb-2">
+            <h2 class="text-2xl font-bold text-gray-800">SK Dalagdag Portal</h2>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+            <div id="adminFields" class="hidden space-y-4">
+                <input type="text" id="username" placeholder="Admin Username" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+                <input type="password" id="password" placeholder="Admin Password" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+                <button type="submit" class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-3 rounded-lg transition">Login as Admin</button>
+            </div>
+            
+            <button type="button" id="showAdmin" onclick="toggleAdmin()" class="w-full text-green-700 text-sm font-bold">Officer Login?</button>
+
+            <div class="relative flex py-2 items-center">
+                <div class="flex-grow border-t border-gray-300"></div>
+                <span class="flex-shrink mx-4 text-gray-400 text-sm">OR</span>
+                <div class="flex-grow border-t border-gray-300"></div>
+            </div>
+            
+            <button type="button" onclick="guestAccess()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition">Enter as Guest</button>
+            <p id="error" class="text-red-500 text-sm text-center hidden mt-2">Invalid Credentials!</p>
+        </form>
+    </div>
+
+    <script>
+        function toggleAdmin() {
+            document.getElementById('adminFields').classList.toggle('hidden');
+            document.getElementById('showAdmin').classList.toggle('hidden');
+        }
+
+        function guestAccess() {
+            sessionStorage.setItem('role', 'guest');
+            window.location.href = "index.html";
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if (user === "admin" && pass === "skdalagdag2026") {
+                sessionStorage.setItem('role', 'admin');
+                window.location.href = "index.html";
+            } else {
+                document.getElementById('error').classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
