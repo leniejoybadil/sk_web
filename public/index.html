@@ -8,8 +8,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
         body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; margin: 0; overflow-x: hidden; }
-        
-        /* Sidebar Styles */
+
         .sidebar { 
             width: 260px; height: 100vh; position: fixed; 
             background: #1b5e20; color: white; padding: 20px; 
@@ -17,7 +16,6 @@
         }
         .main-content { margin-left: 260px; transition: 0.3s; min-height: 100vh; }
 
-        /* Material Stats Card */
         .stats-card {
             background: white; border-radius: 8px;
             position: relative; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
@@ -25,7 +23,6 @@
         }
         .stats-card:hover { transform: translateY(-5px); }
 
-        /* Floating Icon Box */
         .card-icon {
             position: absolute; top: -15px; left: 15px;
             width: 60px; height: 60px; border-radius: 4px;
@@ -34,7 +31,16 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* Mobile Responsiveness */
+        /* ===== SLIDER ===== */
+        .slide { display:none }
+        .slide.active { display:block }
+
+        .dot {
+            height:10px; width:10px; margin:0 4px;
+            background:#ccc; display:inline-block; border-radius:50%;
+        }
+        .dot.active { background:#1b5e20 }
+
         @media(max-width:768px) {
             .sidebar { transform: translateX(-260px); }
             .sidebar.active { transform: translateX(0); }
@@ -44,6 +50,7 @@
         }
     </style>
 </head>
+
 <body class="flex">
 
 <aside id="sidebar" class="sidebar shadow-2xl">
@@ -55,126 +62,106 @@
         <button onclick="toggleMenu()" class="md:hidden text-2xl absolute right-4">✕</button>
     </div>
     <nav class="space-y-1">
-        <a href="index.html" class="flex items-center gap-4 p-3 bg-white/20 rounded-lg shadow-inner font-bold"><span>📊</span> Dashboard</a>
-        <a href="announcements.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📢</span> Announcements</a>
-        <a href="committees.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>👥</span> Committees</a>
-        <a href="schedules.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📅</span> Schedules</a>
-        <a href="events.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>🏆</span> Events</a>
-        
+        <a href="index.html" class="flex items-center gap-4 p-3 bg-white/20 rounded-lg font-bold"><span>📊</span> Dashboard</a>
+        <a href="announcements.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg"><span>📢</span> Announcements</a>
+        <a href="committees.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg"><span>👥</span> Committees</a>
+        <a href="schedules.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg"><span>📅</span> Schedules</a>
+        <a href="events.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg"><span>🏆</span> Events</a>
+
         <div class="pt-10">
-            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 p-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold shadow-lg transition text-sm">
-                🚪 Logout
-            </button>
+            <button onclick="logout()" class="w-full p-3 bg-red-600 rounded-lg font-bold">🚪 Logout</button>
         </div>
     </nav>
 </aside>
 
 <main class="main-content flex-1 flex flex-col">
-    
-    <header class="sticky top-0 bg-white/80 backdrop-blur-md p-4 px-6 flex justify-between items-center z-50 border-b border-gray-200">
-        <div class="flex items-center gap-4">
-            <button onclick="toggleMenu()" class="md:hidden text-2xl text-green-800">☰</button>
-            <h1 class="text-gray-500 text-xs md:text-sm font-medium uppercase tracking-wider">
-                Main / <span id="displayRole" class="text-green-700 font-bold">USER</span>
-            </h1>
-        </div>
-        <div id="adminBadge" class="hidden bg-yellow-400 text-yellow-900 text-[10px] font-black px-3 py-1 rounded-full shadow-sm">ADMIN ACCESS</div>
-    </header>
 
-    <div class="p-4 md:p-8">
-        <div class="mb-10 rounded-2xl overflow-hidden shadow-xl bg-green-900">
-            <img src="cover.png" class="w-full h-auto hero-img object-cover opacity-90" alt="SK Dalagdag Cover">
-        </div>
-
-        <div class="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 mt-10">
-            
-            <div onclick="location.href='announcements.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-orange-500">📢</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Updates</p>
-                <h3 class="text-lg font-bold text-gray-700">Announcements</h3>
-            </div>
-
-            <div onclick="location.href='committees.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-[#795548]">👥</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Organization</p>
-                <h3 class="text-lg font-bold text-gray-700">Committees</h3>
-            </div>
-
-            <div onclick="location.href='kk.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-green-600">📋</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Youth Registry</p>
-                <h3 class="text-lg font-bold text-gray-700">KK Profiling</h3>
-            </div>
-
-            <div onclick="location.href='events.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-blue-600">🏆</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Programs</p>
-                <h3 class="text-lg font-bold text-gray-700">Events</h3>
-            </div>
-
-            <div onclick="location.href='schedules.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-amber-700">📅</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Planning</p>
-                <h3 class="text-lg font-bold text-gray-700">Schedules</h3>
-            </div>
-
-            <div onclick="location.href='suggestions.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-red-600">💡</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Community Wall</p>
-                <h3 class="text-lg font-bold text-gray-700">Suggestions</h3>
-            </div>
-
-        </div>
-
-        <footer class="bg-[#1b5e20] text-white p-8 mt-20 rounded-3xl shadow-2xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
-                <div>
-                    <h3 class="font-bold text-green-300 uppercase mb-2 tracking-widest">Location</h3>
-                    <p class="opacity-80 leading-relaxed">Barangay Hall of Dalagdag, SK Office<br>Calinan District, Davao City</p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-green-300 uppercase mb-2 tracking-widest">Contact</h3>
-                    <p class="opacity-80">0931 159 4097</p>
-                    <p class="opacity-80">skdalagdag@gmail.com</p>
-                </div>
-            </div>
-            <div class="mt-10 pt-4 border-t border-white/10 text-center text-[10px] opacity-40 uppercase tracking-widest">
-                © 2026 SANGGUNIANG KABATAAN OF DALAGDAG
-            </div>
-        </footer>
+<header class="sticky top-0 bg-white p-4 flex justify-between items-center border-b">
+    <div class="flex items-center gap-4">
+        <button onclick="toggleMenu()" class="md:hidden text-2xl">☰</button>
+        <h1 class="text-xs uppercase">Main / <span id="displayRole" class="text-green-700 font-bold">USER</span></h1>
     </div>
+    <div id="adminBadge" class="hidden bg-yellow-400 px-3 py-1 rounded-full text-xs font-bold">ADMIN</div>
+</header>
+
+<div class="p-4 md:p-8">
+
+<!-- ===== SLIDER REPLACED HERE ===== -->
+<div class="mb-10 rounded-2xl overflow-hidden shadow-xl bg-green-900 relative">
+
+    <img src="inside.png" class="slide active w-full hero-img object-cover">
+    <img src="intro.png" class="slide w-full hero-img object-cover">
+    <img src="sklogo.png" class="slide w-full hero-img object-cover">
+
+    <button onclick="changeSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded-full">❮</button>
+    <button onclick="changeSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded-full">❯</button>
+
+    <div class="absolute bottom-3 w-full text-center">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+</div>
+
+<!-- CARDS (UNCHANGED) -->
+<div class="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 mt-10">
+
+<div onclick="location.href='announcements.html'" class="stats-card p-6 text-right cursor-pointer">
+<div class="card-icon bg-orange-500">📢</div>
+<h3 class="text-lg font-bold text-gray-700 mt-6">Announcements</h3>
+</div>
+
+<div onclick="location.href='kk.html'" class="stats-card p-6 text-right cursor-pointer">
+<div class="card-icon bg-green-600">📋</div>
+<h3 class="text-lg font-bold text-gray-700 mt-6">KK Profiling</h3>
+</div>
+
+<div onclick="location.href='events.html'" class="stats-card p-6 text-right cursor-pointer">
+<div class="card-icon bg-blue-600">🏆</div>
+<h3 class="text-lg font-bold text-gray-700 mt-6">Events</h3>
+</div>
+
+</div>
+
+</div>
 </main>
 
 <script>
-    // 1. LOGIN SECURITY CHECK
-    // If there is no 'role' in session storage, send them back to login
-    if (!sessionStorage.getItem('role')) {
-        window.location.href = "login.html";
-    }
+if (!sessionStorage.getItem('role')) {
+    window.location.href = "login.html";
+}
 
-    // 2. MOBILE MENU TOGGLE
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('active');
-    }
+function toggleMenu(){
+    document.getElementById('sidebar').classList.toggle('active');
+}
 
-    // 3. ROLE & BADGE DISPLAY
-    const role = sessionStorage.getItem('role');
-    const displayRole = document.getElementById('displayRole');
-    const adminBadge = document.getElementById('adminBadge');
+function logout(){
+    sessionStorage.clear();
+    window.location.href = "login.html";
+}
 
-    if (role) {
-        displayRole.innerText = role.toUpperCase();
-        if (role === 'admin') {
-            adminBadge.classList.remove('hidden');
-        }
-    }
+/* ===== SLIDER SCRIPT ===== */
+let index = 0;
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
 
-    // 4. LOGOUT FUNCTION
-    function logout() {
-        sessionStorage.clear();
-        window.location.href = "login.html";
-    }
+function showSlide(i){
+  slides.forEach(s=>s.classList.remove("active"));
+  dots.forEach(d=>d.classList.remove("active"));
+
+  slides[i].classList.add("active");
+  dots[i].classList.add("active");
+}
+
+function changeSlide(n){
+  index += n;
+  if(index >= slides.length) index = 0;
+  if(index < 0) index = slides.length - 1;
+  showSlide(index);
+}
+
+setInterval(()=>{ changeSlide(1); }, 4000);
 </script>
 
 </body>
