@@ -1,199 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Event Registration</title>
 </head>
-
 <body class="bg-gray-100 p-3">
 
-<h2 class="font-bold text-lg mb-3">Event Registration</h2>
+<div class="max-w-md mx-auto">
+    <h2 class="font-bold text-2xl mb-4 text-green-800 text-center">Event Registration</h2>
 
-<!-- ================= EVENT BUTTONS ================= -->
-<div class="grid gap-2">
-
-<button onclick="openForm('KK Assembly 2026')" class="bg-green-700 text-white p-2 rounded">
-KK Assembly 2026
-</button>
-
-<button onclick="openForm('Linggo ng Kabataan 2026')" class="bg-green-700 text-white p-2 rounded">
-Linggo ng Kabataan 2026
-</button>
-
-<button onclick="openForm('Basketball Mosquito Division')" class="bg-green-700 text-white p-2 rounded">
-23rd Araw ng Barangay Dalagdag Basketball League Mosquito Division
-</button>
-
-<button onclick="openForm('Interpurok Basketball')" class="bg-green-700 text-white p-2 rounded">
-23rd Araw ng Barangay Dalagdag Interpurok Basketball League
-</button>
-
-<!-- 🏐 VOLLEYBALL ADDED -->
-<button onclick="openForm('Volleyball Tournament')" class="bg-green-700 text-white p-2 rounded">
-23rd Araw ng Barangay Dalagdag Volleyball Tournament
-</button>
-
-<button onclick="openForm('Sepak Takraw')" class="bg-green-700 text-white p-2 rounded">
-23rd Araw ng Barangay Dalagdag Sepak Takraw Tournament
-</button>
-
-<button onclick="openForm('Gardening Activity')" class="bg-green-700 text-white p-2 rounded">
-Binhi ng Pag-asa: Gardening Activity
-</button>
-
+    <div class="grid gap-2">
+        <button onclick="openForm('KK Assembly 2026')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">KK Assembly 2026</button>
+        <button onclick="openForm('Linggo ng Kabataan 2026')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">Linggo ng Kabataan 2026</button>
+        <button onclick="openForm('Basketball Mosquito Division')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">23rd Araw ng Barangay Dalagdag Basketball League Mosquito Division</button>
+        <button onclick="openForm('Interpurok Basketball')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">23rd Araw ng Barangay Dalagdag Interpurok Basketball League</button>
+        <button onclick="openForm('Volleyball Tournament')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">23rd Araw ng Barangay Dalagdag Volleyball Tournament</button>
+        <button onclick="openForm('Sepak Takraw')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">23rd Araw ng Barangay Dalagdag Sepak Takraw Tournament</button>
+        <button onclick="openForm('Gardening Activity')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">Binhi ng Pag-asa: Gardening Activity</button>
+        
+        <button onclick="location.href='index.html'" class="mt-4 text-gray-600 text-center text-sm underline">Back to Dashboard</button>
+    </div>
 </div>
 
-<!-- ================= MODAL ================= -->
-<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center p-4 z-50">
+    <div class="bg-white p-6 rounded-xl w-full max-w-md shadow-2xl">
+        <h3 id="eventTitle" class="font-bold text-xl text-green-900 mb-4 border-b pb-2"></h3>
 
-<div class="bg-white p-4 rounded w-full max-w-md">
+        <div class="space-y-3">
+            <input id="name" placeholder="Full Name" class="border p-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-green-500">
+            <input id="age" type="number" placeholder="Age" class="border p-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-green-500">
 
-<h3 id="eventTitle" class="font-bold mb-2"></h3>
+            <select id="purok" class="border p-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-green-500 bg-white">
+                <option value="" disabled selected>Select Purok</option>
+                <option>Purok 1</option><option>Purok 2</option><option>Purok 3</option><option>Purok 4</option>
+                <option>Purok 5</option><option>Purok 6</option><option>Purok 7</option><option>Purok 8</option><option>Purok 9</option>
+            </select>
 
-<!-- NAME -->
-<input id="name" placeholder="Full Name" class="border p-2 w-full mb-2">
+            <select id="team" class="border p-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-green-500 bg-white hidden">
+                <option value="" disabled selected>Select Team</option>
+                <option>Team 1</option><option>Team 2</option><option>Team 3</option><option>Team 4</option>
+            </select>
 
-<!-- AGE -->
-<input id="age" type="number" placeholder="Age" class="border p-2 w-full mb-2">
+            <div id="idSection" class="hidden">
+                <p class="text-red-600 font-bold text-xs mb-1">⚠ VALID ID REQUIRED (PHOTO)</p>
+                <input type="file" id="validid" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+            </div>
+        </div>
 
-<!-- PUROK (INTERPUROK USES THIS AS TEAM) -->
-<select id="purok" class="border p-2 w-full mb-2">
-  <option>Purok 1</option>
-  <option>Purok 2</option>
-  <option>Purok 3</option>
-  <option>Purok 4</option>
-  <option>Purok 5</option>
-  <option>Purok 6</option>
-  <option>Purok 7</option>
-  <option>Purok 8</option>
-  <option>Purok 9</option>
-</select>
-
-<!-- TEAM (FOR SPORTS ONLY) -->
-<select id="team" class="border p-2 w-full mb-2 hidden">
-  <option>Team 1</option>
-  <option>Team 2</option>
-  <option>Team 3</option>
-  <option>Team 4</option>
-</select>
-
-<!-- WARNING -->
-<p id="idWarning" class="text-red-600 font-bold hidden mb-2">
-⚠ VALID ID REQUIRED FOR THIS EVENT
-</p>
-
-<!-- VALID ID -->
-<input type="file" id="validid" class="mb-2 hidden">
-
-<!-- BUTTONS -->
-<button onclick="submitForm()" class="bg-blue-700 text-white w-full p-2 rounded">
-Submit
-</button>
-
-<button onclick="closeForm()" class="mt-2 w-full bg-gray-400 p-2 rounded">
-Cancel
-</button>
-
-</div>
+        <div class="flex gap-2 mt-6">
+            <button id="submitBtn" onclick="submitForm()" class="bg-blue-700 hover:bg-blue-800 text-white flex-1 p-3 rounded-lg font-bold transition">Submit</button>
+            <button onclick="closeForm()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 flex-1 p-3 rounded-lg font-bold transition">Cancel</button>
+        </div>
+    </div>
 </div>
 
 <script>
-
 let selectedEvent = "";
-
-// OPEN FORM
+const scriptURL = "https://script.google.com/macros/s/AKfycbw2kHLlwqKl64ulVglFyY_GvEMVQ4qs5lJm35HK-pizeFQlrUcPy4mX6JDAVOmye9k/exec";
 function openForm(eventName){
+    selectedEvent = eventName;
+    document.getElementById("eventTitle").innerText = eventName;
+    document.getElementById("modal").classList.remove("hidden");
 
-  selectedEvent = eventName;
-  document.getElementById("eventTitle").innerText = eventName;
-  document.getElementById("modal").classList.remove("hidden");
+    // Hide conditional sections by default
+    document.getElementById("team").classList.add("hidden");
+    document.getElementById("idSection").classList.add("hidden");
 
-  // RESET
-  document.getElementById("team").classList.add("hidden");
-  document.getElementById("validid").classList.add("hidden");
-  document.getElementById("idWarning").classList.add("hidden");
-
-  let needID = false;
-
-  // 🏀 BASKETBALL
-  if(eventName.includes("Basketball")){
-    document.getElementById("team").classList.remove("hidden");
-    document.getElementById("validid").classList.remove("hidden");
-    needID = true;
-  }
-
-  // 🏀 INTERPUROK (NO TEAM, PUROK = TEAM)
-  if(eventName.includes("Interpurok")){
-    document.getElementById("validid").classList.remove("hidden");
-    needID = true;
-  }
-
-  // 🏐 VOLLEYBALL (TEAM EVENT)
-  if(eventName.includes("Volleyball")){
-    document.getElementById("team").classList.remove("hidden");
-    document.getElementById("validid").classList.remove("hidden");
-  }
-
-  // MOSQUITO DIVISION
-  if(eventName.includes("Mosquito")){
-    document.getElementById("validid").classList.remove("hidden");
-    needID = true;
-  }
-
-  // SHOW WARNING
-  if(needID){
-    document.getElementById("idWarning").classList.remove("hidden");
-  }
+    // Show Team for Sports
+    if(eventName.includes("Basketball") || eventName.includes("Volleyball") || eventName.includes("Sepak Takraw")){
+        if(!eventName.includes("Interpurok")) document.getElementById("team").classList.remove("hidden");
+        document.getElementById("idSection").classList.remove("hidden");
+    }
 }
 
-// CLOSE
 function closeForm(){
-  document.getElementById("modal").classList.add("hidden");
+    document.getElementById("modal").classList.add("hidden");
 }
 
-// SUBMIT
 function submitForm(){
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const purok = document.getElementById("purok").value;
+    const team = document.getElementById("team").value || "N/A";
+    const fileInput = document.getElementById("validid");
+    const file = fileInput.files[0];
+    const btn = document.getElementById("submitBtn");
 
-  let file = document.getElementById("validid").files[0];
+    if(!name || !age || !purok){
+        alert("Please complete all required fields");
+        return;
+    }
 
-  if(!name.value || !age.value || !purok.value){
-    alert("Complete all required fields");
-    return;
-  }
+    if(!document.getElementById("idSection").classList.contains("hidden") && !file){
+        alert("Valid ID image is required for this event");
+        return;
+    }
 
-  // VALID ID CHECK
-  if(!document.getElementById("validid").classList.contains("hidden") && !file){
-    alert("Valid ID is required");
-    return;
-  }
+    btn.innerText = "Processing...";
+    btn.disabled = true;
 
-  let formData = new FormData();
-  formData.append("event", selectedEvent);
-  formData.append("name", name.value);
-  formData.append("age", age.value);
+    if(file){
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64 = e.target.result.split(",")[1];
+            sendData(base64, file.name, file.type);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        sendData("", "", "");
+    }
 
-  // INTERPUROK uses PUROK as TEAM
-  formData.append("purok", purok.value);
+    function sendData(base64, filename, mimeType) {
+        const formData = new URLSearchParams();
+        formData.append("event", selectedEvent);
+        formData.append("name", name);
+        formData.append("age", age);
+        formData.append("purok", purok);
+        formData.append("team", team);
+        formData.append("validid", base64);
+        formData.append("filename", filename);
+        formData.append("mimeType", mimeType);
 
-  // ONLY SPORTS USE TEAM
-  formData.append("team", team.value);
-
-  if(file){
-    formData.append("validid", file);
-  }
-
-  fetch("https://script.google.com/macros/s/AKfycbzeyql6hVgTJiio8NLBsa2gzbGSB_WzFLXQNJ1i_sX3_4JR3P1a9HcJVx2T6rxJ-VQi/exec", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.text())
-  .then(() => {
-    alert("Successfully Registered!");
-    closeForm();
-  });
-
+        fetch(scriptURL, { method: "POST", mode: "no-cors", body: formData })
+        .then(() => {
+            alert("Successfully Registered for " + selectedEvent + "!");
+            location.reload();
+        })
+        .catch(err => {
+            alert("Error submitting. Please check your connection.");
+            btn.innerText = "Submit";
+            btn.disabled = false;
+        });
+    }
 }
-
 </script>
 
 </body>
