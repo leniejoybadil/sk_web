@@ -1,68 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>SK Dalagdag | Committees</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; margin: 0; }
+        
+        .sidebar { width: 260px; height: 100vh; position: fixed; background: #1b5e20; color: white; padding: 20px; z-index: 100; }
+        .main-content { margin-left: 260px; padding: 0; }
 
-<style>
-body { font-family: Arial; background:#f3f4f6; }
+        /* Material Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-top: 40px; /* Space for the floating image */
+        }
+        .profile-card:hover { transform: translateY(-5px); }
 
-.card {
-  background:white;
-  padding:12px;
-  border-radius:10px;
-  margin:10px;
-}
-</style>
+        /* Floating Profile Image Box */
+        .profile-img-box {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #eee;
+            box-shadow: 0 4px 20px 0 rgba(0,0,0,0.2);
+            border: 3px solid white;
+        }
+        .profile-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        @media(max-width:768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+        }
+    </style>
 </head>
+<body class="flex">
 
-<body>
+<aside class="sidebar shadow-2xl">
+    <div class="text-center py-4 border-b border-white/20 mb-6">
+        <h2 class="text-xl font-black tracking-tighter">SK DALAGDAG</h2>
+        <p class="text-[10px] opacity-60 uppercase tracking-widest">Youth Portal</p>
+    </div>
+    <nav class="space-y-2">
+        <a href="index.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📊</span> Dashboard</a>
+        <a href="announcements.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📢</span> Announcements</a>
+        <a href="committees.html" class="flex items-center gap-4 p-3 bg-white/20 rounded-lg shadow-inner"><span>👥</span> Committees</a>
+        <a href="schedules.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📅</span> Schedules</a>
+        <a href="events.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>🏆</span> Event Registration</a>
+    </nav>
+</aside>
 
-<div class="p-2 font-bold text-lg">SK COMMITTEES</div>
+<main class="main-content flex-1">
+    <header class="sticky top-0 bg-white/80 backdrop-blur-md p-4 px-8 flex justify-between items-center z-50 border-b border-gray-200">
+        <h1 class="text-gray-500 text-sm font-medium">Dashboard / <span class="text-green-700 font-bold uppercase">SK Committees</span></h1>
+    </header>
 
-<div class="card">
-AQUILINO ORTIZ III - SK Chairman
-</div>
+    <div class="p-8">
+        
+        <h2 class="text-2xl font-bold text-gray-700 mb-10 border-l-4 border-green-600 pl-4">Council Leadership</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            
+            <div class="profile-card p-6 pt-16 text-center">
+                <div class="profile-img-box"><img src="ortiz.png" alt="Ortiz"></div>
+                <h3 class="text-lg font-bold text-gray-800">AQUILINO ORTIZ III</h3>
+                <p class="text-green-700 font-bold text-xs uppercase tracking-widest">SK Chairman</p>
+            </div>
 
-<div class="card">
-LENIE JOY BADIL -Equitable Access to Quality Education Committee Head
-</div>
+            <div class="profile-card p-6 pt-16 text-center">
+                <div class="profile-img-box"><img src="cases.png" alt="Cases"></div>
+                <h3 class="text-lg font-bold text-gray-800">GERAMIE CASES</h3>
+                <p class="text-green-700 font-bold text-xs uppercase tracking-widest">SK Secretary</p>
+            </div>
 
-<div class="card">
-CHRISTOFIL MANAY - Sports Development Committee Head
-</div>
+            <div class="profile-card p-6 pt-16 text-center">
+                <div class="profile-img-box"><img src="treasurer.png" alt="Treasurer"></div>
+                <h3 class="text-lg font-bold text-gray-800">---</h3>
+                <p class="text-green-700 font-bold text-xs uppercase tracking-widest">SK Treasurer</p>
+            </div>
+        </div>
 
-<div class="card">
-KIENDREX BANAC - Agricultural Program Committtee Head
-</div>
+        <h2 class="text-2xl font-bold text-gray-700 mb-10 border-l-4 border-orange-500 pl-4">Committee Heads</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 mb-20">
+            
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="badil.png" alt="Badil"></div>
+                <h4 class="font-bold text-gray-800 text-sm">LENIE JOY BADIL</h4>
+                <p class="text-[10px] text-gray-500 leading-tight mt-1">Equitable Access to Quality Education Program</p>
+            </div>
 
-<div class="card">
-IRISH HUYONG - Environmental Protection Program Committtee Head
-</div>
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="manay.png" alt="Manay"></div>
+                <h4 class="font-bold text-gray-800 text-sm">CHRISTOFIL MANAY</h4>
+                <p class="text-[10px] text-gray-500 leading-tight mt-1">Sports Development Program</p>
+            </div>
 
-<div class="card">
-VEA ORA - Health & Anti-Drug Abuse Program Committeee Head
-</div>
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="banac.png" alt="Banac"></div>
+                <h4 class="font-bold text-gray-800 text-sm">KIENDREX BANAC</h4>
+                <p class="text-[10px] text-gray-500 leading-tight mt-1">Agricultural Program</p>
+            </div>
 
-<div class="card">
-CLARRISE ALMENDEZ - Youth Employment & Livelihood Program Committee Head
-</div>
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="huyong.png" alt="Huyong"></div>
+                <h4 class="font-bold text-gray-800 text-sm">IRISH HUYONG</h4>
+                <p class="text-[10px] text-gray-500 leading-tight mt-1">Environmental Protection Program</p>
+            </div>
 
-<div class="card">
-JAYSON VIVA - Disaster Risk Reduction & Management Committee Head
-</div>
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="ora.png" alt="Ora"></div>
+                <h4 class="font-bold text-gray-800 text-sm">VEA ORA</h4>
+                <p class="text-[10px] text-gray-500 leading-tight mt-1">Health and Anti-Drug Abuse Program</p>
+            </div>
 
-<div class="card">
-GERAMIE CASES - SK Secretary
-</div>
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="almendez.png" alt="Almendez"></div>
+                <h4 class="font-bold text-gray-800 text-sm">CLARRISE ALMENDEZ</h4>
+                <p class="text-[10px] text-gray-500 leading-tight mt-1">Youth Employment & Livelihood Program</p>
+            </div>
 
-<div class="card">
-SK Treasurer - (Vacant)
-</div>
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="viva.png" alt="Viva"></div>
+                <h4 class="font-bold text-gray-800 text-sm">JAYSON VIVA</h4>
+                <p class="text-[10px] text-gray-500 leading-tight mt-1">DRR and Resiliency Program</p>
+            </div>
+        </div>
 
-<div class="card">
-Youth Representatives: Sydney Clair Manombe, Marlo Tomanggong, Jefferson Almendez
-</div>
+        <h2 class="text-2xl font-bold text-gray-700 mb-10 border-l-4 border-blue-500 pl-4">Youth Sector Representatives</h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+            
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="sydney.png" alt="Sydney"></div>
+                <h4 class="font-bold text-gray-800 text-xs">SYDNEY CLAIR MANOMBE</h4>
+            </div>
+
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="marlo.png" alt="Marlo"></div>
+                <h4 class="font-bold text-gray-800 text-xs">MARLO TOMANGGONG</h4>
+            </div>
+
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="ipoy.png" alt="Jefferson"></div>
+                <h4 class="font-bold text-gray-800 text-xs">JEFFERSON ALMENDEZ</h4>
+            </div>
+
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="custan.png" alt="Jesseren"></div>
+                <h4 class="font-bold text-gray-800 text-xs">JESSEREN CUSTAN</h4>
+            </div>
+
+            <div class="profile-card p-4 pt-16 text-center">
+                <div class="profile-img-box"><img src="aj.png" alt="AJ"></div>
+                <h4 class="font-bold text-gray-800 text-xs">AJ ANDREY DACILLO</h4>
+            </div>
+        </div>
+
+    </div>
+</main>
 
 </body>
 </html>
