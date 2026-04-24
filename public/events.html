@@ -1,161 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>SK Event Registration</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f4f4f4;
-}
-
-.container {
-  padding: 20px;
-  text-align: center;
-}
-
-/* EVENT BUTTONS */
-button.event-btn {
-  display: block;
-  width: 90%;
-  margin: 10px auto;
-  padding: 15px;
-  font-size: 16px;
-  background: #1e3a8a;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-/* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-}
-
-.modal-content {
-  background: white;
-  width: 90%;
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-}
-
-.close {
-  float: right;
-  cursor: pointer;
-  font-size: 20px;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-100 p-3">
 
-<div class="container">
+<h2 class="font-bold text-lg mb-3">Event Registration</h2>
 
-<h2>SK Event Registration</h2>
+<!-- ================= EVENT BUTTONS ================= -->
+<div class="grid gap-2">
 
-<button class="event-btn" onclick="openForm('KK Assembly 2026')">KK Assembly 2026</button>
-<button class="event-btn" onclick="openForm('Linggo ng Kabataan 2026')">Linggo ng Kabataan 2026</button>
-<button class="event-btn" onclick="openForm('Basketball Mosquito Division')">Basketball Mosquito Division</button>
-<button class="event-btn" onclick="openForm('Interpurok Basketball')">Interpurok Basketball</button>
-<button class="event-btn" onclick="openForm('Sepak Takraw')">Sepak Takraw</button>
-<button class="event-btn" onclick="openForm('Volleyball Tournament')">Volleyball Tournament</button>
-<button class="event-btn" onclick="openForm('Gardening Activity')">Gardening Activity</button>
+<button onclick="openForm('KK Assembly 2026')" class="bg-green-700 text-white p-2 rounded">
+KK Assembly 2026
+</button>
+
+<button onclick="openForm('Linggo ng Kabataan 2026')" class="bg-green-700 text-white p-2 rounded">
+Linggo ng Kabataan 2026
+</button>
+
+<button onclick="openForm('Basketball Mosquito Division')" class="bg-green-700 text-white p-2 rounded">
+Basketball League Mosquito Division
+</button>
+
+<button onclick="openForm('Interpurok Basketball')" class="bg-green-700 text-white p-2 rounded">
+Interpurok Basketball League
+</button>
+
+<!-- 🏐 VOLLEYBALL ADDED -->
+<button onclick="openForm('Volleyball Tournament')" class="bg-green-700 text-white p-2 rounded">
+23rd Araw ng Barangay Dalagdag Volleyball Tournament
+</button>
+
+<button onclick="openForm('Sepak Takraw')" class="bg-green-700 text-white p-2 rounded">
+Sepak Takraw Tournament
+</button>
+
+<button onclick="openForm('Gardening Activity')" class="bg-green-700 text-white p-2 rounded">
+Binhi ng Pag-asa: Gardening Activity
+</button>
 
 </div>
 
-<!-- POPUP FORM -->
-<div id="modal" class="modal">
-  <div class="modal-content">
+<!-- ================= MODAL ================= -->
+<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
 
-    <span class="close" onclick="closeForm()">&times;</span>
-    <h3 id="eventTitle"></h3>
+<div class="bg-white p-4 rounded w-full max-w-md">
 
-    <input type="text" id="name" placeholder="Full Name">
-    <input type="number" id="age" placeholder="Age">
+<h3 id="eventTitle" class="font-bold mb-2"></h3>
 
-    <select id="purok">
-      <option>Purok 1</option>
-      <option>Purok 2</option>
-      <option>Purok 3</option>
-      <option>Purok 4</option>
-      <option>Purok 5</option>
-      <option>Purok 6</option>
-      <option>Purok 7</option>
-      <option>Purok 8</option>
-      <option>Purok 9</option>
-    </select>
+<!-- NAME -->
+<input id="name" placeholder="Full Name" class="border p-2 w-full mb-2">
 
-    <select id="team">
-      <option value="">No Team</option>
-      <option>Team 1</option>
-      <option>Team 2</option>
-      <option>Team 3</option>
-      <option>Team 4</option>
-    </select>
+<!-- AGE -->
+<input id="age" type="number" placeholder="Age" class="border p-2 w-full mb-2">
 
-    <button onclick="submitForm()">Submit</button>
+<!-- PUROK (INTERPUROK USES THIS AS TEAM) -->
+<select id="purok" class="border p-2 w-full mb-2">
+  <option>Purok 1</option>
+  <option>Purok 2</option>
+  <option>Purok 3</option>
+  <option>Purok 4</option>
+  <option>Purok 5</option>
+  <option>Purok 6</option>
+  <option>Purok 7</option>
+  <option>Purok 8</option>
+  <option>Purok 9</option>
+</select>
 
-  </div>
+<!-- TEAM (FOR SPORTS ONLY) -->
+<select id="team" class="border p-2 w-full mb-2 hidden">
+  <option>Team 1</option>
+  <option>Team 2</option>
+  <option>Team 3</option>
+  <option>Team 4</option>
+</select>
+
+<!-- WARNING -->
+<p id="idWarning" class="text-red-600 font-bold hidden mb-2">
+⚠ VALID ID REQUIRED FOR THIS EVENT
+</p>
+
+<!-- VALID ID -->
+<input type="file" id="validid" class="mb-2 hidden">
+
+<!-- BUTTONS -->
+<button onclick="submitForm()" class="bg-blue-700 text-white w-full p-2 rounded">
+Submit
+</button>
+
+<button onclick="closeForm()" class="mt-2 w-full bg-gray-400 p-2 rounded">
+Cancel
+</button>
+
+</div>
 </div>
 
 <script>
+
 let selectedEvent = "";
 
 // OPEN FORM
-function openForm(eventName) {
+function openForm(eventName){
+
   selectedEvent = eventName;
   document.getElementById("eventTitle").innerText = eventName;
-  document.getElementById("modal").style.display = "block";
+  document.getElementById("modal").classList.remove("hidden");
+
+  // RESET
+  document.getElementById("team").classList.add("hidden");
+  document.getElementById("validid").classList.add("hidden");
+  document.getElementById("idWarning").classList.add("hidden");
+
+  let needID = false;
+
+  // 🏀 BASKETBALL
+  if(eventName.includes("Basketball")){
+    document.getElementById("team").classList.remove("hidden");
+    document.getElementById("validid").classList.remove("hidden");
+    needID = true;
+  }
+
+  // 🏀 INTERPUROK (NO TEAM, PUROK = TEAM)
+  if(eventName.includes("Interpurok")){
+    document.getElementById("validid").classList.remove("hidden");
+    needID = true;
+  }
+
+  // 🏐 VOLLEYBALL (TEAM EVENT)
+  if(eventName.includes("Volleyball")){
+    document.getElementById("team").classList.remove("hidden");
+    document.getElementById("validid").classList.remove("hidden");
+  }
+
+  // MOSQUITO DIVISION
+  if(eventName.includes("Mosquito")){
+    document.getElementById("validid").classList.remove("hidden");
+    needID = true;
+  }
+
+  // SHOW WARNING
+  if(needID){
+    document.getElementById("idWarning").classList.remove("hidden");
+  }
 }
 
-// CLOSE FORM
-function closeForm() {
-  document.getElementById("modal").style.display = "none";
+// CLOSE
+function closeForm(){
+  document.getElementById("modal").classList.add("hidden");
 }
 
-// SUBMIT FORM TO GOOGLE APPS SCRIPT
-function submitForm() {
+// SUBMIT
+function submitForm(){
 
-  const data = {
-    event: selectedEvent,
-    name: document.getElementById("name").value,
-    age: document.getElementById("age").value,
-    purok: document.getElementById("purok").value,
-    team: document.getElementById("team").value
-  };
+  let file = document.getElementById("validid").files[0];
+
+  if(!name.value || !age.value || !purok.value){
+    alert("Complete all required fields");
+    return;
+  }
+
+  // VALID ID CHECK
+  if(!document.getElementById("validid").classList.contains("hidden") && !file){
+    alert("Valid ID is required");
+    return;
+  }
+
+  let formData = new FormData();
+  formData.append("event", selectedEvent);
+  formData.append("name", name.value);
+  formData.append("age", age.value);
+
+  // INTERPUROK uses PUROK as TEAM
+  formData.append("purok", purok.value);
+
+  // ONLY SPORTS USE TEAM
+  formData.append("team", team.value);
+
+  if(file){
+    formData.append("validid", file);
+  }
 
   fetch("https://script.google.com/macros/s/AKfycbzeyql6hVgTJiio8NLBsa2gzbGSB_WzFLXQNJ1i_sX3_4JR3P1a9HcJVx2T6rxJ-VQi/exec", {
     method: "POST",
-    body: JSON.stringify(data)
+    body: formData
   })
-  .then(res => res.json())
-  .then(res => {
+  .then(res => res.text())
+  .then(() => {
     alert("Successfully Registered!");
     closeForm();
-  })
-  .catch(err => {
-    alert("Error submitting form");
-    console.log(err);
   });
 
 }
+
 </script>
 
 </body>
