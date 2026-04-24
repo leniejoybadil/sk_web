@@ -165,8 +165,7 @@ function submitForm(){
     formData.append('gender', gender);
 
     // REPLACE THIS WITH YOUR DEPLOYED URL
-    const scriptURL = "https://script.google.com/a/macros/hcdc.edu.ph/s/AKfycbwuXEIc8oGW0RpfnhPxvlf416fZRo94KKfGGYSOTD0EhL_uIbpcUQ0eBU1XPBv9CGF7/exec"
-
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwuXEIc8oGW0RpfnhPxvlf416fZRo94KKfGGYSOTD0EhL_uIbpcUQ0eBU1XPBv9CGF7/exec";
     fetch(scriptURL, { method: "POST", mode: "no-cors", body: formData })
     .then(() => {
         alert("Success! Form sent to Google Sheets.");
