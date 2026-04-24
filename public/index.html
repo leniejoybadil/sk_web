@@ -1,125 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-
 <title>SK Dalagdag System</title>
 
 <style>
-body {
-  font-family: Arial;
-  background: #f4f6f8;
-}
-
-/* SIDEBAR */
-.sidebar {
-  width: 260px;
-  height: 100vh;
-  position: fixed;
-  background: linear-gradient(180deg, #1b5e20, #2e7d32);
-  color: white;
-  padding: 20px;
-}
-
-.sidebar h2 {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.sidebar a {
-  display: block;
-  padding: 10px;
-  margin: 6px 0;
-  border-radius: 8px;
-  text-decoration: none;
-  color: white;
-  transition: 0.2s;
-}
-
-.sidebar a:hover {
-  background: rgba(255,255,255,0.15);
-}
-
-/* MAIN */
-.main {
-  margin-left: 260px;
-  padding: 20px;
-}
-
-/* TOPBAR */
-.topbar {
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-/* HERO */
-.hero {
-  margin-top: 20px;
-  background: linear-gradient(135deg, #2e7d32, #1b5e20);
-  color: white;
-  padding: 20px;
-  border-radius: 18px;
-}
-
-/* GRID */
-.grid {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
-}
-
-/* CARD */
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: 0.2s;
-  border-left: 5px solid transparent;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-
-/* COLORS */
-.green { border-color: #2e7d32; }
-.yellow { border-color: #f9a825; }
-.blue { border-color: #1976d2; }
-.orange { border-color: #ef6c00; }
-.purple { border-color: #8e24aa; }
-.pink { border-color: #c2185b; }
-
-/* RESPONSIVE */
-@media(max-width:768px){
-  .sidebar{
-    position: relative;
-    width: 100%;
-    height: auto;
+  /* --- GLOBAL STYLES --- */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    margin: 0;
   }
 
-  .main{
-    margin-left: 0;
+  /* --- SIDEBAR --- */
+  .sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    background: linear-gradient(180deg, #1b5e20, #2e7d32);
+    color: white;
+    padding: 25px;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    z-index: 100;
   }
-}
+
+  .sidebar h2 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 15px;
+  }
+
+  .sidebar a {
+    display: block;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 10px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.8);
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+
+  .sidebar a:hover {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    transform: translateX(5px);
+  }
+
+  /* --- MAIN CONTENT --- */
+  .main {
+    margin-left: 260px;
+    padding: 30px;
+    min-height: 100vh;
+  }
+
+  /* --- TOPBAR --- */
+  .topbar {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+
+  /* --- HERO BANNER --- */
+  .hero {
+    margin-top: 25px;
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.2);
+  }
+
+  /* --- GRID SYSTEM --- */
+  .grid-container {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  /* --- MODERN CARDS --- */
+  .card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 6px solid #e5e7eb; /* Default light gray */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    color: #1f2937;
+    margin-bottom: 4px;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+
+  /* --- THE FIX: COLOR CLASSES --- */
+  /* These names now match your HTML perfectly */
+  .green  { border-left-color: #2e7d32; }
+  .yellow { border-left-color: #f9a825; }
+  .blue   { border-left-color: #1976d2; }
+  .orange { border-left-color: #ef6c00; }
+  .purple { border-left-color: #8e24aa; }
+  .pink   { border-left-color: #c2185b; }
+  .brown  { border-left-color: #795548; } /* Fixed Schedules */
+  .red    { border-left-color: #dc2626; } /* Fixed Suggestions */
+
+  /* --- RESPONSIVE --- */
+  @media(max-width:1024px){
+    .sidebar { width: 220px; }
+    .main { margin-left: 220px; }
+  }
+
+  @media(max-width:768px){
+    .sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding: 15px;
+    }
+    .main { margin-left: 0; padding: 15px; }
+    .hero { padding: 25px; }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
-  <h2> SK DALAGDAG</h2>
-
+  <h2>SK DALAGDAG</h2>
   <a href="index.html">Dashboard</a>
   <a href="committees.html">Committees</a>
   <a href="announcements.html">Announcements</a>
@@ -130,27 +162,22 @@ body {
   <a href="kk.html">KK Profiling</a>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
-  <!-- TOPBAR -->
   <div class="topbar">
     <div>
-      <h1 class="text-xl font-bold">Dashboard</h1>
-      <p class="text-gray-500">SK Management System</p>
+      <h1 class="text-2xl font-extrabold text-gray-800">Dashboard</h1>
+      <p class="text-gray-500 font-medium">SK Management System</p>
     </div>
-    <img src="sklogo.png" class="w-12">
+    <img src="sklogo.png" alt="Logo" class="w-14 h-14 object-contain">
   </div>
 
-  <!-- HERO -->
   <div class="hero">
-    <h2 class="text-2xl font-bold">Welcome SK DALAGDAG</h2>
-    <p>Updates, Events, and opportunities for the youth of Brgy. Dalagdag.</p>
+    <h2 class="text-3xl font-bold mb-2">Welcome, SK DALAGDAG!</h2>
+    <p class="opacity-90 text-lg">Your central hub for updates, events, and opportunities for the youth of Brgy. Dalagdag.</p>
   </div>
 
-  <!-- GRID CARDS -->
-  <div class="grid">
-
+  <div class="grid-container">
 
     <div onclick="location.href='announcements.html'" class="card orange">
       <h3 class="font-bold">Announcements</h3>
