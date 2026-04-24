@@ -1,182 +1,160 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-body{font-family:Arial;background:#f3f3f3}
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:white;
-padding:10px;
-}
-
-.header img{width:55px}
-
-.box{
-background:white;
-border:1px solid #000;
-padding:8px;
-margin-top:8px;
-}
-
-.label{font-size:10px;color:#555}
-
-.option{
-display:flex;
-align-items:center;
-gap:8px;
-margin:3px 0;
-}
-
-/* PDF/PRINT OPTIMIZATION */
-@media print{
-  button, .no-print {display:none !important}
-  body {background:white; padding:0; margin:0;}
-  .box {break-inside:avoid; border: 1px solid #333 !important;}
-  .p-3 {padding:0 !important;}
-  input {border:none !important; outline:none !important;}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>KK Profiling Form</title>
+    <style>
+        body { font-family: Arial; background: #f3f3f3; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 10px; }
+        .header img { width: 55px; }
+        .box { background: white; border: 1px solid #000; padding: 8px; margin-top: 8px; }
+        .label { font-size: 10px; color: #555; font-weight: bold; text-transform: uppercase; }
+        .option { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 14px; }
+        
+        @media print {
+            button, .no-print { display: none !important; }
+            body { background: white; }
+            .box { break-inside: avoid; }
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="header">
-<img src="davao.png">
-
-<div class="text-center font-bold text-sm">
-REPUBLIC OF THE PHILIPPINES<br>
-BARANGAY DALAGDAG<br>
-KATIPUNAN NG KABATAAN PROFILING FORM
+    <img src="davao.png" alt="Davao Logo">
+    <div class="text-center font-bold text-sm">
+        REPUBLIC OF THE PHILIPPINES<br>
+        BARANGAY DALAGDAG<br>
+        KATIPUNAN NG KABATAAN PROFILING FORM
+    </div>
+    <img src="sklogo.png" alt="SK Logo">
 </div>
 
-<img src="sklogo.png">
-</div>
+<form id="kkForm" class="p-3">
+    <div class="box">
+        <div class="label">FULL NAME</div>
+        <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b border-gray-200 focus:border-green-500" required>
 
-<div class="p-3">
+        <div class="label mt-2">CONTACT NUMBER</div>
+        <input type="text" name="contact" id="contact" class="w-full outline-none border-b border-gray-200 focus:border-green-500" required>
 
-<div class="box">
-<div class="label">FULL NAME</div>
-<input id="fullname" class="w-full outline-none" placeholder="Enter Full Name">
+        <div class="label mt-2">EMAIL</div>
+        <input type="email" name="email" id="email" class="w-full outline-none border-b border-gray-200 focus:border-green-500">
 
-<div class="label mt-2">CONTACT NUMBER</div>
-<input id="contact" class="w-full outline-none" placeholder="09123456789">
+        <div class="label mt-2">ADDRESS</div>
+        <input type="text" name="address" id="address" class="w-full outline-none border-b border-gray-200 focus:border-green-500" required>
+    </div>
 
-<div class="label mt-2">EMAIL</div>
-<input id="email" class="w-full outline-none" placeholder="email@example.com">
+    <div class="box">
+        <div class="label">BIRTHDATE</div>
+        <input type="date" name="birthdate" id="birthdate" class="w-full" onchange="calcAge()" required>
+        <div class="label mt-2">AGE</div>
+        <input type="text" name="age" id="age" class="w-full outline-none" readonly>
+    </div>
 
-<div class="label mt-2">ADDRESS</div>
-<input id="address" class="w-full outline-none" placeholder="Purok / Street">
-</div>
+    <div class="box">
+        <div class="label">GENDER</div>
+        <label class="option"><input type="radio" name="gender" value="Male"> Male</label>
+        <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
+    </div>
 
-<div class="box">
-<div class="label">BIRTHDATE</div>
-<input type="date" id="birthdate" class="w-full" onchange="calcAge()">
+    <div class="box">
+        <div class="label">CIVIL STATUS</div>
+        <label class="option"><input type="radio" name="civil_status" value="Single"> Single</label>
+        <label class="option"><input type="radio" name="civil_status" value="Married"> Married</label>
+        <label class="option"><input type="radio" name="civil_status" value="Widowed"> Widowed</label>
+        <label class="option"><input type="radio" name="civil_status" value="Separated"> Separated</label>
+    </div>
 
-<div class="label mt-2">AGE</div>
-<input id="age" class="w-full outline-none" readonly>
-</div>
+    <div class="box">
+        <div class="label">YOUTH TYPE</div>
+        <label class="option"><input type="radio" name="youth_type" value="In-School"> In-School Youth</label>
+        <label class="option"><input type="radio" name="youth_type" value="Out-of-School"> Out-of-School Youth</label>
+        <label class="option"><input type="radio" name="youth_type" value="Working"> Working Youth</label>
+        <label class="option"><input type="radio" name="youth_type" value="PWD"> PWD</label>
+    </div>
 
-<div class="box">
-<div class="label">GENDER</div>
-<label class="option"><input type="radio" name="gender" value="Male"> Male</label>
-<label class="option"><input type="radio" name="gender" value="Female"> Female</label>
-</div>
+    <div class="box">
+        <div class="label">EDUCATIONAL ATTAINMENT</div>
+        <select name="education" class="w-full outline-none bg-transparent py-1">
+            <option value="Elementary Level">Elementary Level</option>
+            <option value="Elementary Graduate">Elementary Graduate</option>
+            <option value="High School Level">High School Level</option>
+            <option value="High School Graduate">High School Graduate</option>
+            <option value="College Level">College Level</option>
+            <option value="College Graduate">College Graduate</option>
+            <option value="Vocational Graduate">Vocational Graduate</option>
+            <option value="Masters Graduate">Masters Graduate</option>
+            <option value="Doctorate Graduate">Doctorate Graduate</option>
+        </select>
+    </div>
 
-<div class="box">
-<div class="label">CIVIL STATUS</div>
-<label class="option"><input type="radio" name="civil" value="Single"> Single</label>
-<label class="option"><input type="radio" name="civil" value="Married"> Married</label>
-</div>
+    <div class="box">
+        <div class="label">EMPLOYMENT STATUS</div>
+        <label class="option"><input type="radio" name="employment" value="Employed"> Employed</label>
+        <label class="option"><input type="radio" name="employment" value="Not Employed"> Not Employed</label>
+        <label class="option"><input type="radio" name="employment" value="Self-Employed"> Self-Employed</label>
+    </div>
 
-<div class="box">
-<div class="label">EDUCATIONAL ATTAINMENT</div>
-<select id="edu" class="w-full outline-none bg-transparent">
-    <option>Elementary Level</option>
-    <option>Elementary Graduate</option>
-    <option>High School Level</option>
-    <option>High School Graduate</option>
-    <option>College Level</option>
-    <option>College Graduate</option>
-    <option>Vocational Graduate</option>
-</select>
-</div>
+    <div class="box">
+        <div class="label">SK PARTICIPATION</div>
+        <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
+        <label class="option"><input type="radio" name="voter" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="voter" value="No"> No</label>
 
-<div class="box">
-<div class="label">SK PARTICIPATION</div>
-<p class="text-xs font-bold mt-1">Registered SK Voter?</p>
-<label class="option"><input type="radio" name="v1" value="Yes"> Yes</label>
-<label class="option"><input type="radio" name="v1" value="No"> No</label>
+        <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
+        <label class="option"><input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes</label>
+        <label class="option"><input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No</label>
 
-<p class="text-xs font-bold mt-1">Did you attend KK Assembly?</p>
-<label class="option"><input type="radio" name="v3" value="Yes"> Yes</label>
-<label class="option"><input type="radio" name="v3" value="No"> No</label>
-</div>
+        <div id="kk_times_box" class="hidden mt-2 border-t pt-2">
+            <p class="text-xs font-bold">If YES, how many times?</p>
+            <label class="option"><input type="radio" name="times" value="1-2"> 1-2</label>
+            <label class="option"><input type="radio" name="times" value="3-5"> 3-5</label>
+            <label class="option"><input type="radio" name="times" value="More than 5"> More than 5</label>
+        </div>
+    </div>
 
-<div class="no-print">
-    <button id="submitBtn" onclick="submitForm()" class="bg-green-600 hover:bg-green-700 text-white font-bold w-full p-3 mt-4 rounded-lg shadow-md transition">
-    SUBMIT TO DATABASE
-    </button>
-
-    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold w-full p-3 mt-2 rounded-lg shadow-md transition">
-    DOWNLOAD AS PDF / PRINT
-    </button>
-    
-    <button onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 mt-2 rounded-lg text-sm">
-    BACK TO DASHBOARD
-    </button>
-</div>
-
-</div>
+    <div class="no-print space-y-2 mt-4">
+        <button type="submit" id="submitBtn" class="bg-green-600 text-white w-full p-3 font-bold rounded shadow">SUBMIT</button>
+        <button type="button" onclick="window.print()" class="bg-blue-600 text-white w-full p-3 font-bold rounded shadow">DOWNLOAD PDF</button>
+        <button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded text-sm">BACK</button>
+    </div>
+</form>
 
 <script>
-function calcAge(){
-    let b=new Date(document.getElementById('birthdate').value);
-    let t=new Date();
-    let ageVal = t.getFullYear()-b.getFullYear();
-    document.getElementById('age').value = ageVal;
-}
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwuXEIc8oGW0RpfnhPxvlf416fZRo94KKfGGYSOTD0EhL_uIbpcUQ0eBU1XPBv9CGF7/exec';
+    const form = document.getElementById('kkForm');
 
-function submitForm(){
-    const btn = document.getElementById('submitBtn');
-    btn.innerText = "SENDING...";
-    btn.disabled = true;
+    function calcAge() {
+        let b = new Date(document.getElementById('birthdate').value);
+        let t = new Date();
+        document.getElementById('age').value = t.getFullYear() - b.getFullYear();
+    }
 
-    const formData = new URLSearchParams();
-    formData.append('fullname', document.getElementById('fullname').value);
-    formData.append('contact', document.getElementById('contact').value);
-    formData.append('email', document.getElementById('email').value);
-    formData.append('address', document.getElementById('address').value);
-    formData.append('birthdate', document.getElementById('birthdate').value);
-    formData.append('age', document.getElementById('age').value);
-    
-    // Get radio values
-    const v1 = document.querySelector('input[name="v1"]:checked')?.value || "N/A";
-    const v3 = document.querySelector('input[name="v3"]:checked')?.value || "N/A";
-    const gender = document.querySelector('input[name="gender"]:checked')?.value || "N/A";
+    function toggleTimes(show) {
+        document.getElementById('kk_times_box').style.display = show ? 'block' : 'none';
+    }
 
-    formData.append('sk_voter', v1);
-    formData.append('kk_attend', v3);
-    formData.append('gender', gender);
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.innerText = "SENDING...";
+        btn.disabled = true;
 
-    // REPLACE THIS WITH YOUR DEPLOYED URL
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwuXEIc8oGW0RpfnhPxvlf416fZRo94KKfGGYSOTD0EhL_uIbpcUQ0eBU1XPBv9CGF7/exec";
-    fetch(scriptURL, { method: "POST", mode: "no-cors", body: formData })
-    .then(() => {
-        alert("Success! Form sent to Google Sheets.");
-        btn.innerText = "SUBMIT TO DATABASE";
-        btn.disabled = false;
-    })
-    .catch(error => {
-        alert("Error! Check internet.");
-        btn.disabled = false;
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form)})
+            .then(response => {
+                alert("Successfully sent to SK Database!");
+                btn.innerText = "SUBMIT";
+                btn.disabled = false;
+                form.reset();
+            })
+            .catch(error => {
+                alert("Error! Try again.");
+                btn.disabled = false;
+            });
     });
-}
 </script>
 
 </body>
