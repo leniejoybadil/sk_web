@@ -9,6 +9,37 @@
         body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; }
         .sidebar { width: 260px; height: 100vh; position: fixed; background: linear-gradient(180deg, #1b5e20, #2e7d32); color: white; padding: 20px; z-index: 50; }
         .main { margin-left: 260px; padding: 20px; transition: 0.3s; }
+        
+        /* Hero Banner Styling */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .hero-banner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-cover: cover;
+            z-index: 0;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 20px; }
         
         .card { 
@@ -25,15 +56,15 @@
         .purple { border-color: #8e24aa; }
         .brown { border-color: #795548; }
         .red { border-color: #dc2626; }
-        .pink { border-color: #c2185b; }
 
         @media(max-width:768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
             .main { margin-left: 0; }
+            .hero-banner { height: 250px; }
+            .hero-banner h1 { font-size: 2rem !important; }
         }
     </style>
     <script>
-        // Security Gate
         if (!sessionStorage.getItem('role')) { window.location.href = "login.html"; }
     </script>
 </head>
@@ -51,56 +82,85 @@
 </div>
 
 <div class="main">
+    
+    <div class="hero-banner">
+        <img src="cover.png" alt="SK Background">
+        <div class="hero-overlay"></div>
+
+        <div class="absolute top-4 right-4 flex gap-2 z-20">
+            <img src="davao.png" class="w-10 h-10 drop-shadow-md">
+            <img src="sklogo.png" class="w-10 h-10 drop-shadow-md">
+        </div>
+
+        <div class="relative z-20 text-center">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold tracking-tight drop-shadow-lg">
+                SANGGUNIANG KABATAAN
+            </h1>
+            <p class="text-md tracking-[0.3em] uppercase mt-1 font-light opacity-90">
+                Barangay Dalagdag
+            </p>
+        </div>
+
+        <div class="absolute bottom-4 left-6 z-20 space-y-1 text-xs md:text-sm">
+            <div class="flex items-center gap-2">
+                <span class="text-green-400">📞</span> 09311594097
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-red-400">✉️</span> skdalagdag@gmail.com
+            </div>
+        </div>
+    </div>
+
     <div class="bg-white p-6 rounded-xl flex justify-between items-center shadow-sm">
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">Welcome, <span id="displayRole" class="text-green-700">User</span></h1>
-            <p class="text-gray-500">Barangay Dalagdag SK System</p>
+            <h1 class="text-2xl font-bold text-gray-800">Welcome, <span id="displayRole" class="text-green-700 uppercase">User</span></h1>
+            <p class="text-gray-500 text-sm">Dalagdag Youth Portal Dashboard</p>
         </div>
         <div class="text-right">
-            <span id="adminBadge" class="hidden bg-yellow-100 text-yellow-800 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase">Admin Access</span>
-            <img src="sklogo.png" class="w-12 ml-auto mt-1">
+            <span id="adminBadge" class="hidden bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Admin Access</span>
         </div>
     </div>
 
     <div class="grid-container">
         <div onclick="location.href='announcements.html'" class="card orange">
             <h3 class="font-bold">Announcements</h3>
-            <p>Official updates</p>
+            <p class="text-sm text-gray-500">Official updates</p>
         </div>
 
         <div onclick="location.href='events.html'" class="card blue">
             <h3 class="font-bold">Events</h3>
-            <p>Registration</p>
+            <p class="text-sm text-gray-500">Registration</p>
         </div>
 
         <div onclick="location.href='projects.html'" class="card green">
             <h3 class="font-bold">Projects</h3>
-            <p>SK programs</p>
+            <p class="text-sm text-gray-500">SK programs</p>
         </div>
 
         <div onclick="location.href='kk.html'" class="card purple">
             <h3 class="font-bold">KK Profiling</h3>
-            <p>Youth Registration</p>
+            <p class="text-sm text-gray-500">Youth Registration</p>
         </div>
 
         <div onclick="location.href='schedules.html'" class="card brown">
             <h3 class="font-bold">Schedules</h3>
-            <p>Official Planning</p>
+            <p class="text-sm text-gray-500">Official Planning</p>
         </div>
 
         <div onclick="location.href='suggestions.html'" class="card red">
             <h3 class="font-bold">Suggestions</h3>
-            <p>Share your ideas</p>
+            <p class="text-sm text-gray-500">Share your ideas</p>
+        </div>
     </div>
 </div>
 
 <script>
     const role = sessionStorage.getItem('role');
-    document.getElementById('displayRole').innerText = role.toUpperCase();
-    
-    // Show badge only if Admin
-    if (role === 'admin') {
-        document.getElementById('adminBadge').classList.remove('hidden');
+    if(role) {
+        document.getElementById('displayRole').innerText = role;
+        if (role === 'admin') {
+            document.getElementById('adminBadge').classList.remove('hidden');
+        }
     }
 
     function logout() {
