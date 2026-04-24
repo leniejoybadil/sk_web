@@ -11,7 +11,7 @@
         .header img { width: 55px; }
         .box { background: white; border: 1px solid #000; padding: 8px; margin-top: 8px; }
         .label { font-size: 10px; color: #555; font-weight: bold; text-transform: uppercase; }
-        .option { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 14px; }
+        .option { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 14px; cursor: pointer; }
         
         @media print {
             button, .no-print { display: none !important; }
@@ -35,16 +35,16 @@
 <form id="kkForm" class="p-3">
     <div class="box">
         <div class="label">FULL NAME</div>
-        <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b border-gray-200 focus:border-green-500" required>
+        <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
 
         <div class="label mt-2">CONTACT NUMBER</div>
-        <input type="text" name="contact" id="contact" class="w-full outline-none border-b border-gray-200 focus:border-green-500" required>
+        <input type="text" name="contact" id="contact" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
 
         <div class="label mt-2">EMAIL</div>
-        <input type="email" name="email" id="email" class="w-full outline-none border-b border-gray-200 focus:border-green-500">
+        <input type="email" name="email" id="email" class="w-full outline-none border-b border-gray-100 focus:border-green-500">
 
         <div class="label mt-2">ADDRESS</div>
-        <input type="text" name="address" id="address" class="w-full outline-none border-b border-gray-200 focus:border-green-500" required>
+        <input type="text" name="address" id="address" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
     </div>
 
     <div class="box">
@@ -56,13 +56,13 @@
 
     <div class="box">
         <div class="label">GENDER</div>
-        <label class="option"><input type="radio" name="gender" value="Male"> Male</label>
+        <label class="option"><input type="radio" name="gender" value="Male" required> Male</label>
         <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
     </div>
 
     <div class="box">
         <div class="label">CIVIL STATUS</div>
-        <label class="option"><input type="radio" name="civil_status" value="Single"> Single</label>
+        <label class="option"><input type="radio" name="civil_status" value="Single" required> Single</label>
         <label class="option"><input type="radio" name="civil_status" value="Married"> Married</label>
         <label class="option"><input type="radio" name="civil_status" value="Widowed"> Widowed</label>
         <label class="option"><input type="radio" name="civil_status" value="Separated"> Separated</label>
@@ -70,7 +70,7 @@
 
     <div class="box">
         <div class="label">YOUTH TYPE</div>
-        <label class="option"><input type="radio" name="youth_type" value="In-School"> In-School Youth</label>
+        <label class="option"><input type="radio" name="youth_type" value="In-School" required> In-School Youth</label>
         <label class="option"><input type="radio" name="youth_type" value="Out-of-School"> Out-of-School Youth</label>
         <label class="option"><input type="radio" name="youth_type" value="Working"> Working Youth</label>
         <label class="option"><input type="radio" name="youth_type" value="PWD"> PWD</label>
@@ -86,14 +86,12 @@
             <option value="College Level">College Level</option>
             <option value="College Graduate">College Graduate</option>
             <option value="Vocational Graduate">Vocational Graduate</option>
-            <option value="Masters Graduate">Masters Graduate</option>
-            <option value="Doctorate Graduate">Doctorate Graduate</option>
         </select>
     </div>
 
     <div class="box">
         <div class="label">EMPLOYMENT STATUS</div>
-        <label class="option"><input type="radio" name="employment" value="Employed"> Employed</label>
+        <label class="option"><input type="radio" name="employment" value="Employed" required> Employed</label>
         <label class="option"><input type="radio" name="employment" value="Not Employed"> Not Employed</label>
         <label class="option"><input type="radio" name="employment" value="Self-Employed"> Self-Employed</label>
     </div>
@@ -101,7 +99,7 @@
     <div class="box">
         <div class="label">SK PARTICIPATION</div>
         <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
-        <label class="option"><input type="radio" name="voter" value="Yes"> Yes</label>
+        <label class="option"><input type="radio" name="voter" value="Yes" required> Yes</label>
         <label class="option"><input type="radio" name="voter" value="No"> No</label>
 
         <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
@@ -117,24 +115,27 @@
     </div>
 
     <div class="no-print space-y-2 mt-4">
-        <button type="submit" id="submitBtn" class="bg-green-600 text-white w-full p-3 font-bold rounded shadow">SUBMIT</button>
-        <button type="button" onclick="window.print()" class="bg-blue-600 text-white w-full p-3 font-bold rounded shadow">DOWNLOAD PDF</button>
-        <button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded text-sm">BACK</button>
+        <button type="submit" id="submitBtn" class="bg-green-600 text-white w-full p-3 font-bold rounded shadow hover:bg-green-700">SUBMIT</button>
+        <button type="button" onclick="window.print()" class="bg-blue-600 text-white w-full p-3 font-bold rounded shadow hover:bg-blue-700">DOWNLOAD PDF</button>
+        <button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded text-sm hover:bg-gray-600">BACK TO DASHBOARD</button>
     </div>
 </form>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwuXEIc8oGW0RpfnhPxvlf416fZRo94KKfGGYSOTD0EhL_uIbpcUQ0eBU1XPBv9CGF7/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyEczCH2VKfLu8wXV-Lgs7o19iyZAx8bTaOWGywrhP_zIBHj_iz5HHA6pb6dVc1g8N2/exec';
     const form = document.getElementById('kkForm');
 
     function calcAge() {
         let b = new Date(document.getElementById('birthdate').value);
         let t = new Date();
-        document.getElementById('age').value = t.getFullYear() - b.getFullYear();
+        if(!isNaN(b.getTime())) {
+            document.getElementById('age').value = t.getFullYear() - b.getFullYear();
+        }
     }
 
     function toggleTimes(show) {
-        document.getElementById('kk_times_box').style.display = show ? 'block' : 'none';
+        const box = document.getElementById('kk_times_box');
+        box.classList.toggle('hidden', !show);
     }
 
     form.addEventListener('submit', e => {
@@ -143,15 +144,19 @@
         btn.innerText = "SENDING...";
         btn.disabled = true;
 
+        // Use FormData to catch all 'name' attributes automatically
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form)})
-            .then(response => {
+            .then(() => {
                 alert("Successfully sent to SK Database!");
                 btn.innerText = "SUBMIT";
                 btn.disabled = false;
                 form.reset();
+                document.getElementById('kk_times_box').classList.add('hidden');
             })
             .catch(error => {
-                alert("Error! Try again.");
+                console.error('Error!', error.message);
+                alert("Submit failed. Check connection.");
+                btn.innerText = "SUBMIT";
                 btn.disabled = false;
             });
     });
