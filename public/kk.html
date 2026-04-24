@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <title>KK Profiling Form</title>
     <style>
         body { font-family: Arial; background: #f3f3f3; }
@@ -22,104 +23,106 @@
 </head>
 <body>
 
-<div class="header">
-    <img src="davao.png" alt="Davao Logo">
-    <div class="text-center font-bold text-sm">
-        REPUBLIC OF THE PHILIPPINES<br>
-        BARANGAY DALAGDAG<br>
-        KATIPUNAN NG KABATAAN PROFILING FORM
+<div id="pdf-area">
+    <div class="header">
+        <img src="davao.png" alt="Davao Logo">
+        <div class="text-center font-bold text-sm">
+            REPUBLIC OF THE PHILIPPINES<br>
+            BARANGAY DALAGDAG<br>
+            KATIPUNAN NG KABATAAN PROFILING FORM
+        </div>
+        <img src="sklogo.png" alt="SK Logo">
     </div>
-    <img src="sklogo.png" alt="SK Logo">
+
+    <form id="kkForm" class="p-3">
+        <div class="box">
+            <div class="label">FULL NAME</div>
+            <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
+
+            <div class="label mt-2">CONTACT NUMBER</div>
+            <input type="text" name="contact" id="contact" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
+
+            <div class="label mt-2">EMAIL</div>
+            <input type="email" name="email" id="email" class="w-full outline-none border-b border-gray-100 focus:border-green-500">
+
+            <div class="label mt-2">ADDRESS</div>
+            <input type="text" name="address" id="address" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
+        </div>
+
+        <div class="box">
+            <div class="label">BIRTHDATE</div>
+            <input type="date" name="birthdate" id="birthdate" class="w-full" onchange="calcAge()" required>
+            <div class="label mt-2">AGE</div>
+            <input type="text" name="age" id="age" class="w-full outline-none" readonly>
+        </div>
+
+        <div class="box">
+            <div class="label">GENDER</div>
+            <label class="option"><input type="radio" name="gender" value="Male" required> Male</label>
+            <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
+        </div>
+
+        <div class="box">
+            <div class="label">CIVIL STATUS</div>
+            <label class="option"><input type="radio" name="civil_status" value="Single" required> Single</label>
+            <label class="option"><input type="radio" name="civil_status" value="Married"> Married</label>
+            <label class="option"><input type="radio" name="civil_status" value="Widowed"> Widowed</label>
+            <label class="option"><input type="radio" name="civil_status" value="Separated"> Separated</label>
+        </div>
+
+        <div class="box">
+            <div class="label">YOUTH TYPE</div>
+            <label class="option"><input type="radio" name="youth_type" value="In-School" required> In-School Youth</label>
+            <label class="option"><input type="radio" name="youth_type" value="Out-of-School"> Out-of-School Youth</label>
+            <label class="option"><input type="radio" name="youth_type" value="Working"> Working Youth</label>
+            <label class="option"><input type="radio" name="youth_type" value="PWD"> PWD</label>
+        </div>
+
+        <div class="box">
+            <div class="label">EDUCATIONAL ATTAINMENT</div>
+            <select name="education" class="w-full outline-none bg-transparent py-1">
+                <option value="Elementary Level">Elementary Level</option>
+                <option value="Elementary Graduate">Elementary Graduate</option>
+                <option value="High School Level">High School Level</option>
+                <option value="High School Graduate">High School Graduate</option>
+                <option value="College Level">College Level</option>
+                <option value="College Graduate">College Graduate</option>
+                <option value="Vocational Graduate">Vocational Graduate</option>
+            </select>
+        </div>
+
+        <div class="box">
+            <div class="label">EMPLOYMENT STATUS</div>
+            <label class="option"><input type="radio" name="employment" value="Employed" required> Employed</label>
+            <label class="option"><input type="radio" name="employment" value="Not Employed"> Not Employed</label>
+            <label class="option"><input type="radio" name="employment" value="Self-Employed"> Self-Employed</label>
+        </div>
+
+        <div class="box">
+            <div class="label">SK PARTICIPATION</div>
+            <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
+            <label class="option"><input type="radio" name="voter" value="Yes" required> Yes</label>
+            <label class="option"><input type="radio" name="voter" value="No"> No</label>
+
+            <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
+            <label class="option"><input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes</label>
+            <label class="option"><input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No</label>
+
+            <div id="kk_times_box" class="hidden mt-2 border-t pt-2">
+                <p class="text-xs font-bold">If YES, how many times?</p>
+                <label class="option"><input type="radio" name="times" value="1-2"> 1-2</label>
+                <label class="option"><input type="radio" name="times" value="3-5"> 3-5</label>
+                <label class="option"><input type="radio" name="times" value="More than 5"> More than 5</label>
+            </div>
+        </div>
+    </form>
 </div>
 
-<form id="kkForm" class="p-3">
-    <div class="box">
-        <div class="label">FULL NAME</div>
-        <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
-
-        <div class="label mt-2">CONTACT NUMBER</div>
-        <input type="text" name="contact" id="contact" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
-
-        <div class="label mt-2">EMAIL</div>
-        <input type="email" name="email" id="email" class="w-full outline-none border-b border-gray-100 focus:border-green-500">
-
-        <div class="label mt-2">ADDRESS</div>
-        <input type="text" name="address" id="address" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
-    </div>
-
-    <div class="box">
-        <div class="label">BIRTHDATE</div>
-        <input type="date" name="birthdate" id="birthdate" class="w-full" onchange="calcAge()" required>
-        <div class="label mt-2">AGE</div>
-        <input type="text" name="age" id="age" class="w-full outline-none" readonly>
-    </div>
-
-    <div class="box">
-        <div class="label">GENDER</div>
-        <label class="option"><input type="radio" name="gender" value="Male" required> Male</label>
-        <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
-    </div>
-
-    <div class="box">
-        <div class="label">CIVIL STATUS</div>
-        <label class="option"><input type="radio" name="civil_status" value="Single" required> Single</label>
-        <label class="option"><input type="radio" name="civil_status" value="Married"> Married</label>
-        <label class="option"><input type="radio" name="civil_status" value="Widowed"> Widowed</label>
-        <label class="option"><input type="radio" name="civil_status" value="Separated"> Separated</label>
-    </div>
-
-    <div class="box">
-        <div class="label">YOUTH TYPE</div>
-        <label class="option"><input type="radio" name="youth_type" value="In-School" required> In-School Youth</label>
-        <label class="option"><input type="radio" name="youth_type" value="Out-of-School"> Out-of-School Youth</label>
-        <label class="option"><input type="radio" name="youth_type" value="Working"> Working Youth</label>
-        <label class="option"><input type="radio" name="youth_type" value="PWD"> PWD</label>
-    </div>
-
-    <div class="box">
-        <div class="label">EDUCATIONAL ATTAINMENT</div>
-        <select name="education" class="w-full outline-none bg-transparent py-1">
-            <option value="Elementary Level">Elementary Level</option>
-            <option value="Elementary Graduate">Elementary Graduate</option>
-            <option value="High School Level">High School Level</option>
-            <option value="High School Graduate">High School Graduate</option>
-            <option value="College Level">College Level</option>
-            <option value="College Graduate">College Graduate</option>
-            <option value="Vocational Graduate">Vocational Graduate</option>
-        </select>
-    </div>
-
-    <div class="box">
-        <div class="label">EMPLOYMENT STATUS</div>
-        <label class="option"><input type="radio" name="employment" value="Employed" required> Employed</label>
-        <label class="option"><input type="radio" name="employment" value="Not Employed"> Not Employed</label>
-        <label class="option"><input type="radio" name="employment" value="Self-Employed"> Self-Employed</label>
-    </div>
-
-    <div class="box">
-        <div class="label">SK PARTICIPATION</div>
-        <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
-        <label class="option"><input type="radio" name="voter" value="Yes" required> Yes</label>
-        <label class="option"><input type="radio" name="voter" value="No"> No</label>
-
-        <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
-        <label class="option"><input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes</label>
-        <label class="option"><input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No</label>
-
-        <div id="kk_times_box" class="hidden mt-2 border-t pt-2">
-            <p class="text-xs font-bold">If YES, how many times?</p>
-            <label class="option"><input type="radio" name="times" value="1-2"> 1-2</label>
-            <label class="option"><input type="radio" name="times" value="3-5"> 3-5</label>
-            <label class="option"><input type="radio" name="times" value="More than 5"> More than 5</label>
-        </div>
-    </div>
-
-    <div class="no-print space-y-2 mt-4">
-        <button type="submit" id="submitBtn" class="bg-green-600 text-white w-full p-3 font-bold rounded shadow hover:bg-green-700">SUBMIT</button>
-        <button type="button" onclick="window.print()" class="bg-blue-600 text-white w-full p-3 font-bold rounded shadow hover:bg-blue-700">DOWNLOAD PDF</button>
-        <button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded text-sm hover:bg-gray-600">BACK TO DASHBOARD</button>
-    </div>
-</form>
+<div class="p-3 no-print space-y-2 mt-4">
+    <button type="button" onclick="submitToGoogle()" id="submitBtn" class="bg-green-600 text-white w-full p-3 font-bold rounded shadow hover:bg-green-700">SUBMIT</button>
+    <button type="button" onclick="downloadAsPDF()" class="bg-blue-600 text-white w-full p-3 font-bold rounded shadow hover:bg-blue-700">DOWNLOAD PDF</button>
+    <button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded text-sm hover:bg-gray-600">BACK TO DASHBOARD</button>
+</div>
 
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyEczCH2VKfLu8wXV-Lgs7o19iyZAx8bTaOWGywrhP_zIBHj_iz5HHA6pb6dVc1g8N2/exec';
@@ -138,13 +141,25 @@
         box.classList.toggle('hidden', !show);
     }
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
+    // NEW: Function to download exactly what is on the screen as a PDF
+    function downloadAsPDF() {
+        const element = document.getElementById('pdf-area');
+        const opt = {
+            margin: 0.2,
+            filename: 'KK_Profiling_Form.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    }
+
+    // Wrapped your original submit logic in a function
+    function submitToGoogle() {
         const btn = document.getElementById('submitBtn');
         btn.innerText = "SENDING...";
         btn.disabled = true;
 
-        // Use FormData to catch all 'name' attributes automatically
         fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form)})
             .then(() => {
                 alert("Successfully sent to SK Database!");
@@ -159,7 +174,10 @@
                 btn.innerText = "SUBMIT";
                 btn.disabled = false;
             });
-    });
+    }
+
+    // Prevent default form submit
+    form.addEventListener('submit', e => e.preventDefault());
 </script>
 
 </body>
