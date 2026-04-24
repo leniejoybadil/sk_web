@@ -1,50 +1,96 @@
-<div class="section">
-  <h2>Announcements</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>SK Announcements</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+        .announcement-card {
+            border-left: 5px solid #15803d;
+            transition: transform 0.2s;
+        }
+        .announcement-card:hover {
+            transform: scale(1.01);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
 
-  <div id="announcementBox" class="announcement-box">
-    No announcement.
-  </div>
+    <div class="max-w-3xl mx-auto">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">📢 Announcements</h1>
+                <p class="text-gray-500 text-sm">Stay updated with Barangay Dalagdag activities</p>
+            </div>
+            <button onclick="location.href='index.html'" class="text-gray-600 hover:text-green-700 font-medium text-sm">← Back to Dashboard</button>
+        </div>
 
-  <!-- ADMIN PANEL (hidden in real system later) -->
-  <div id="adminPanel">
-    <input type="text" id="announcementInput" placeholder="Post announcement">
-    <button onclick="postAnnouncement()">Post</button>
-  </div>
-</div>
+        <div id="adminOnlyForm" class="hidden bg-white p-6 rounded-2xl shadow-lg border border-green-100 mb-10">
+            <div class="flex items-center gap-2 mb-4 text-green-700 font-bold">
+                <span>✨</span> Post New Update
+            </div>
+            <div class="space-y-4">
+                <input id="title" type="text" placeholder="Headline (e.g. Liga Next Week!)" 
+                       class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-green-500">
+                
+                <textarea id="message" rows="3" placeholder="Write the details here..." 
+                          class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                
+                <button onclick="postAnnouncement()" id="postBtn" class="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition">
+                    Publish Announcement
+                </button>
+            </div>
+        </div>
 
-<style>
-.section {
-  padding: 20px;
-}
-
-.announcement-box {
-  background: #fff;
-  padding: 20px;
-  border-left: 5px solid #1e3a8a;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  margin-bottom: 10px;
-}
-
-#adminPanel input {
-  width: 70%;
-  padding: 10px;
-}
-
-#adminPanel button {
-  padding: 10px;
-  background: #1e3a8a;
-  color: white;
-  border: none;
-}
-</style>
+        <div class="space-y-6">
+            <h2 class="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                <span class="w-2 h-2 bg-green-500 rounded-full"></span> Recent News
+            </h2>
+            
+            <div id="announcementFeed" class="space-y-4">
+                <div class="announcement-card bg-white p-5 rounded-xl shadow-sm">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg text-gray-800">Welcome to the New Portal!</h3>
+                        <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded">Just Now</span>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed text-sm">
+                        Barangay Dalagdag SK is now digital. You can now register for events and KK profiling online!
+                    </p>
+                </div>
+                </div>
+        </div>
+    </div>
 
 <script>
-function postAnnouncement() {
-  const text = document.getElementById("announcementInput").value;
+    // 1. SECURITY: Check if user is Admin
+    const role = sessionStorage.getItem('role');
+    if (role === 'admin') {
+        document.getElementById('adminOnlyForm').classList.remove('hidden');
+    }
 
-  if (text.trim() === "") return;
+    // 2. POST LOGIC
+    function postAnnouncement() {
+        const title = document.getElementById('title').value;
+        const msg = document.getElementById('message').value;
+        const btn = document.getElementById('postBtn');
 
-  document.getElementById("announcementBox").innerText = text;
-  document.getElementById("announcementInput").value = "";
-}
+        if (!title || !msg) {
+            alert("Please fill in both fields");
+            return;
+        }
+
+        btn.innerText = "Posting...";
+        btn.disabled = true;
+
+        // Simulate successful post (Replace with your actual Fetch/Apps Script call)
+        setTimeout(() => {
+            alert("Announcement Posted Successfully!");
+            location.reload();
+        }, 1000);
+    }
 </script>
+
+</body>
+</html>
