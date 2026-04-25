@@ -204,13 +204,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const role = localStorage.getItem('role');
 
+    // allow guest OR admin
     if (!role) {
         window.location.replace("login.html");
         return;
     }
 
     const roleDisplay = document.getElementById('displayRole');
-    if (roleDisplay) roleDisplay.innerText = role;
+    if (roleDisplay) {
+        roleDisplay.innerText = role.toUpperCase();
+    }
 
 });
 
@@ -229,7 +232,6 @@ function logout() {
     localStorage.removeItem('role');
     window.location.replace("login.html");
 }
-
 
 /* =========================
    SLIDER
