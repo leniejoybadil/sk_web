@@ -11,13 +11,13 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
 
 .announcement-card {
     border-left: 5px solid #15803d;
-    transition: transform 0.2s;
+    transition: 0.2s;
 }
 .announcement-card:hover { transform: scale(1.01); }
 
 .pin {
-    background: #dbeafe;
     border-left: 5px solid #2563eb;
+    background: #eff6ff;
 }
 </style>
 </head>
@@ -39,12 +39,12 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
         <div class="relative text-xl">
             🔔
             <span id="notifBadge"
-            class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] px-1 rounded-full">
-            0
-            </span>
+            class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] px-1 rounded-full">0</span>
         </div>
 
-        <button onclick="location.href='index.html'" class="text-sm">← Back</button>
+        <button onclick="location.href='index.html'" class="text-sm text-gray-600">
+            ← Back
+        </button>
     </div>
 </div>
 
@@ -57,14 +57,11 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
     <textarea id="message" placeholder="Message"
     class="w-full p-2 border rounded mb-2"></textarea>
 
-    <!-- IMAGE UPLOAD -->
-    <input id="image" type="file" accept="image/*"
-    class="w-full p-2 border rounded mb-3">
-
     <button onclick="postAnnouncement()"
     class="w-full bg-green-700 text-white py-2 rounded">
         Post Announcement
     </button>
+
 </div>
 
 <!-- FEED -->
@@ -75,6 +72,7 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
 <script>
 
 const role = localStorage.getItem("role");
+let lastSeen = localStorage.getItem("lastSeen") || 0;
 
 /* SHOW ADMIN FORM */
 if (role === "admin") {
@@ -86,16 +84,18 @@ function loadAnnouncements() {
 
     let posts = JSON.parse(localStorage.getItem("sk_announcements")) || [];
 
-    // PINNED FIRST
-    posts.sort((a, b) => (b.pinned === true) - (a.pinned === true));
+    // PIN FIRST
+    posts.sort((a, b) => (b.pinned || 0) - (a.pinned || 0));
 
     const feed = document.getElementById("announcementFeed");
     feed.innerHTML = "";
 
     posts.forEach(p => {
 
+        let r = p.reactions || {like:0};
+
         feed.innerHTML += `
-        <div class="announcement-card bg-white p-5 rounded-xl shadow ${p.pinned ? 'pin' : ''}">
+        <div class="announcement-card p-5 bg-white rounded-xl shadow ${p.pinned ? 'pin' : ''}">
 
             <div class="flex justify-between">
                 <h3 class="font-bold">${p.title}</h3>
@@ -103,11 +103,8 @@ function loadAnnouncements() {
                 <div class="flex gap-2">
 
                 ${role === "admin" ? `
-                    <button onclick="deleteAnnouncement(${p.id})"
-                    class="text-red-600 text-xs">🗑</button>
-
-                    <button onclick="pinAnnouncement(${p.id})"
-                    class="text-blue-600 text-xs">📌</button>
+                    <button onclick="deletePost(${p.id})">🗑</button>
+                    <button onclick="togglePin(${p.id})">📌</button>
                 ` : ""}
 
                 </div>
@@ -115,59 +112,45 @@ function loadAnnouncements() {
 
             <p class="text-sm mt-2">${p.message}</p>
 
-            ${p.image ? `<img src="${p.image}" class="mt-2 rounded">` : ""}
-
             <!-- REACTIONS -->
-            <div class="flex gap-3 mt-3 text-sm">
-                <button onclick="react(${p.id},'like')">👍 ${p.reactions?.like||0}</button>
-                <button onclick="react(${p.id},'heart')">❤️ ${p.reactions?.heart||0}</button>
-                <button onclick="react(${p.id},'wow')">😮 ${p.reactions?.wow||0}</button>
-                <button onclick="react(${p.id},'sad')">😢 ${p.reactions?.sad||0}</button>
+            <div class="flex gap-4 mt-3 text-sm">
+                <button onclick="react(${p.id})">❤️ ${r.like}</button>
             </div>
 
         </div>`;
     });
 
-    updateNotifications();
+    updateNotif(posts);
 }
 
 /* POST */
 function postAnnouncement() {
 
+    if (role !== "admin") return alert("Admin only!");
+
     const title = document.getElementById("title").value;
     const message = document.getElementById("message").value;
-    const imageInput = document.getElementById("image");
 
     if (!title || !message) return alert("Fill all fields");
 
     let posts = JSON.parse(localStorage.getItem("sk_announcements")) || [];
 
-    function save(img) {
+    posts.unshift({
+        id: Date.now(),
+        title,
+        message,
+        pinned: false,
+        reactions: {like:0},
+        date: Date.now()
+    });
 
-        posts.unshift({
-            id: Date.now(),
-            title,
-            message,
-            image: img,
-            pinned: false,
-            reactions: { like:0, heart:0, wow:0, sad:0 }
-        });
+    localStorage.setItem("sk_announcements", JSON.stringify(posts));
 
-        localStorage.setItem("sk_announcements", JSON.stringify(posts));
-        loadAnnouncements();
-    }
-
-    if (imageInput.files[0]) {
-        let reader = new FileReader();
-        reader.onload = e => save(e.target.result);
-        reader.readAsDataURL(imageInput.files[0]);
-    } else {
-        save("");
-    }
+    loadAnnouncements();
 }
 
 /* DELETE */
-function deleteAnnouncement(id) {
+function deletePost(id) {
     let posts = JSON.parse(localStorage.getItem("sk_announcements")) || [];
     posts = posts.filter(p => p.id !== id);
     localStorage.setItem("sk_announcements", JSON.stringify(posts));
@@ -175,7 +158,7 @@ function deleteAnnouncement(id) {
 }
 
 /* PIN */
-function pinAnnouncement(id) {
+function togglePin(id) {
     let posts = JSON.parse(localStorage.getItem("sk_announcements")) || [];
 
     posts = posts.map(p => {
@@ -187,41 +170,31 @@ function pinAnnouncement(id) {
     loadAnnouncements();
 }
 
-/* REACTIONS */
-function react(id, type) {
+/* REACTION */
+function react(id) {
     let posts = JSON.parse(localStorage.getItem("sk_announcements")) || [];
 
-    const i = posts.findIndex(p => p.id === id);
+    let post = posts.find(p => p.id === id);
+    if (!post.reactions) post.reactions = {like:0};
 
-    if (!posts[i].reactions) {
-        posts[i].reactions = {like:0, heart:0, wow:0, sad:0};
-    }
-
-    posts[i].reactions[type]++;
+    post.reactions.like++;
 
     localStorage.setItem("sk_announcements", JSON.stringify(posts));
     loadAnnouncements();
 }
 
 /* NOTIFICATION */
-function updateNotifications() {
-    let posts = JSON.parse(localStorage.getItem("sk_announcements")) || [];
-    let lastSeen = localStorage.getItem("lastSeen") || 0;
-
+function updateNotif(posts) {
     let count = posts.filter(p => p.id > lastSeen).length;
-
     document.getElementById("notifBadge").innerText = count;
 }
 
 /* INIT */
-window.onload = () => {
-    loadAnnouncements();
+loadAnnouncements();
 
-    let posts = JSON.parse(localStorage.getItem("sk_announcements")) || [];
-    if (posts.length > 0) {
-        localStorage.setItem("lastSeen", posts[0].id);
-    }
-};
+if (JSON.parse(localStorage.getItem("sk_announcements"))?.length) {
+    localStorage.setItem("lastSeen", Date.now());
+}
 
 </script>
 

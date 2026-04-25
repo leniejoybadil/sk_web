@@ -97,40 +97,13 @@ body {
 📊 Dashboard
         </a>
 
-        <a href="announcements.html" class="nav-item">
-            <span class="nav-icon">📢</span>
-            <span>Announcements</span>
-        </a>
-
-        <a href="committees.html" class="nav-item">
-            <span class="nav-icon">👥</span>
-            <span>Committees</span>
-        </a>
-
-        <a href="schedules.html" class="nav-item">
-            <span class="nav-icon">📅</span>
-            <span>Schedule</span>
-        </a>
-
-        <a href="events.html" class="nav-item">
-            <span class="nav-icon">🏆</span>
-            <span>Events</span>
-        </a>
-
-        <a href="kk.html" class="nav-item">
-            <span class="nav-icon">📋</span>
-            <span>KK Profiling</span>
-        </a>
-
-        <a href="projects.html" class="nav-item">
-            <span class="nav-icon">📁</span>
-            <span>Projects</span>
-        </a>
-
-        <a href="suggestions.html" class="nav-item">
-            <span class="nav-icon">💡</span>
-            <span>Suggestions</span>
-        </a>
+        <a href="announcements.html">📢 Announcements</a>
+        <a href="committees.html">👥 Committees</a>
+        <a href="schedules.html">📅 Schedule</a>
+        <a href="events.html">🏆 Events</a>
+        <a href="kk.html">📋 KK Profiling</a>
+        <a href="projects.html">📁 Projects</a>
+        <a href="suggestions.html">💡 Suggestions</a>
 
         <div class="pt-10">
             <button onclick="logout()" class="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg transition">
@@ -211,10 +184,13 @@ body {
 ========================= */
 window.addEventListener("DOMContentLoaded", () => {
 
-    const role = localStorage.getItem('role');
+    const role =
+        localStorage.getItem('role') ||
+        sessionStorage.getItem('role');
 
-    // ❗ only redirect if REALLY empty
-    if (role === null || role === undefined || role === "") {
+    if (!role || role === "null") {
+        localStorage.removeItem('role');
+        sessionStorage.removeItem('role');
         window.location.replace("login.html");
         return;
     }
@@ -224,24 +200,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
 });
 
-/* =========================
-   MENU (UNCHANGED)
-========================= */
+/* MENU */
 function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('active');
 }
 
-/* =========================
-   LOGOUT (FIXED)
-========================= */
+/* LOGOUT FIXED */
 function logout() {
     localStorage.removeItem('role');
+    sessionStorage.removeItem('role');
     window.location.replace("login.html");
 }
 
-/* =========================
-   SLIDER (UNCHANGED)
-========================= */
+/* SLIDER */
 let index = 0;
 const slides = document.querySelectorAll(".slide");
 
@@ -260,5 +231,6 @@ function changeSlide(n){
 setInterval(() => changeSlide(1), 4000);
 
 </script>
+
 </body>
 </html>
