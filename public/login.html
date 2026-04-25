@@ -158,6 +158,14 @@ class="w-full p-3 border-2 rounded-xl">
 </footer>
 
 <script>
+
+    function login() {
+    sessionStorage.setItem('role', 'admin'); // or "user"
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 50);
+}
 // GUEST
 function loginAsGuest(){
   sessionStorage.setItem('role','guest');
