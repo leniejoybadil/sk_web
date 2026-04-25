@@ -1,96 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>SK Announcements</title>
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
-        .announcement-card {
-            border-left: 5px solid #15803d;
-            transition: transform 0.2s;
-        }
-        .announcement-card:hover {
-            transform: scale(1.01);
-        }
-    </style>
-</head>
-<body class="p-4 md:p-8">
-
-    <div class="max-w-3xl mx-auto">
-        <div class="flex items-center justify-between mb-8">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">📢 Announcements</h1>
-                <p class="text-gray-500 text-sm">Stay updated with Barangay Dalagdag activities</p>
-            </div>
-            <button onclick="location.href='index.html'" class="text-gray-600 hover:text-green-700 font-medium text-sm">← Back to Dashboard</button>
-        </div>
-
-        <div id="adminOnlyForm" class="hidden bg-white p-6 rounded-2xl shadow-lg border border-green-100 mb-10">
-            <div class="flex items-center gap-2 mb-4 text-green-700 font-bold">
-                <span>✨</span> Post New Update
-            </div>
-            <div class="space-y-4">
-                <input id="title" type="text" placeholder="Headline (e.g. Liga Next Week!)" 
-                       class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-green-500">
-                
-                <textarea id="message" rows="3" placeholder="Write the details here..." 
-                          class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
-                
-                <button onclick="postAnnouncement()" id="postBtn" class="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition">
-                    Publish Announcement
-                </button>
-            </div>
-        </div>
-
-        <div class="space-y-6">
-            <h2 class="text-lg font-semibold text-gray-700 flex items-center gap-2">
-                <span class="w-2 h-2 bg-green-500 rounded-full"></span> Recent News
-            </h2>
-            
-            <div id="announcementFeed" class="space-y-4">
-                <div class="announcement-card bg-white p-5 rounded-xl shadow-sm">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-lg text-gray-800">Welcome to the New Portal!</h3>
-                        <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded">Just Now</span>
-                    </div>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        Barangay Dalagdag SK is now digital. You can now register for events and KK profiling online!
-                    </p>
-                </div>
-                </div>
-        </div>
-    </div>
-
 <script>
-    // 1. SECURITY: Check if user is Admin
-    const role = sessionStorage.getItem('role');
+    // =========================
+    // FIX: ROLE CHECK (IMPORTANT)
+    // =========================
+    const role = localStorage.getItem('role');
+
     if (role === 'admin') {
         document.getElementById('adminOnlyForm').classList.remove('hidden');
     }
 
-    // 2. POST LOGIC
+    // =========================
+    // LOAD ANNOUNCEMENTS
+    // =========================
+    function loadAnnouncements() {
+        let posts = JSON.parse(localStorage.getItem("announcements")) || [];
+
+        const feed = document.getElementById("announcementFeed");
+
+        // keep default welcome post
+        feed.innerHTML = `
+        <div class="announcement-card bg-white p-5 rounded-xl shadow-sm">
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg text-gray-800">Welcome to the New Portal!</h3>
+                <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded">Just Now</span>
+            </div>
+            <p class="text-gray-600 leading-relaxed text-sm">
+                Barangay Dalagdag SK is now digital. You can now register for events and KK profiling online!
+            </p>
+        </div>
+        `;
+
+        posts.forEach(p => {
+            feed.innerHTML += `
+                <div class="announcement-card bg-white p-5 rounded-xl shadow-sm">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg text-gray-800">${p.title}</h3>
+                        <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded">${p.date}</span>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed text-sm">${p.message}</p>
+                </div>
+            `;
+        });
+    }
+
+    loadAnnouncements();
+
+    // =========================
+    // POST ANNOUNCEMENT (ADMIN ONLY)
+    // =========================
     function postAnnouncement() {
         const title = document.getElementById('title').value;
         const msg = document.getElementById('message').value;
         const btn = document.getElementById('postBtn');
+
+        if (role !== 'admin') {
+            alert("Only admin can post announcements!");
+            return;
+        }
 
         if (!title || !msg) {
             alert("Please fill in both fields");
             return;
         }
 
+        let posts = JSON.parse(localStorage.getItem("announcements")) || [];
+
+        posts.unshift({
+            title: title,
+            message: msg,
+            date: new Date().toLocaleString()
+        });
+
+        localStorage.setItem("announcements", JSON.stringify(posts));
+
         btn.innerText = "Posting...";
         btn.disabled = true;
 
-        // Simulate successful post (Replace with your actual Fetch/Apps Script call)
         setTimeout(() => {
-            alert("Announcement Posted Successfully!");
-            location.reload();
-        }, 1000);
+            btn.innerText = "Publish Announcement";
+            btn.disabled = false;
+
+            document.getElementById('title').value = "";
+            document.getElementById('message').value = "";
+
+            loadAnnouncements();
+        }, 500);
     }
 </script>
-
-</body>
-</html>
