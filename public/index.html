@@ -1,216 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>SK Dalagdag | Dashboard</title>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; margin: 0; overflow-x: hidden; }
-        
-        /* Sidebar Styles */
-        .sidebar { 
-            width: 260px; height: 100vh; position: fixed; 
-            background: #1b5e20; color: white; padding: 20px; 
-            z-index: 100; transition: 0.3s; 
-        }
-        .main-content { margin-left: 260px; transition: 0.3s; min-height: 100vh; }
+<title>SK Dalagdag | Dashboard</title>
 
-        /* Material Stats Card */
-        .stats-card {
-            background: white; border-radius: 8px;
-            position: relative; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease; margin-top: 20px;
-        }
-        .stats-card:hover { transform: translateY(-5px); }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-        /* Floating Icon Box */
-        .card-icon {
-            position: absolute; top: -15px; left: 15px;
-            width: 60px; height: 60px; border-radius: 4px;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 22px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  overflow-x: hidden;
+}
 
-        /* Swiper Customization */
-        .swiper { width: 100%; height: 350px; }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  background: #1b5e20;
+  color: white;
+  padding: 20px;
+  z-index: 100;
+}
 
-        /* Mobile Responsiveness */
-        @media(max-width:768px) {
-            .sidebar { transform: translateX(-260px); }
-            .sidebar.active { transform: translateX(0); }
-            .main-content { margin-left: 0; }
-            .grid-container { grid-template-columns: 1fr !important; gap: 45px !important; }
-            .swiper { height: 200px; }
-        }
-    </style>
+.main-content {
+  margin-left: 260px;
+  min-height: 100vh;
+}
+
+/* Cards */
+.stats-card {
+  background: white;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  margin-top: 20px;
+}
+.stats-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-icon {
+  position: absolute;
+  top: -15px;
+  left: 15px;
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+}
+
+/* SLIDER */
+.slide { display:none; }
+.slide.active { display:block; }
+
+.hero-banner {
+  height: 260px;
+}
+@media(min-width:768px){
+  .hero-banner { height: 360px; }
+}
+
+/* Mobile */
+@media(max-width:768px){
+  .sidebar { transform: translateX(-260px); }
+  .sidebar.active { transform: translateX(0); }
+  .main-content { margin-left: 0; }
+}
+</style>
 </head>
+
 <body class="flex">
 
-<aside id="sidebar" class="sidebar shadow-2xl">
-    <div class="flex justify-between items-center mb-6 border-b border-white/20 pb-4">
-        <div class="text-center w-full">
-            <h2 class="text-xl font-black tracking-tighter">SK DALAGDAG</h2>
-            <p class="text-[10px] opacity-60 uppercase tracking-widest">Youth Portal</p>
-        </div>
-        <button onclick="toggleMenu()" class="md:hidden text-2xl absolute right-4">✕</button>
-    </div>
-    <nav class="space-y-1">
-        <a href="index.html" class="flex items-center gap-4 p-3 bg-white/20 rounded-lg shadow-inner font-bold"><span>📊</span> Dashboard</a>
-        <a href="announcements.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📢</span> Announcements</a>
-        <a href="committees.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>👥</span> Committees</a>
-        <a href="schedules.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>📅</span> Schedules</a>
-        <a href="events.html" class="flex items-center gap-4 p-3 hover:bg-white/10 rounded-lg transition"><span>🏆</span> Events</a>
-        
-        <div class="pt-10">
-            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 p-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold shadow-lg transition text-sm">
-                🚪 Logout
-            </button>
-        </div>
-    </nav>
+<!-- SIDEBAR -->
+<aside id="sidebar" class="sidebar">
+<h2 class="text-xl font-bold text-center mb-6">SK DALAGDAG</h2>
+
+<nav class="space-y-2">
+<a href="index.html">📊 Dashboard</a><br>
+<a href="announcements.html">📢 Announcements</a><br>
+<a href="committees.html">👥 Committees</a><br>
+<a href="schedules.html">📅 Schedule</a><br>
+<a href="events.html">🏆 Events</a><br>
+<a href="kk.html">📋 KK</a><br>
+<a href="projects.html">📁 Projects</a><br>
+<a href="suggestions.html">💡 Suggestions</a><br>
+</nav>
+
+<button onclick="logout()" class="mt-10 bg-red-600 w-full p-2 rounded">
+Logout
+</button>
 </aside>
 
-<main class="main-content flex-1 flex flex-col">
-    
-    <header class="sticky top-0 bg-white/80 backdrop-blur-md p-4 px-6 flex justify-between items-center z-50 border-b border-gray-200">
-        <div class="flex items-center gap-4">
-            <button onclick="toggleMenu()" class="md:hidden text-2xl text-green-800">☰</button>
-            <h1 class="text-gray-500 text-xs md:text-sm font-medium uppercase tracking-wider">
-                Main / <span id="displayRole" class="text-green-700 font-bold">USER</span>
-            </h1>
-        </div>
-        <div id="adminBadge" class="hidden bg-yellow-400 text-yellow-900 text-[10px] font-black px-3 py-1 rounded-full shadow-sm">ADMIN ACCESS</div>
-    </header>
+<!-- MAIN -->
+<main class="main-content flex-1">
 
-    <div class="p-4 md:p-8">
-        
-        <div class="swiper mySwiper mb-10 rounded-2xl overflow-hidden shadow-xl bg-green-900">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="inside.png" alt="SK Dalagdag Inside">
-                </div>
-                <div class="swiper-slide">
-                    <img src="intro.png" alt="SK Dalagdag Intro">
-                </div>
-            </div>
-            <div class="swiper-button-next !text-white"></div>
-            <div class="swiper-button-prev !text-white"></div>
-            <div class="swiper-pagination"></div>
-        </div>
+<header class="bg-white p-4 flex justify-between items-center">
+<button onclick="toggleMenu()">☰</button>
+<h1>Main / <span id="displayRole">USER</span></h1>
+</header>
 
-        <div class="grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 mt-10">
-            
-            <div onclick="location.href='announcements.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-orange-500">📢</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Updates</p>
-                <h3 class="text-lg font-bold text-gray-700">Announcements</h3>
-            </div>
+<div class="p-6">
 
-            <div onclick="location.href='committees.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-[#795548]">👥</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Organization</p>
-                <h3 class="text-lg font-bold text-gray-700">Committees</h3>
-            </div>
+<!-- SLIDER -->
+<div class="hero-banner relative rounded-xl overflow-hidden shadow-lg">
 
-            <div onclick="location.href='kk.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-green-600">📋</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Youth Registry</p>
-                <h3 class="text-lg font-bold text-gray-700">KK Profiling</h3>
-            </div>
+<img src="inside.png" class="slide active w-full h-full object-cover">
+<img src="intro.png" class="slide w-full h-full object-cover">
 
-            <div onclick="location.href='events.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-blue-600">🏆</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Programs</p>
-                <h3 class="text-lg font-bold text-gray-700">Events</h3>
-            </div>
+<button onclick="changeSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1">❮</button>
+<button onclick="changeSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1">❯</button>
 
-            <div onclick="location.href='schedules.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-amber-700">📅</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Planning</p>
-                <h3 class="text-lg font-bold text-gray-700">Schedules</h3>
-            </div>
+</div>
 
-            <div onclick="location.href='suggestions.html'" class="stats-card p-6 text-right cursor-pointer">
-                <div class="card-icon bg-red-600">💡</div>
-                <p class="text-gray-400 text-xs uppercase font-bold">Community Wall</p>
-                <h3 class="text-lg font-bold text-gray-700">Suggestions</h3>
-            </div>
+<!-- BUTTONS -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
 
-        </div>
+<div onclick="location.href='announcements.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-orange-500">📢</div>
+<h3 class="mt-6 font-bold">Announcements</h3>
+</div>
 
-        <footer class="bg-[#1b5e20] text-white p-8 mt-20 rounded-3xl shadow-2xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
-                <div>
-                    <h3 class="font-bold text-green-300 uppercase mb-2 tracking-widest">Location</h3>
-                    <p class="opacity-80 leading-relaxed">Barangay Hall of Dalagdag, SK Office<br>Calinan District, Davao City</p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-green-300 uppercase mb-2 tracking-widest">Contact</h3>
-                    <p class="opacity-80">0931 159 4097</p>
-                    <p class="opacity-80">skdalagdag@gmail.com</p>
-                </div>
-            </div>
-            <div class="mt-10 pt-4 border-t border-white/10 text-center text-[10px] opacity-40 uppercase tracking-widest">
-                © 2026 SANGGUNIANG KABATAAN OF DALAGDAG
-            </div>
-        </footer>
-    </div>
+<div onclick="location.href='committees.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-[#795548]">👥</div>
+<h3 class="mt-6 font-bold">Committees</h3>
+</div>
+
+<div onclick="location.href='kk.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-green-600">📋</div>
+<h3 class="mt-6 font-bold">KK</h3>
+</div>
+
+<div onclick="location.href='events.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-blue-600">🏆</div>
+<h3 class="mt-6 font-bold">Events</h3>
+</div>
+
+<div onclick="location.href='schedules.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-amber-700">📅</div>
+<h3 class="mt-6 font-bold">Schedule</h3>
+</div>
+
+<div onclick="location.href='suggestions.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-red-600">💡</div>
+<h3 class="mt-6 font-bold">Suggestions</h3>
+</div>
+
+<div onclick="location.href='projects.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-purple-600">📁</div>
+<h3 class="mt-6 font-bold">Projects</h3>
+</div>
+
+</div>
+
+</div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 <script>
-    // 1. LOGIN SECURITY CHECK
-    if (!sessionStorage.getItem('role')) {
-        window.location.href = "login.html";
-    }
+// LOGIN CHECK
+if (!sessionStorage.getItem('role')) {
+  window.location.href = "login.html";
+}
 
-    // 2. MOBILE MENU TOGGLE
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('active');
-    }
+// MENU
+function toggleMenu(){
+  document.getElementById('sidebar').classList.toggle('active');
+}
 
-    // 3. ROLE & BADGE DISPLAY
-    const role = sessionStorage.getItem('role');
-    const displayRole = document.getElementById('displayRole');
-    const adminBadge = document.getElementById('adminBadge');
+// LOGOUT
+function logout(){
+  sessionStorage.clear();
+  window.location.href="login.html";
+}
 
-    if (role) {
-        displayRole.innerText = role.toUpperCase();
-        if (role === 'admin') {
-            adminBadge.classList.remove('hidden');
-        }
-    }
+// ROLE
+const role = sessionStorage.getItem('role');
+if(role){
+  document.getElementById('displayRole').innerText = role;
+}
 
-    // 4. LOGOUT FUNCTION
-    function logout() {
-        sessionStorage.clear();
-        window.location.href = "login.html";
-    }
+// SLIDER
+let index = 0;
+const slides = document.querySelectorAll(".slide");
 
-    // 5. SLIDER INITIALIZATION
-    const swiper = new Swiper(".mySwiper", {
-        loop: true,
-        autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-    });
+function showSlide(i){
+  slides.forEach(s=>s.classList.remove("active"));
+  slides[i].classList.add("active");
+}
+
+function changeSlide(n){
+  index += n;
+  if(index >= slides.length) index = 0;
+  if(index < 0) index = slides.length - 1;
+  showSlide(index);
+}
+
+setInterval(()=>changeSlide(1),4000);
 </script>
 
 </body>
