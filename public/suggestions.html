@@ -5,44 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>SK Dalagdag | Community Wall</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; margin: 0; }
-        
-        .sidebar { width: 260px; height: 100vh; position: fixed; background: #1b5e20; color: white; padding: 20px; z-index: 100; }
-        .main-content { margin-left: 260px; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; margin: 0; overflow-x: hidden; }
+
+        .sidebar {
+            width: 260px; height: 100vh; position: fixed;
+            background: #1b5e20; color: white; padding: 20px;
+            z-index: 100; transition: 0.3s;
+        }
+
+        .main-content { margin-left: 260px; transition: 0.3s; min-height: 100vh; }
+
+        @media(max-width:768px) {
+            .sidebar { transform: translateX(-260px); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; }
+        }
 
         .post-card {
             background: white;
             border-radius: 12px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .reaction-btn {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #65676b;
-            transition: background 0.2s;
-        }
-        .reaction-btn:hover { background: #f2f2f2; }
-
-        @media(max-width:768px) {
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; }
+            margin-bottom: 15px;
         }
     </style>
 </head>
+
 <body class="flex">
 
-<aside class="sidebar">
-    <h2 class="text-xl font-bold mb-6 text-center border-b border-white/20 pb-4">SK DALAGDAG</h2>
+<aside id="sidebar" class="sidebar shadow-2xl">
+    <div class="flex justify-between items-center md:block">
+        <h2 class="text-xl font-bold mb-6 text-center border-b border-white/20 pb-4">SK DALAGDAG</h2>
+        <button onclick="toggleMenu()" class="md:hidden text-2xl mb-4">✕</button>
+    </div>
     <nav class="space-y-2">
         <a href="index.html" class="block p-3 hover:bg-white/10 rounded-lg">📊 Dashboard</a>
         <a href="suggestions.html" class="block p-3 bg-white/20 rounded-lg font-bold">💡 Community Wall</a>
@@ -50,131 +47,180 @@
 </aside>
 
 <main class="main-content flex-1">
-    <header class="bg-white p-4 px-8 border-b border-gray-200 sticky top-0 z-50">
-        <h1 class="text-gray-500 text-sm font-medium">Community / <span class="text-green-700 font-bold uppercase">Wall</span></h1>
-    </header>
 
-    <div class="p-4 md:p-8 max-w-2xl mx-auto">
-        
-        <div class="bg-white p-4 rounded-xl shadow-md mb-8">
-            <div class="flex gap-3 mb-4">
-                <div class="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold">👤</div>
-                <input id="nickname" type="text" placeholder="Nickname" class="bg-gray-100 rounded-full flex-1 px-4 outline-none border-none text-sm">
-            </div>
-            <textarea id="suggestion" rows="2" placeholder="What's on your mind, SK Youth?" class="w-full p-2 outline-none text-lg"></textarea>
-            <hr class="my-3">
-            <button onclick="savePost()" class="w-full bg-green-700 text-white font-bold py-2 rounded-lg hover:bg-green-800 transition">Post Activity Suggestion</button>
+<header class="bg-white p-4 px-6 border-b border-gray-200 sticky top-0 z-50 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+        <button onclick="toggleMenu()" class="md:hidden text-2xl text-green-800">☰</button>
+        <h1 class="text-gray-500 text-xs md:text-sm font-medium uppercase tracking-wider">Community Wall</h1>
+    </div>
+    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-800 font-bold text-xs">SK</div>
+</header>
+
+<div class="p-3 md:p-8 max-w-2xl mx-auto">
+
+    <div class="bg-white p-4 rounded-xl shadow-md mb-6">
+        <div class="flex gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold">👤</div>
+            <input id="nickname" type="text" placeholder="Nickname"
+                   class="bg-gray-100 rounded-full flex-1 px-4 text-sm h-10 outline-none">
         </div>
 
-        <div id="postFeed"></div>
+        <textarea id="suggestion" rows="2" placeholder="What's on your mind?"
+                  class="w-full p-2 outline-none text-base resize-none"></textarea>
+
+        <hr class="my-2">
+
+        <button onclick="savePost()"
+                class="w-full bg-green-700 text-white font-bold py-2.5 rounded-lg">
+            Post Suggestion
+        </button>
     </div>
+
+    <div id="postFeed" class="pb-20"></div>
+</div>
+
 </main>
 
 <script>
-    const role = sessionStorage.getItem('role');
+function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('active');
+}
 
-    window.onload = displayPosts;
+const role = sessionStorage.getItem('role');
+window.onload = displayPosts;
 
-    function savePost() {
-        const nick = document.getElementById('nickname').value || "Anonymous";
-        const msg = document.getElementById('suggestion').value;
-        if(!msg) return alert("Write something first!");
+function savePost() {
+    const nick = document.getElementById('nickname').value || "Guest User";
+    const msg = document.getElementById('suggestion').value;
+    if (!msg) return alert("Please write a message.");
 
-        const newPost = {
-            id: Date.now(),
-            author: nick,
-            text: msg,
-            date: new Date().toLocaleString(),
-            reactions: { like: 0, heart: 0, angry: 0 },
-            replies: []
-        };
+    const newPost = {
+        id: Date.now(),
+        author: nick,
+        text: msg,
+        date: new Date().toLocaleDateString(),
 
-        let posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
-        posts.unshift(newPost);
-        localStorage.setItem('sk_posts', JSON.stringify(posts));
+        // ✅ ADDED REACTIONS ONLY
+        reactions: {
+            like: 0,
+            sad: 0,
+            heart: 0,
+            eye: 0,
+            wow: 0,
+            angry: 0
+        },
 
-        document.getElementById('suggestion').value = '';
-        displayPosts();
-    }
+        replies: []
+    };
 
-    function displayPosts() {
-        const posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
-        const feed = document.getElementById('postFeed');
-        feed.innerHTML = '';
+    let posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
+    posts.unshift(newPost);
+    localStorage.setItem('sk_posts', JSON.stringify(posts));
 
-        posts.forEach(post => {
-            const card = document.createElement('div');
-            card.className = "post-card p-4";
-            
-            let deleteBtn = (role === 'admin') ? `<button onclick="deletePost(${post.id})" class="text-red-500 text-xs font-bold">Delete Post</button>` : '';
+    document.getElementById('suggestion').value = '';
+    displayPosts();
+}
 
-            card.innerHTML = `
-                <div class="flex justify-between items-start mb-3">
-                    <div class="flex gap-2">
-                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500">👤</div>
-                        <div>
-                            <h4 class="font-bold text-gray-900 text-sm">${post.author}</h4>
-                            <p class="text-[10px] text-gray-500">${post.date}</p>
-                        </div>
-                    </div>
-                    ${deleteBtn}
-                </div>
-                <p class="text-gray-800 text-sm mb-4">${post.text}</p>
-                
-                <div class="flex border-t border-b border-gray-100 py-1 mb-3 justify-around">
-                    <button onclick="react(${post.id}, 'like')" class="reaction-btn">👍 ${post.reactions.like || 0}</button>
-                    <button onclick="react(${post.id}, 'heart')" class="reaction-btn">❤️ ${post.reactions.heart || 0}</button>
-                    <button onclick="react(${post.id}, 'angry')" class="reaction-btn">😡 ${post.reactions.angry || 0}</button>
-                </div>
+function displayPosts() {
+    const posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
+    const feed = document.getElementById('postFeed');
+    feed.innerHTML = '';
 
-                <div class="space-y-2 mb-3">
-                    ${post.replies.map(r => `
-                        <div class="bg-gray-50 p-2 rounded-lg text-xs">
-                            <span class="font-bold text-green-800">${r.author}:</span> ${r.text}
-                        </div>
-                    `).join('')}
-                </div>
+    posts.forEach(post => {
 
+        let deleteBtn = (role === 'admin')
+            ? `<button onclick="deletePost(${post.id})" class="text-red-500 text-[10px] border px-2 py-1 rounded">Delete</button>`
+            : '';
+
+        const card = document.createElement('div');
+        card.className = "post-card p-4";
+
+        card.innerHTML = `
+            <div class="flex justify-between items-start mb-3">
                 <div class="flex gap-2">
-                    <input id="reply-${post.id}" type="text" placeholder="Write a reply..." class="bg-gray-100 rounded-full flex-1 px-3 py-1 text-xs outline-none">
-                    <button onclick="addReply(${post.id})" class="text-green-700 font-bold text-xs">Reply</button>
+                    <div class="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center">👤</div>
+                    <div>
+                        <h4 class="font-bold text-xs">${post.author}</h4>
+                        <p class="text-[9px] text-gray-400">${post.date}</p>
+                    </div>
                 </div>
-            `;
-            feed.appendChild(card);
-        });
+                ${deleteBtn}
+            </div>
+
+            <p class="text-sm mb-4">${post.text}</p>
+
+            <!-- ✅ REACTIONS ADDED -->
+            <div class="flex flex-wrap gap-2 border-t border-b py-2 mb-3 text-xs">
+
+                <button onclick="react(${post.id}, 'like')">👍 ${post.reactions.like || 0}</button>
+                <button onclick="react(${post.id}, 'sad')">😢 ${post.reactions.sad || 0}</button>
+                <button onclick="react(${post.id}, 'heart')">❤️ ${post.reactions.heart || 0}</button>
+                <button onclick="react(${post.id}, 'eye')">🙄 ${post.reactions.eye || 0}</button>
+                <button onclick="react(${post.id}, 'wow')">😮 ${post.reactions.wow || 0}</button>
+                <button onclick="react(${post.id}, 'angry')">😡 ${post.reactions.angry || 0}</button>
+
+            </div>
+
+            <div class="space-y-2 mb-3 max-h-40 overflow-y-auto">
+                ${post.replies.map(r => `
+                    <div class="bg-gray-50 p-2 rounded-lg text-[11px]">
+                        <b>${r.author}:</b> ${r.text}
+                    </div>
+                `).join('')}
+            </div>
+
+            <div class="flex gap-2">
+                <input id="reply-${post.id}" type="text" placeholder="Comment..."
+                       class="bg-gray-100 rounded-full flex-1 px-3 py-1.5 text-xs">
+                <button onclick="addReply(${post.id})" class="text-green-700 font-bold text-xs">Reply</button>
+            </div>
+        `;
+
+        feed.appendChild(card);
+    });
+}
+
+function react(postId, type) {
+    let posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
+    const index = posts.findIndex(p => p.id === postId);
+
+    if (!posts[index].reactions[type]) {
+        posts[index].reactions[type] = 0;
     }
 
-    function react(postId, type) {
-        let posts = JSON.parse(localStorage.getItem('sk_posts'));
-        const index = posts.findIndex(p => p.id === postId);
-        posts[index].reactions[type]++;
+    posts[index].reactions[type]++;
+    localStorage.setItem('sk_posts', JSON.stringify(posts));
+    displayPosts();
+}
+
+function addReply(postId) {
+    const input = document.getElementById(`reply-${postId}`);
+    if (!input.value) return;
+
+    let posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
+    const index = posts.findIndex(p => p.id === postId);
+
+    posts[index].replies.push({
+        author: role === 'admin' ? "Admin" : "User",
+        text: input.value
+    });
+
+    localStorage.setItem('sk_posts', JSON.stringify(posts));
+    displayPosts();
+    input.value = '';
+}
+
+function deletePost(id) {
+    if (role !== 'admin') return alert("Only admin can delete posts!");
+
+    if (confirm("Delete this post?")) {
+        let posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
+        posts = posts.filter(p => p.id !== id);
         localStorage.setItem('sk_posts', JSON.stringify(posts));
         displayPosts();
     }
-
-    function addReply(postId) {
-        const input = document.getElementById(`reply-${postId}`);
-        if(!input.value) return;
-
-        let posts = JSON.parse(localStorage.getItem('sk_posts'));
-        const index = posts.findIndex(p => p.id === postId);
-        
-        posts[index].replies.push({
-            author: role === 'admin' ? "Admin" : "Guest",
-            text: input.value
-        });
-
-        localStorage.setItem('sk_posts', JSON.stringify(posts));
-        displayPosts();
-    }
-
-    function deletePost(id) {
-        if(confirm("Admin: Delete this post?")) {
-            let posts = JSON.parse(localStorage.getItem('sk_posts')).filter(p => p.id !== id);
-            localStorage.setItem('sk_posts', JSON.stringify(posts));
-            displayPosts();
-        }
-    }
+}
 </script>
+
 </body>
 </html>
