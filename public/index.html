@@ -179,53 +179,46 @@ body {
 
 <script>
 
-/* =========================
-   FIXED LOGIN CHECK (NO LOOP)
-========================= */
 window.addEventListener("DOMContentLoaded", () => {
 
-    const role =
-        localStorage.getItem('role') ||
-        sessionStorage.getItem('role');
+    const role = sessionStorage.getItem('role');
 
-    if (!role || role === "null") {
-        localStorage.removeItem('role');
-        sessionStorage.removeItem('role');
+    // ❌ NOT LOGGED IN → BACK TO LOGIN
+    if (!role) {
         window.location.replace("login.html");
         return;
     }
 
+    // show role
     const display = document.getElementById('displayRole');
     if (display) display.innerText = role.toUpperCase();
 
 });
 
-/* MENU */
-function toggleMenu() {
-    document.getElementById('sidebar').classList.toggle('active');
-}
-
-/* LOGOUT FIXED */
+// ===================
+// LOGOUT
+// ===================
 function logout() {
-    localStorage.removeItem('role');
     sessionStorage.removeItem('role');
     window.location.replace("login.html");
 }
 
-/* SLIDER */
+// sidebar toggle (unchanged)
+function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('active');
+}
+
+// slider unchanged
 let index = 0;
 const slides = document.querySelectorAll(".slide");
 
-function showSlide(i){
-  slides.forEach(s => s.classList.remove("active"));
-  slides[i].classList.add("active");
-}
-
 function changeSlide(n){
-  index += n;
-  if(index >= slides.length) index = 0;
-  if(index < 0) index = slides.length - 1;
-  showSlide(index);
+    index += n;
+    if(index >= slides.length) index = 0;
+    if(index < 0) index = slides.length - 1;
+
+    slides.forEach(s => s.classList.remove("active"));
+    slides[index].classList.add("active");
 }
 
 setInterval(() => changeSlide(1), 4000);
