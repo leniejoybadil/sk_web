@@ -93,10 +93,9 @@ body {
     </div>
 
     <nav class="flex flex-col gap-1">
-        <a href="index.html" class="nav-item active">
-            <span class="nav-icon">📊</span>
-            <span>Dashboard</span>
-        </a>
+       <a href="index.html" class="block w-full px-4 py-3 rounded-lg bg-white text-green-800 font-bold shadow-sm hover:bg-green-100 transition flex items-center gap-2">
+📊 Dashboard
+</a>
         <a href="announcements.html" class="nav-item">
             <span class="nav-icon">📢</span>
             <span>Announcements</span>
@@ -127,9 +126,9 @@ body {
         </a>
 
         <div class="pt-10">
-            <button onclick="logout()" class="logout-btn w-full flex items-center justify-center gap-2">
-                🚪 Logout
-            </button>
+            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg transition">
+    🚪 Logout
+</button>
         </div>
     </nav>
 </aside>
@@ -198,31 +197,49 @@ body {
 </main>
 
 <script>
-  //log-in check
-window.addEventListener("load", () => {
+/* =========================
+   LOGIN CHECK (FIXED)
+========================= */
+window.addEventListener("DOMContentLoaded", () => {
 
     const role = sessionStorage.getItem('role');
 
-    // wait a bit to avoid instant redirect glitch
-    setTimeout(() => {
+    if (!role) {
+        window.location.replace("login.html");
+        return;
+    }
 
-        if (!role) {
-            window.location.replace("login.html");
-            return;
-        }
-
-        const roleDisplay = document.getElementById('displayRole');
-        if (roleDisplay) roleDisplay.innerText = role;
-
-    }, 100);
+    const roleDisplay = document.getElementById('displayRole');
+    if (roleDisplay) roleDisplay.innerText = role;
 
 });
-// SLIDER
+
+
+/* =========================
+   MENU TOGGLE (ADD IF MISSING)
+========================= */
+function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('active');
+}
+
+
+/* =========================
+   LOGOUT (FIXED - YOU WERE MISSING THIS)
+========================= */
+function logout() {
+    sessionStorage.removeItem('role'); // clear only role
+    window.location.replace("login.html");
+}
+
+
+/* =========================
+   SLIDER
+========================= */
 let index = 0;
 const slides = document.querySelectorAll(".slide");
 
 function showSlide(i){
-  slides.forEach(s=>s.classList.remove("active"));
+  slides.forEach(s => s.classList.remove("active"));
   slides[i].classList.add("active");
 }
 
@@ -233,8 +250,8 @@ function changeSlide(n){
   showSlide(index);
 }
 
-setInterval(()=>changeSlide(1),4000);
-</script>
+setInterval(() => changeSlide(1), 4000);
 
+</script>
 </body>
 </html>
