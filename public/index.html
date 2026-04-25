@@ -211,40 +211,36 @@ body {
 ========================= */
 window.addEventListener("DOMContentLoaded", () => {
 
-    setTimeout(() => {
+    const role = localStorage.getItem('role');
 
-        const role = localStorage.getItem('role') || sessionStorage.getItem('role');
+    // ❗ only redirect if REALLY empty
+    if (role === null || role === undefined || role === "") {
+        window.location.replace("login.html");
+        return;
+    }
 
-        if (!role) {
-            window.location.replace("login.html");
-            return;
-        }
-
-        const display = document.getElementById('displayRole');
-        if (display) display.innerText = role.toUpperCase();
-
-    }, 100);
+    const display = document.getElementById('displayRole');
+    if (display) display.innerText = role.toUpperCase();
 
 });
 
 /* =========================
-   MENU
+   MENU (UNCHANGED)
 ========================= */
 function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('active');
 }
 
 /* =========================
-   LOGOUT FIX
+   LOGOUT (FIXED)
 ========================= */
 function logout() {
     localStorage.removeItem('role');
-    sessionStorage.removeItem('role');
     window.location.replace("login.html");
 }
 
 /* =========================
-   SLIDER
+   SLIDER (UNCHANGED)
 ========================= */
 let index = 0;
 const slides = document.querySelectorAll(".slide");
@@ -264,6 +260,5 @@ function changeSlide(n){
 setInterval(() => changeSlide(1), 4000);
 
 </script>
-
 </body>
 </html>

@@ -103,19 +103,18 @@ ADMIN LOGIN 🔑
 </footer>
 
 <script>
-
 // ========================
-// GUEST LOGIN
+// GUEST LOGIN (FIXED)
 // ========================
 function loginAsGuest() {
     localStorage.setItem('role', 'guest');
-    console.log("Saved role:", localStorage.getItem('role'));
 
-    setTimeout(() => {
-        window.location.href = "index.html";
-    }, 100);
+    window.location.replace("index.html");
 }
 
+// ========================
+// ADMIN LOGIN (FIXED)
+// ========================
 document.getElementById('adminForm').addEventListener('submit', function(e){
     e.preventDefault();
 
@@ -124,11 +123,8 @@ document.getElementById('adminForm').addEventListener('submit', function(e){
 
     if(user === 'admin' && pass === 'luffy_28'){
         localStorage.setItem('role', 'admin');
-        console.log("Saved role:", localStorage.getItem('role'));
 
-        setTimeout(() => {
-            window.location.href = "index.html";
-        }, 100);
+        window.location.replace("index.html");
     } else {
         alert("Incorrect Admin Credentials");
     }
