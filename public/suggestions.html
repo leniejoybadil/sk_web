@@ -100,7 +100,6 @@ function savePost() {
         text: msg,
         date: new Date().toLocaleDateString(),
 
-        // ✅ ADDED REACTIONS ONLY
         reactions: {
             like: 0,
             sad: 0,
@@ -110,7 +109,10 @@ function savePost() {
             angry: 0
         },
 
-        replies: []
+        replies: [],
+
+        // ✅ ADDED ONLY THIS
+        userReactions: {}
     };
 
     let posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
@@ -149,7 +151,6 @@ function displayPosts() {
 
             <p class="text-sm mb-4">${post.text}</p>
 
-            <!-- ✅ REACTIONS ADDED -->
             <div class="flex flex-wrap gap-2 border-t border-b py-2 mb-3 text-xs">
 
                 <button onclick="react(${post.id}, 'like')">👍 ${post.reactions.like || 0}</button>
@@ -184,11 +185,26 @@ function react(postId, type) {
     let posts = JSON.parse(localStorage.getItem('sk_posts')) || [];
     const index = posts.findIndex(p => p.id === postId);
 
+    if (!posts[index]) return;
+
+    if (!posts[index].userReactions) {
+        posts[index].userReactions = {};
+    }
+
+    // ✅ ONLY ONCE RULE
+    if (posts[index].userReactions[type]) {
+        alert("You already reacted to this post!");
+        return;
+    }
+
+    posts[index].userReactions[type] = true;
+
     if (!posts[index].reactions[type]) {
         posts[index].reactions[type] = 0;
     }
 
     posts[index].reactions[type]++;
+
     localStorage.setItem('sk_posts', JSON.stringify(posts));
     displayPosts();
 }
