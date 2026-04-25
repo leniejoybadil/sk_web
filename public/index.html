@@ -202,7 +202,7 @@ body {
 ========================= */
 window.addEventListener("DOMContentLoaded", () => {
 
-    const role = sessionStorage.getItem('role');
+    const role = localStorage.getItem('role');
 
     if (!role) {
         window.location.replace("login.html");
@@ -213,7 +213,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (roleDisplay) roleDisplay.innerText = role;
 
 });
-
 
 /* =========================
    MENU TOGGLE (ADD IF MISSING)
@@ -227,7 +226,7 @@ function toggleMenu() {
    LOGOUT (FIXED - YOU WERE MISSING THIS)
 ========================= */
 function logout() {
-    sessionStorage.removeItem('role'); // clear only role
+    localStorage.removeItem('role');
     window.location.replace("login.html");
 }
 

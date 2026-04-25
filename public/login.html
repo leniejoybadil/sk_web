@@ -167,10 +167,11 @@ class="w-full p-3 border-2 rounded-xl">
     }, 50);
 }
 // GUEST
-function loginAsGuest(){
-  sessionStorage.setItem('role','guest');
-  window.location.href="index.html";
+function login() {
+    localStorage.setItem('role', 'admin'); // or user
+    window.location.href = "index.html";
 }
+
 
 // ADMIN
 document.getElementById('adminForm').addEventListener('submit', function(e){
