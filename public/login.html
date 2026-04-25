@@ -14,6 +14,12 @@ body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   background-color: #f1f8e9;
+
+  /* This will brighten your images inside the slidebar */
+.swiper-slide img {
+    filter: brightness(1.2) contrast(1.1); 
+    /* 1.2 means 120% brightness. Adjust as needed! */
+}
 }
 
 /* IMAGE FIX */
@@ -99,13 +105,11 @@ body {
             <!-- ADMIN LOGIN -->
             <form id="adminForm" class="space-y-3">
 
-                <input type="text" id="username" placeholder="Dalagdag"
-                class="w-full p-3 border-2 border-gray-100 rounded-xl bg-gray-50 focus:bg-white focus:border-green-600 outline-none"
-                required>
+<input type="text" id="username" placeholder="Enter username"
+class="w-full p-3 border-2 rounded-xl">
 
-                <input type="password" id="password" placeholder="sk_official"
-                class="w-full p-3 border-2 border-gray-100 rounded-xl bg-gray-50 focus:bg-white focus:border-green-600 outline-none"
-                required>
+<input type="password" id="password" placeholder="Enter password"
+class="w-full p-3 border-2 rounded-xl">
 
                 <button type="submit"
                 class="w-full bg-[#ffeb3b] text-[#1b4332] font-black py-3 rounded-xl shadow hover:bg-yellow-400">
@@ -167,7 +171,7 @@ document.getElementById('adminForm').addEventListener('submit', function(e){
   const user = username.value;
   const pass = password.value;
 
-  if(user === 'admin' && pass === 'dalagdag2026'){
+  if(user === 'admin' && pass === 'luffy_28'){
     sessionStorage.setItem('role','admin');
     window.location.href="index.html";
   } else {

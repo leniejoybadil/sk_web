@@ -6,6 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <title>KK Profiling Form</title>
+
     <style>
         body { font-family: Arial; background: #f3f3f3; }
         .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 10px; }
@@ -13,7 +14,7 @@
         .box { background: white; border: 1px solid #000; padding: 8px; margin-top: 8px; }
         .label { font-size: 10px; color: #555; font-weight: bold; text-transform: uppercase; }
         .option { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 14px; cursor: pointer; }
-        
+
         @media print {
             button, .no-print { display: none !important; }
             body { background: white; }
@@ -21,6 +22,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <div id="pdf-area">
@@ -35,6 +37,7 @@
     </div>
 
     <form id="kkForm" class="p-3">
+
         <div class="box">
             <div class="label">FULL NAME</div>
             <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b border-gray-100 focus:border-green-500" required>
@@ -52,6 +55,7 @@
         <div class="box">
             <div class="label">BIRTHDATE</div>
             <input type="date" name="birthdate" id="birthdate" class="w-full" onchange="calcAge()" required>
+
             <div class="label mt-2">AGE</div>
             <input type="text" name="age" id="age" class="w-full outline-none" readonly>
         </div>
@@ -100,9 +104,20 @@
 
         <div class="box">
             <div class="label">SK PARTICIPATION</div>
+
             <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
             <label class="option"><input type="radio" name="voter" value="Yes" required> Yes</label>
             <label class="option"><input type="radio" name="voter" value="No"> No</label>
+
+            <div class="label">VOTED IN LAST ELECTION?</div>
+
+    <label class="option">
+        <input type="radio" name="last_election_vote" value="Yes" required> Yes
+    </label>
+
+    <label class="option">
+        <input type="radio" name="last_election_vote" value="No"> No
+    </label>
 
             <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
             <label class="option"><input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes</label>
@@ -115,69 +130,72 @@
                 <label class="option"><input type="radio" name="times" value="More than 5"> More than 5</label>
             </div>
         </div>
+
     </form>
 </div>
 
 <div class="p-3 no-print space-y-2 mt-4">
     <button type="button" onclick="submitToGoogle()" id="submitBtn" class="bg-green-600 text-white w-full p-3 font-bold rounded shadow hover:bg-green-700">SUBMIT</button>
+
     <button type="button" onclick="downloadAsPDF()" class="bg-blue-600 text-white w-full p-3 font-bold rounded shadow hover:bg-blue-700">DOWNLOAD PDF</button>
+
     <button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded text-sm hover:bg-gray-600">BACK TO DASHBOARD</button>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyEczCH2VKfLu8wXV-Lgs7o19iyZAx8bTaOWGywrhP_zIBHj_iz5HHA6pb6dVc1g8N2/exec';
-    const form = document.getElementById('kkForm');
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyEczCH2VKfLu8wXV-Lgs7o19iyZAx8bTaOWGywrhP_zIBHj_iz5HHA6pb6dVc1g8N2/exec';
+const form = document.getElementById('kkForm');
 
-    function calcAge() {
-        let b = new Date(document.getElementById('birthdate').value);
-        let t = new Date();
-        if(!isNaN(b.getTime())) {
-            document.getElementById('age').value = t.getFullYear() - b.getFullYear();
-        }
+function calcAge() {
+    let b = new Date(document.getElementById('birthdate').value);
+    let t = new Date();
+    if (!isNaN(b.getTime())) {
+        document.getElementById('age').value = t.getFullYear() - b.getFullYear();
     }
+}
 
-    function toggleTimes(show) {
-        const box = document.getElementById('kk_times_box');
-        box.classList.toggle('hidden', !show);
-    }
+function toggleTimes(show) {
+    document.getElementById('kk_times_box').classList.toggle('hidden', !show);
+}
 
-    // NEW: Function to download exactly what is on the screen as a PDF
-    function downloadAsPDF() {
-        const element = document.getElementById('pdf-area');
-        const opt = {
-            margin: 0.2,
-            filename: 'KK_Profiling_Form.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(element).save();
-    }
+function downloadAsPDF() {
+    const element = document.getElementById('pdf-area');
 
-    // Wrapped your original submit logic in a function
-    function submitToGoogle() {
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "SENDING...";
-        btn.disabled = true;
+    html2pdf().set({
+        margin: 0.2,
+        filename: 'KK_Profiling_Form.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    }).from(element).save();
+}
 
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: new FormData(form)})
-            .then(() => {
-                alert("Successfully sent to SK Database!");
-                btn.innerText = "SUBMIT";
-                btn.disabled = false;
-                form.reset();
-                document.getElementById('kk_times_box').classList.add('hidden');
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert("Submit failed. Check connection.");
-                btn.innerText = "SUBMIT";
-                btn.disabled = false;
-            });
-    }
+function submitToGoogle() {
+    const btn = document.getElementById('submitBtn');
+    btn.innerText = "SENDING...";
+    btn.disabled = true;
 
-    // Prevent default form submit
-    form.addEventListener('submit', e => e.preventDefault());
+    fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new FormData(form)
+    })
+    .then(() => {
+        alert("Successfully sent to SK Database!");
+        btn.innerText = "SUBMIT";
+        btn.disabled = false;
+        form.reset();
+        document.getElementById('kk_times_box').classList.add('hidden');
+    })
+    .catch(err => {
+        alert("Submit failed. Check connection.");
+        console.error(err);
+        btn.innerText = "SUBMIT";
+        btn.disabled = false;
+    });
+}
+
+form.addEventListener('submit', e => e.preventDefault());
 </script>
 
 </body>
