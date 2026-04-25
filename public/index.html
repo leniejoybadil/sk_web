@@ -17,6 +17,7 @@ body {
   overflow-x: hidden;
 }
 
+/* Sidebar */
 .sidebar {
   width: 260px;
   height: 100vh;
@@ -32,6 +33,7 @@ body {
   min-height: 100vh;
 }
 
+/* Cards */
 .stats-card {
   background: white;
   border-radius: 8px;
@@ -58,17 +60,18 @@ body {
   font-size: 22px;
 }
 
+/* SLIDER */
 .slide { display:none; }
 .slide.active { display:block; }
 
 .hero-banner {
   height: 260px;
 }
-
 @media(min-width:768px){
   .hero-banner { height: 360px; }
 }
 
+/* Mobile */
 @media(max-width:768px){
   .sidebar { transform: translateX(-260px); }
   .sidebar.active { transform: translateX(0); }
@@ -91,29 +94,42 @@ body {
 
     <nav class="flex flex-col gap-1">
         <a href="index.html" class="block w-full px-4 py-3 rounded-lg bg-white text-green-800 font-bold shadow-sm hover:bg-green-100 transition flex items-center gap-2">
-            📊 Dashboard
+📊 Dashboard
         </a>
 
         <a href="announcements.html" class="nav-item">
-            <span>📢 Announcements</span>
+            <span class="nav-icon">📢</span>
+            <span>Announcements</span>
         </a>
+
         <a href="committees.html" class="nav-item">
-            <span>👥 Committees</span>
+            <span class="nav-icon">👥</span>
+            <span>Committees</span>
         </a>
+
         <a href="schedules.html" class="nav-item">
-            <span>📅 Schedule</span>
+            <span class="nav-icon">📅</span>
+            <span>Schedule</span>
         </a>
+
         <a href="events.html" class="nav-item">
-            <span>🏆 Events</span>
+            <span class="nav-icon">🏆</span>
+            <span>Events</span>
         </a>
+
         <a href="kk.html" class="nav-item">
-            <span>📋 KK Profiling</span>
+            <span class="nav-icon">📋</span>
+            <span>KK Profiling</span>
         </a>
+
         <a href="projects.html" class="nav-item">
-            <span>📁 Projects</span>
+            <span class="nav-icon">📁</span>
+            <span>Projects</span>
         </a>
+
         <a href="suggestions.html" class="nav-item">
-            <span>💡 Suggestions</span>
+            <span class="nav-icon">💡</span>
+            <span>Suggestions</span>
         </a>
 
         <div class="pt-10">
@@ -168,6 +184,21 @@ body {
 <h3 class="mt-6 font-bold">Events</h3>
 </div>
 
+<div onclick="location.href='schedules.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-amber-700">📅</div>
+<h3 class="mt-6 font-bold">Schedule</h3>
+</div>
+
+<div onclick="location.href='suggestions.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-red-600">💡</div>
+<h3 class="mt-6 font-bold">Suggestions</h3>
+</div>
+
+<div onclick="location.href='projects.html'" class="stats-card p-6 cursor-pointer">
+<div class="card-icon bg-purple-600">📁</div>
+<h3 class="mt-6 font-bold">Projects</h3>
+</div>
+
 </div>
 
 </div>
@@ -175,16 +206,14 @@ body {
 
 <script>
 
-let role;
-
-// =========================
-// FIX 1: SAFE LOGIN CHECK (NO FLASH LOOP)
-// =========================
+/* =========================
+   FIXED LOGIN CHECK (NO LOOP)
+========================= */
 window.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
 
-        role = localStorage.getItem('role');
+        const role = localStorage.getItem('role') || sessionStorage.getItem('role');
 
         if (!role) {
             window.location.replace("login.html");
@@ -194,28 +223,29 @@ window.addEventListener("DOMContentLoaded", () => {
         const display = document.getElementById('displayRole');
         if (display) display.innerText = role.toUpperCase();
 
-    }, 120); // prevents instant redirect glitch
+    }, 100);
 
 });
 
-// =========================
-// MENU
-// =========================
+/* =========================
+   MENU
+========================= */
 function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('active');
 }
 
-// =========================
-// LOGOUT FIX
-// =========================
+/* =========================
+   LOGOUT FIX
+========================= */
 function logout() {
     localStorage.removeItem('role');
+    sessionStorage.removeItem('role');
     window.location.replace("login.html");
 }
 
-// =========================
-// SLIDER
-// =========================
+/* =========================
+   SLIDER
+========================= */
 let index = 0;
 const slides = document.querySelectorAll(".slide");
 
@@ -234,5 +264,6 @@ function changeSlide(n){
 setInterval(() => changeSlide(1), 4000);
 
 </script>
+
 </body>
 </html>
