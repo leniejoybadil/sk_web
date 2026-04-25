@@ -83,25 +83,56 @@ body {
 <body class="flex">
 
 <!-- SIDEBAR -->
-<aside id="sidebar" class="sidebar">
-<h2 class="text-xl font-bold text-center mb-6">SK DALAGDAG</h2>
+<aside id="sidebar" class="sidebar shadow-2xl bg-[#1b5e20]">
+    <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+        <div class="text-center w-full">
+            <h2 class="text-xl font-black tracking-tighter text-white">SK DALAGDAG</h2>
+            <p class="text-[10px] opacity-60 text-white uppercase tracking-widest">Youth Portal</p>
+        </div>
+        <button onclick="toggleMenu()" class="md:hidden text-2xl text-white absolute right-4">✕</button>
+    </div>
 
-<nav class="space-y-2">
-<a href="index.html">📊 Dashboard</a><br>
-<a href="announcements.html">📢 Announcements</a><br>
-<a href="committees.html">👥 Committees</a><br>
-<a href="schedules.html">📅 Schedule</a><br>
-<a href="events.html">🏆 Events</a><br>
-<a href="kk.html">📋 KK</a><br>
-<a href="projects.html">📁 Projects</a><br>
-<a href="suggestions.html">💡 Suggestions</a><br>
-</nav>
+    <nav class="flex flex-col gap-1">
+        <a href="index.html" class="nav-item active">
+            <span class="nav-icon">📊</span>
+            <span>Dashboard</span>
+        </a>
+        <a href="announcements.html" class="nav-item">
+            <span class="nav-icon">📢</span>
+            <span>Announcements</span>
+        </a>
+        <a href="committees.html" class="nav-item">
+            <span class="nav-icon">👥</span>
+            <span>Committees</span>
+        </a>
+        <a href="schedules.html" class="nav-item">
+            <span class="nav-icon">📅</span>
+            <span>Schedule</span>
+        </a>
+        <a href="events.html" class="nav-item">
+            <span class="nav-icon">🏆</span>
+            <span>Events</span>
+        </a>
+        <a href="kk.html" class="nav-item">
+            <span class="nav-icon">📋</span>
+            <span>KK Profiling</span>
+        </a>
+        <a href="projects.html" class="nav-item">
+            <span class="nav-icon">📁</span>
+            <span>Projects</span>
+        </a>
+        <a href="suggestions.html" class="nav-item">
+            <span class="nav-icon">💡</span>
+            <span>Suggestions</span>
+        </a>
 
-<button onclick="logout()" class="mt-10 bg-red-600 w-full p-2 rounded">
-Logout
-</button>
+        <div class="pt-10">
+            <button onclick="logout()" class="logout-btn w-full flex items-center justify-center gap-2">
+                🚪 Logout
+            </button>
+        </div>
+    </nav>
 </aside>
-
 <!-- MAIN -->
 <main class="main-content flex-1">
 
@@ -167,28 +198,20 @@ Logout
 </main>
 
 <script>
-// LOGIN CHECK
-if (!sessionStorage.getItem('role')) {
-  window.location.href = "login.html";
-}
+  //log-in check
+window.addEventListener("DOMContentLoaded", () => {
 
-// MENU
-function toggleMenu(){
-  document.getElementById('sidebar').classList.toggle('active');
-}
+    const role = localStorage.getItem('role');
 
-// LOGOUT
-function logout(){
-  sessionStorage.clear();
-  window.location.href="login.html";
-}
+    if (!role) {
+        window.location.replace("login.html");
+        return;
+    }
 
-// ROLE
-const role = sessionStorage.getItem('role');
-if(role){
-  document.getElementById('displayRole').innerText = role;
-}
+    const roleDisplay = document.getElementById('displayRole');
+    if (roleDisplay) roleDisplay.textContent = role;
 
+});
 // SLIDER
 let index = 0;
 const slides = document.querySelectorAll(".slide");
