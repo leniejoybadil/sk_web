@@ -103,43 +103,24 @@ ADMIN LOGIN 🔑
 </footer>
 
 <script>
-
-// ========================
-// GUEST LOGIN
-// ========================
 function loginAsGuest() {
-    localStorage.setItem('role', 'guest');
-
-    // small delay prevents redirect race bug
-    setTimeout(() => {
-        window.location.replace("index.html");
-    }, 100);
+    sessionStorage.setItem("role", "guest");
+    window.location.href = "index.html";
 }
 
-// ========================
-// ADMIN LOGIN
-// ========================
-document.getElementById('adminForm').addEventListener('submit', function(e){
+document.getElementById("adminForm").addEventListener("submit", function(e){
     e.preventDefault();
 
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
 
-    if(user === 'admin' && pass === 'luffy_28'){
-
-        localStorage.setItem('role', 'admin');
-
-        // clean redirect (prevents loop bug)
-        setTimeout(() => {
-            window.location.replace("index.html");
-        }, 100);
-
+    if(user === "admin" && pass === "luffy_28"){
+        sessionStorage.setItem("role", "admin");
+        window.location.href = "index.html";
     } else {
         alert("Incorrect Admin Credentials");
     }
 });
-
 </script>
-
 </body>
 </html>

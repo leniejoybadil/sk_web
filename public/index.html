@@ -179,46 +179,59 @@ body {
 
 <script>
 
+//
+// ✅ FIXED LOGIN CHECK (THIS WAS YOUR BUG)
+//
 window.addEventListener("DOMContentLoaded", () => {
 
-    const role = sessionStorage.getItem('role');
+    const role = sessionStorage.getItem("role");
 
-    // ❌ NOT LOGGED IN → BACK TO LOGIN
-    if (!role) {
+    console.log("ROLE CHECK:", role);
+
+    // ❌ NOT LOGGED IN → GO BACK
+    if (!role || role === "null" || role === "undefined") {
+        sessionStorage.removeItem("role");
         window.location.replace("login.html");
         return;
     }
 
-    // show role
-    const display = document.getElementById('displayRole');
+    // ✅ SHOW ROLE
+    const display = document.getElementById("displayRole");
     if (display) display.innerText = role.toUpperCase();
 
 });
 
-// ===================
-// LOGOUT
-// ===================
-function logout() {
-    sessionStorage.removeItem('role');
-    window.location.replace("login.html");
-}
-
-// sidebar toggle (unchanged)
+//
+// MENU
+//
 function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('active');
 }
 
-// slider unchanged
+//
+// LOGOUT
+//
+function logout() {
+    sessionStorage.removeItem("role");
+    window.location.replace("login.html");
+}
+
+//
+// SLIDER
+//
 let index = 0;
 const slides = document.querySelectorAll(".slide");
 
-function changeSlide(n){
-    index += n;
-    if(index >= slides.length) index = 0;
-    if(index < 0) index = slides.length - 1;
+function showSlide(i){
+  slides.forEach(s => s.classList.remove("active"));
+  slides[i].classList.add("active");
+}
 
-    slides.forEach(s => s.classList.remove("active"));
-    slides[index].classList.add("active");
+function changeSlide(n){
+  index += n;
+  if(index >= slides.length) index = 0;
+  if(index < 0) index = slides.length - 1;
+  showSlide(index);
 }
 
 setInterval(() => changeSlide(1), 4000);

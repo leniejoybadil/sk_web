@@ -62,14 +62,18 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
 
 <script>
 
+/* =========================
+   SESSION CHECK (ADMIN FORM)
+========================= */
 const role = sessionStorage.getItem("role");
 
-/* SHOW ADMIN FORM ONLY */
 if (role === "admin") {
     document.getElementById("adminOnlyForm").classList.remove("hidden");
 }
 
-/* LOAD ANNOUNCEMENTS */
+/* =========================
+   LOAD ANNOUNCEMENTS
+========================= */
 function loadAnnouncements() {
 
     let posts = JSON.parse(localStorage.getItem("announcements")) || [];
@@ -78,33 +82,40 @@ function loadAnnouncements() {
 
     feed.innerHTML = "";
 
-    // default post (old “news style”)
+    /* 📰 DEFAULT NEWS */
     feed.innerHTML += `
     <div class="announcement-card bg-white p-5 rounded-xl shadow-sm">
-        <h3 class="font-bold text-lg">Welcome to SK Portal</h3>
-        <p class="text-sm text-gray-600">
-            Barangay Dalagdag SK is now digital.
+        <h3 class="font-bold text-lg">📢 SK Portal News</h3>
+        <p class="text-sm text-gray-600 mt-1">
+            Welcome! Barangay Dalagdag SK is now digital. Stay updated with announcements and events.
         </p>
     </div>
     `;
 
+    /* USER POSTS */
     posts.forEach(p => {
         feed.innerHTML += `
         <div class="announcement-card bg-white p-5 rounded-xl shadow-sm">
+
             <h3 class="font-bold text-lg">${p.title}</h3>
+
             <p class="text-sm text-gray-600 mt-1">${p.message}</p>
 
             ${p.image ? `<img src="${p.image}" class="mt-3 rounded-lg">` : ""}
-            
+
             <p class="text-[10px] text-gray-400 mt-2">${p.date}</p>
+
         </div>
         `;
     });
 }
 
+/* INIT */
 loadAnnouncements();
 
-/* POST ANNOUNCEMENT (ADMIN ONLY) */
+/* =========================
+   POST ANNOUNCEMENT (ADMIN ONLY)
+========================= */
 function postAnnouncement() {
 
     if (sessionStorage.getItem("role") !== "admin") {
@@ -135,7 +146,7 @@ function postAnnouncement() {
 
         posts.unshift(newPost);
 
-        localStorage.setItem("announcements", JSON.stringify(posts));
+        localStorage.setItem("sk_announcements", JSON.stringify(posts));
 
         location.reload();
     }
