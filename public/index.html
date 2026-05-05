@@ -10,72 +10,104 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f0f2f5;
-  margin: 0;
-  overflow-x: hidden;
+body{
+    font-family:'Roboto',sans-serif;
+    background:#f0f2f5;
+    margin:0;
+    overflow-x:hidden;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 260px;
-  height: 100vh;
-  position: fixed;
-  background: #1b5e20;
-  color: white;
-  padding: 20px;
-  z-index: 100;
+/* SIDEBAR */
+.sidebar{
+    width:260px;
+    height:100vh;
+    position:fixed;
+    left:0;
+    top:0;
+    background:#1b5e20;
+    color:white;
+    padding:20px;
+    z-index:100;
+    overflow-y:auto;
 }
 
-.main-content {
-  margin-left: 260px;
-  min-height: 100vh;
+/* MAIN */
+.main-content{
+    margin-left:260px;
+    width:calc(100% - 260px);
+    min-height:100vh;
 }
 
-/* Cards */
-.stats-card {
-  background: white;
-  border-radius: 8px;
-  position: relative;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  transition: 0.3s;
-  margin-top: 20px;
-}
-.stats-card:hover {
-  transform: translateY(-5px);
+/* HERO */
+.slide{display:none;}
+.slide.active{display:block;}
+
+.hero-banner{
+    height:220px;
 }
 
-.card-icon {
-  position: absolute;
-  top: -15px;
-  left: 15px;
-  width: 60px;
-  height: 60px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 22px;
+@media(min-width:640px){
+    .hero-banner{
+        height:300px;
+    }
 }
 
-/* SLIDER */
-.slide { display:none; }
-.slide.active { display:block; }
-
-.hero-banner {
-  height: 260px;
-}
-@media(min-width:768px){
-  .hero-banner { height: 360px; }
+@media(min-width:1024px){
+    .hero-banner{
+        height:380px;
+    }
 }
 
-/* Mobile */
+@media(min-width:1440px){
+    .hero-banner{
+        height:420px;
+    }
+}
+
+/* CARDS */
+.stats-card{
+    background:white;
+    border-radius:16px;
+    position:relative;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.stats-card:hover{
+    transform:translateY(-5px);
+}
+
+.card-icon{
+    position:absolute;
+    top:-15px;
+    left:18px;
+    width:58px;
+    height:58px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:22px;
+}
+
+/* MOBILE */
 @media(max-width:768px){
-  .sidebar { transform: translateX(-260px); }
-  .sidebar.active { transform: translateX(0); }
-  .main-content { margin-left: 0; }
+
+    .sidebar{
+        transform:translateX(-260px);
+        transition:.3s;
+    }
+
+    .sidebar.active{
+        transform:translateX(0);
+    }
+
+    .main-content{
+        margin-left:0;
+        width:100%;
+    }
+
 }
 </style>
 </head>
@@ -83,18 +115,33 @@ body {
 <body class="flex">
 
 <!-- SIDEBAR -->
-<aside id="sidebar" class="sidebar shadow-2xl bg-[#1b5e20]">
+<aside id="sidebar" class="sidebar shadow-2xl">
+
     <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+
         <div class="text-center w-full">
-            <h2 class="text-xl font-black tracking-tighter text-white">SK DALAGDAG</h2>
-            <p class="text-[10px] opacity-60 text-white uppercase tracking-widest">Youth Portal</p>
+            <h2 class="text-xl font-black tracking-tighter">
+                SK DALAGDAG
+            </h2>
+
+            <p class="text-[10px] opacity-70 uppercase tracking-widest">
+                Youth Portal
+            </p>
         </div>
-        <button onclick="toggleMenu()" class="md:hidden text-2xl text-white absolute right-4">✕</button>
+
+        <button onclick="toggleMenu()"
+        class="md:hidden text-2xl absolute right-4">
+            ✕
+        </button>
+
     </div>
 
-    <nav class="flex flex-col gap-1">
-        <a href="index.html" class="block w-full px-4 py-3 rounded-lg bg-white text-green-800 font-bold shadow-sm hover:bg-green-100 transition flex items-center gap-2">
-📊 Dashboard
+
+    <nav class="flex flex-col gap-2">
+
+        <a href="index.html"
+        class="px-4 py-3 rounded-lg bg-white text-green-800 font-bold">
+            📊 Dashboard
         </a>
 
         <a href="announcements.html">📢 Announcements</a>
@@ -105,197 +152,331 @@ body {
         <a href="projects.html">📁 Projects</a>
         <a href="suggestions.html">💡 Suggestions</a>
 
+
         <div class="pt-10">
-            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg transition">
+
+            <button onclick="logout()"
+            class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg">
+
                 🚪 Logout
+
             </button>
+
         </div>
+
     </nav>
+
 </aside>
 
+
 <!-- MAIN -->
-<main class="main-content flex-1">
+<main class="main-content">
 
-<header class="bg-white p-4 flex justify-between items-center">
-<button onclick="toggleMenu()">☰</button>
-<h1>Main / <span id="displayRole">USER</span></h1>
-</header>
+    <!-- HEADER -->
+    <header class="bg-white px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
 
-<div class="p-6">
+        <button onclick="toggleMenu()"
+        class="text-xl">
+            ☰
+        </button>
 
-<!-- SLIDER -->
-<div class="hero-banner relative rounded-xl overflow-hidden shadow-lg">
+        <h1 class="font-semibold">
+            Main /
+            <span id="displayRole">
+                USER
+            </span>
+        </h1>
 
- <img src="intro.png" class="slide w-full h-full object-cover">
-<img src="bg.png" class="slide active w-full h-full object-cover">
-<img src="bridge.png" class="slide active w-full h-full object-cover">
+    </header>
 
-<button onclick="changeSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1">❮</button>
-<button onclick="changeSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1">❯</button>
 
-</div>
 
-<!-- BUTTONS -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+    <!-- CONTENT -->
+    <div class="px-4 sm:px-6 lg:px-8 xl:px-10 py-6 max-w-7xl mx-auto">
 
-<div onclick="location.href='announcements.html'" class="stats-card p-6 cursor-pointer">
-<div class="card-icon bg-orange-500">📢</div>
-<h3 class="mt-6 font-bold">Announcements</h3>
-</div>
+        <!-- SLIDER -->
+        <div class="hero-banner relative rounded-2xl overflow-hidden shadow-lg">
 
-<div onclick="location.href='committees.html'" class="stats-card p-6 cursor-pointer">
-<div class="card-icon bg-[#795548]">👥</div>
-<h3 class="mt-6 font-bold">Committees</h3>
-</div>
+            <img src="bridge.png"
+            class="slide active w-full h-full object-cover">
 
-<div onclick="location.href='kk.html'" class="stats-card p-6 cursor-pointer">
-<div class="card-icon bg-green-600">📋</div>
-<h3 class="mt-6 font-bold">KK</h3>
-</div>
+            <img src="intro.png"
+            class="slide w-full h-full object-cover">
 
-<div onclick="location.href='events.html'" class="stats-card p-6 cursor-pointer">
-<div class="card-icon bg-blue-600">🏆</div>
-<h3 class="mt-6 font-bold">Events</h3>
-</div>
 
-<div onclick="location.href='schedules.html'" class="stats-card p-6 cursor-pointer">
-<div class="card-icon bg-amber-700">📅</div>
-<h3 class="mt-6 font-bold">Schedule</h3>
-</div>
+            <button onclick="changeSlide(-1)"
+            class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">
 
-<div onclick="location.href='suggestions.html'" class="stats-card p-6 cursor-pointer">
-<div class="card-icon bg-red-600">💡</div>
-<h3 class="mt-6 font-bold">Suggestions</h3>
-</div>
+                ❮
 
-<div onclick="location.href='projects.html'" class="stats-card p-6 cursor-pointer">
-<div class="card-icon bg-purple-600">📁</div>
-<h3 class="mt-6 font-bold">Projects</h3>
-</div>
- <!-- WEBSITE STYLE INFO SECTION -->
-<section class="mt-16 rounded-3xl overflow-hidden bg-gradient-to-r from-green-900 via-green-800 to-green-700 shadow-2xl">
+            </button>
 
-    <div class="px-6 md:px-10 xl:px-16 py-10 md:py-14">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+            <button onclick="changeSlide(1)"
+            class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">
 
-            <!-- ABOUT -->
-            <div>
-                <h3 class="text-2xl font-bold text-white mb-4">
-                    🌱 About SK Dalagdag
+                ❯
+
+            </button>
+
+        </div>
+
+
+
+        <!-- BUTTONS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
+
+            <div onclick="location.href='announcements.html'"
+            class="stats-card p-6 cursor-pointer">
+
+                <div class="card-icon bg-orange-500">
+                    📢
+                </div>
+
+                <h3 class="mt-8 font-bold">
+                    Announcements
                 </h3>
 
-                <p class="text-green-100 leading-relaxed">
-                    Empowering the youth through leadership,
-                    innovation, sports, environmental sustainability,
-                    and community collaboration for a stronger future.
-                </p>
             </div>
 
 
-            <!-- CONTACT -->
-            <div>
-                <h3 class="text-2xl font-bold text-white mb-4">
-                    📞 Contact Us
+
+            <div onclick="location.href='committees.html'"
+            class="stats-card p-6 cursor-pointer">
+
+                <div class="card-icon bg-[#795548]">
+                    👥
+                </div>
+
+                <h3 class="mt-8 font-bold">
+                    Committees
                 </h3>
 
-                <div class="space-y-3 text-green-100">
-                    <p>📍 Barangay Dalagdag</p>
-                    <p>📧 skdalagdag@gmail.com</p>
-                    <p>📱 +63 XXX XXX XXXX</p>
-                </div>
             </div>
 
 
-            <!-- OVERVIEW -->
-            <div>
-                <h3 class="text-2xl font-bold text-white mb-4">
-                    🚀 Community Impact
+
+            <div onclick="location.href='kk.html'"
+            class="stats-card p-6 cursor-pointer">
+
+                <div class="card-icon bg-green-600">
+                    📋
+                </div>
+
+                <h3 class="mt-8 font-bold">
+                    KK Profiling
                 </h3>
 
-                <div class="space-y-3 text-green-100">
-                    <p>👥 Active Youth Members</p>
-                    <p>🏆 Sports & Community Events</p>
-                    <p>🌿 Sustainable Projects</p>
+            </div>
+
+
+
+            <div onclick="location.href='events.html'"
+            class="stats-card p-6 cursor-pointer">
+
+                <div class="card-icon bg-blue-600">
+                    🏆
                 </div>
+
+                <h3 class="mt-8 font-bold">
+                    Events
+                </h3>
+
+            </div>
+
+
+
+            <div onclick="location.href='schedules.html'"
+            class="stats-card p-6 cursor-pointer">
+
+                <div class="card-icon bg-amber-700">
+                    📅
+                </div>
+
+                <h3 class="mt-8 font-bold">
+                    Schedule
+                </h3>
+
+            </div>
+
+
+
+            <div onclick="location.href='suggestions.html'"
+            class="stats-card p-6 cursor-pointer">
+
+                <div class="card-icon bg-red-600">
+                    💡
+                </div>
+
+                <h3 class="mt-8 font-bold">
+                    Suggestions
+                </h3>
+
+            </div>
+
+
+
+            <div onclick="location.href='projects.html'"
+            class="stats-card p-6 cursor-pointer">
+
+                <div class="card-icon bg-purple-600">
+                    📁
+                </div>
+
+                <h3 class="mt-8 font-bold">
+                    Projects
+                </h3>
+
             </div>
 
         </div>
 
 
-        <!-- BOTTOM LINE -->
-        <div class="border-t border-white/20 mt-10 pt-6 text-center">
 
-            <p class="text-green-100 text-sm md:text-base">
-                © 2026 SK Dalagdag Youth Portal • Flourish Together. Empowering Youth.
-            </p>
+        <!-- GREEN INFO SECTION -->
+        <section class="mt-16 rounded-3xl overflow-hidden bg-gradient-to-r from-green-900 via-green-800 to-green-700 shadow-xl">
 
-        </div>
+            <div class="px-6 md:px-10 xl:px-16 py-10 md:py-14">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+
+                    <div>
+
+                        <h3 class="text-2xl font-bold text-white mb-4">
+                            🌱 About SK Dalagdag
+                        </h3>
+
+                        <p class="text-green-100 leading-relaxed">
+                            Empowering youth through leadership,
+                            innovation, sports, sustainability,
+                            and community collaboration.
+                        </p>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <h3 class="text-2xl font-bold text-white mb-4">
+                            📞 Contact Us
+                        </h3>
+
+                        <div class="space-y-2 text-green-100">
+                            <p>📍 Barangay Dalagdag</p>
+                            <p>📧 skdalagdag@gmail.com</p>
+                            <p>📱 +63 XXX XXX XXXX</p>
+                        </div>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <h3 class="text-2xl font-bold text-white mb-4">
+                            🚀 Community Impact
+                        </h3>
+
+                        <div class="space-y-2 text-green-100">
+                            <p>👥 Active Youth Members</p>
+                            <p>🏆 Sports & Events</p>
+                            <p>🌿 Sustainable Projects</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="border-t border-white/20 mt-10 pt-6 text-center">
+
+                    <p class="text-green-100 text-sm md:text-base">
+                        © 2026 SK Dalagdag Youth Portal • Flourish Together. Empowering Youth.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
 
     </div>
 
-</section>
-</div>
 </main>
+
+
 
 <script>
 
-//
-// ✅ FIXED LOGIN CHECK (THIS WAS YOUR BUG)
-//
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded",()=>{
 
     const role = sessionStorage.getItem("role");
 
-    console.log("ROLE CHECK:", role);
+    if(!role || role==="null" || role==="undefined"){
 
-    // ❌ NOT LOGGED IN → GO BACK
-    if (!role || role === "null" || role === "undefined") {
         sessionStorage.removeItem("role");
         window.location.replace("login.html");
         return;
+
     }
 
-    // ✅ SHOW ROLE
-    const display = document.getElementById("displayRole");
-    if (display) display.innerText = role.toUpperCase();
+    document.getElementById("displayRole").innerText =
+    role.toUpperCase();
 
 });
 
-//
-// MENU
-//
-function toggleMenu() {
-    document.getElementById('sidebar').classList.toggle('active');
+
+function toggleMenu(){
+
+    document.getElementById("sidebar")
+    .classList.toggle("active");
+
 }
 
-//
-// LOGOUT
-//
-function logout() {
+
+function logout(){
+
     sessionStorage.removeItem("role");
     window.location.replace("login.html");
+
 }
 
-//
-// SLIDER
-//
+
 let index = 0;
-const slides = document.querySelectorAll(".slide");
+
+const slides =
+document.querySelectorAll(".slide");
+
 
 function showSlide(i){
-  slides.forEach(s => s.classList.remove("active"));
-  slides[i].classList.add("active");
+
+    slides.forEach(s=>s.classList.remove("active"));
+    slides[i].classList.add("active");
+
 }
+
 
 function changeSlide(n){
-  index += n;
-  if(index >= slides.length) index = 0;
-  if(index < 0) index = slides.length - 1;
-  showSlide(index);
+
+    index += n;
+
+    if(index >= slides.length){
+        index = 0;
+    }
+
+    if(index < 0){
+        index = slides.length - 1;
+    }
+
+    showSlide(index);
+
 }
 
-setInterval(() => changeSlide(1), 4000);
+
+setInterval(()=>{
+    changeSlide(1);
+},4000);
 
 </script>
 
