@@ -148,41 +148,61 @@ function toggleTimes(show) {
     document.getElementById('kk_times_box').classList.toggle('hidden', !show);
 }
 
-function downloadAsPDF() {
-    const element = document.getElementById('pdf-area');
+function downloadAsPDF(){
 
-    html2pdf().set({
-        margin: 0.2,
-        filename: 'KK_Profiling_Form.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    }).from(element).save();
-}
-
-function submitToGoogle() {
-    const btn = document.getElementById('submitBtn');
-    btn.innerText = "SENDING...";
+    const btn = event.target;
+    btn.innerText = "GENERATING...";
     btn.disabled = true;
 
-    fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: new FormData(form)
-    })
-    .then(() => {
-        alert("Successfully sent to SK Database!");
-        btn.innerText = "SUBMIT";
-        btn.disabled = false;
-        form.reset();
-        document.getElementById('kk_times_box').classList.add('hidden');
-    })
-    .catch(err => {
-        alert("Submit failed. Check connection.");
-        console.error(err);
-        btn.innerText = "SUBMIT";
-        btn.disabled = false;
-    });
+    const element =
+    document.getElementById("pdf-area");
+
+    setTimeout(()=>{
+
+        html2pdf().set({
+
+            margin:0.2,
+
+            filename:"KK_Profiling_Form.pdf",
+
+            image:{
+                type:"jpeg",
+                quality:0.90
+            },
+
+            html2canvas:{
+                scale:1,
+                useCORS:true,
+                scrollY:0
+            },
+
+            jsPDF:{
+                unit:"in",
+                format:"letter",
+                orientation:"portrait"
+            }
+
+        })
+        .from(element)
+        .save()
+        .then(()=>{
+
+            btn.innerText="DOWNLOAD PDF";
+            btn.disabled=false;
+
+        })
+        .catch(err=>{
+
+            alert("PDF generation failed on this device.");
+            console.error(err);
+
+            btn.innerText="DOWNLOAD PDF";
+            btn.disabled=false;
+
+        });
+
+    },500);
+
 }
 
 form.addEventListener('submit', e => e.preventDefault());
