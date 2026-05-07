@@ -258,7 +258,7 @@ function toggleTimes(show){
     document.getElementById("kk_times_box").classList.toggle("hidden", !show);
 }
 
-/* ✅ ONLY MOBILE FIXED PDF FUNCTION */
+/* ✅ ONLY FIXED PDF PART */
 async function downloadAsPDF(){
 
     const btn = document.getElementById("pdfBtn");
@@ -269,9 +269,6 @@ async function downloadAsPDF(){
     try{
 
         const element = document.getElementById("pdf-area");
-
-        // 🔴 IMPORTANT: allow images to load on mobile
-        await new Promise(r => setTimeout(r, 800));
 
         const worker = html2pdf().set({
 
@@ -284,10 +281,11 @@ async function downloadAsPDF(){
             },
 
             html2canvas:{
-                scale:0.7,
+                scale:0.7,   // 🔥 FIX FOR MOBILE CRASH
                 useCORS:true,
                 logging:false,
-                scrollY:0
+                scrollY:0,
+                imageTimeout:20000
             },
 
             jsPDF:{
@@ -307,7 +305,7 @@ async function downloadAsPDF(){
 
     catch(error){
 
-        alert("PDF not supported on this mobile device.");
+        alert("PDF failed on mobile. Try again or use laptop.");
         console.error(error);
 
         btn.innerText = "DOWNLOAD PDF";
@@ -335,12 +333,11 @@ function submitToGoogle(){
         btn.disabled = false;
 
         form.reset();
-        document.getElementById("kk_times_box").classList.add("hidden");
 
     })
     .catch(err=>{
 
-        alert("Submit failed. Check connection.");
+        alert("Submit failed.");
         console.error(err);
 
         btn.innerText = "SUBMIT";
