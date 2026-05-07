@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- PDF SCRIPT REMOVED (NOT NEEDED ANYMORE) -->
-
 <title>KK Profiling Form</title>
 
 <style>
@@ -93,9 +91,7 @@ body{
 
     <form id="kkForm" class="p-3">
 
-        <!-- BASIC INFO -->
         <div class="box">
-
             <div class="label">FULL NAME</div>
             <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b" required>
 
@@ -107,14 +103,11 @@ body{
 
             <div class="label mt-2">ADDRESS</div>
             <input type="text" name="address" id="address" class="w-full outline-none border-b" required>
-
         </div>
 
-        <!-- BIRTH -->
         <div class="box">
 
             <div class="label">BIRTHDATE</div>
-
             <input type="date" name="birthdate" id="birthdate" class="w-full" onchange="calcAge()" required>
 
             <div class="label mt-2">AGE</div>
@@ -122,24 +115,15 @@ body{
 
         </div>
 
-        <!-- GENDER -->
         <div class="box">
 
             <div class="label">GENDER</div>
 
-            <label class="option">
-                <input type="radio" name="gender" value="Male" required>
-                Male
-            </label>
-
-            <label class="option">
-                <input type="radio" name="gender" value="Female">
-                Female
-            </label>
+            <label class="option"><input type="radio" name="gender" value="Male" required> Male</label>
+            <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
 
         </div>
 
-        <!-- CIVIL -->
         <div class="box">
 
             <div class="label">CIVIL STATUS</div>
@@ -151,7 +135,6 @@ body{
 
         </div>
 
-        <!-- YOUTH -->
         <div class="box">
 
             <div class="label">YOUTH TYPE</div>
@@ -163,13 +146,11 @@ body{
 
         </div>
 
-        <!-- EDUCATION -->
         <div class="box">
 
             <div class="label">EDUCATIONAL ATTAINMENT</div>
 
             <select name="education" class="w-full outline-none bg-transparent py-1">
-
                 <option>Elementary Level</option>
                 <option>Elementary Graduate</option>
                 <option>High School Level</option>
@@ -177,12 +158,10 @@ body{
                 <option>College Level</option>
                 <option>College Graduate</option>
                 <option>Vocational Graduate</option>
-
             </select>
 
         </div>
 
-        <!-- EMPLOYMENT -->
         <div class="box">
 
             <div class="label">EMPLOYMENT STATUS</div>
@@ -193,7 +172,6 @@ body{
 
         </div>
 
-        <!-- SK -->
         <div class="box">
 
             <div class="label">SK PARTICIPATION</div>
@@ -226,7 +204,7 @@ body{
 
 <div class="p-3 no-print space-y-2 mt-4">
 
-<button type="button" onclick="submitToGoogle()" id="submitBtn" class="bg-green-600 text-white w-full p-3 font-bold rounded">
+<button type="button" onclick="submitToGoogle()" class="bg-green-600 text-white w-full p-3 font-bold rounded">
 SUBMIT
 </button>
 
@@ -257,34 +235,30 @@ function toggleTimes(show){
     document.getElementById("kk_times_box").classList.toggle("hidden", !show);
 }
 
-/* ✅ ONLY ADDED (THIS WAS MISSING) */
-function submitToGoogle(){
+form.addEventListener("submit", e=>e.preventDefault());
 
-    const btn = document.getElementById("submitBtn");
-    btn.innerText = "SENDING...";
-    btn.disabled = true;
+/* ✅ ONLY FIX ADDED BELOW */
+function submitToGoogle() {
 
-    const formData = new FormData(form);
+    const data = new FormData(form);
 
     fetch(scriptURL, {
         method: "POST",
-        body: formData
+        body: data
     })
-    .then(response => {
+    .then(response => response.text())
+    .then(result => {
         alert("Submitted successfully!");
         form.reset();
-        btn.innerText = "SUBMIT";
-        btn.disabled = false;
+        document.getElementById("age").value = "";
+        document.getElementById("kk_times_box").classList.add("hidden");
     })
     .catch(error => {
-        alert("Submission failed!");
+        alert("Error submitting form!");
         console.error(error);
-        btn.innerText = "SUBMIT";
-        btn.disabled = false;
     });
-}
 
-form.addEventListener("submit", e=>e.preventDefault());
+}
 
 </script>
 
