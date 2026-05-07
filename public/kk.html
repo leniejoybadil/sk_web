@@ -206,12 +206,54 @@ body{
 
         <div class="box">
 
-            <div class="label">SK PARTICIPATION</div>
+            <div class="box">
 
-            <label class="option"><input type="radio" name="voter" value="Yes" required> Yes</label>
-            <label class="option"><input type="radio" name="voter" value="No"> No</label>
+    <div class="label">SK PARTICIPATION</div>
 
-        </div>
+    <!-- SK VOTER -->
+    <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
+
+    <label class="option">
+        <input type="radio" name="voter" value="Yes" required> Yes
+    </label>
+
+    <label class="option">
+        <input type="radio" name="voter" value="No"> No
+    </label>
+
+
+    <!-- KK ASSEMBLY -->
+    <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
+
+    <label class="option">
+        <input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes
+    </label>
+
+    <label class="option">
+        <input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No
+    </label>
+
+
+    <!-- TIMES ATTENDED -->
+    <div id="kk_times_box" class="hidden mt-2 border-t pt-2">
+
+        <p class="text-xs font-bold">If YES, how many times?</p>
+
+        <label class="option">
+            <input type="radio" name="times" value="1-2"> 1-2
+        </label>
+
+        <label class="option">
+            <input type="radio" name="times" value="3-5"> 3-5
+        </label>
+
+        <label class="option">
+            <input type="radio" name="times" value="More than 5"> More than 5
+        </label>
+
+    </div>
+
+</div>
 
     </form>
 
@@ -238,8 +280,7 @@ BACK TO DASHBOARD
 
 <script>
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycby_5esvYmGyhRuGKoQ2zdmjuOl5oB2d0xJHQnXR6OYwudPDCsnA1FQL79lLVMWbLE2O/exec';
-
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzDcCwpg2QbWacngPw8F54mVHF6OF9J-OWeSUfuqV03YQwOICY8GSPgagi9-cGpZAk1/exec';
 let isRegistered = false;
 
 const form = document.getElementById("kkForm");
@@ -252,14 +293,13 @@ function calcAge(){
     }
 }
 
-/* 🔥 SMART NAME CHECKER */
-function checkUser(){
+ function checkUser(){
 
     const name = document.getElementById("checkName").value;
     const result = document.getElementById("checkResult");
 
     if(!name){
-        result.innerText = "Enter a name first.";
+        result.innerText = "Enter name first.";
         result.style.color = "red";
         return;
     }
@@ -267,6 +307,8 @@ function checkUser(){
     fetch(`${scriptURL}?name=${encodeURIComponent(name)}`)
     .then(res => res.text())
     .then(data => {
+
+        data = data.trim();
 
         if(data === "FOUND"){
             result.innerText = "⚠ Already Registered!";
@@ -278,10 +320,13 @@ function checkUser(){
             isRegistered = false;
         }
 
+    })
+    .catch(() => {
+        result.innerText = "Error checking name.";
+        result.style.color = "red";
     });
 
 }
-
 /* BLOCK SUBMIT IF FOUND */
 function submitToGoogle(){
 
