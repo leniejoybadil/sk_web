@@ -96,33 +96,9 @@ body{
 
     </div>
 
-    <!-- 🔥 SMART NAME CHECKER (UNCHANGED) -->
-    <div class="p-3">
-
-        <div class="box">
-
-            <div class="label">Already Registered? (Check Name)</div>
-
-            <input type="text" id="checkName"
-                class="w-full border-b outline-none p-1"
-                placeholder="Enter full name">
-
-            <button type="button"
-                onclick="checkUser()"
-                class="bg-purple-600 text-white w-full p-2 mt-2 rounded">
-
-                CHECK REGISTRATION
-
-            </button>
-
-            <div id="checkResult" class="text-sm mt-2 font-bold"></div>
-
-        </div>
-
-    </div>
-
     <form id="kkForm" class="p-3">
 
+        <!-- FULL NAME -->
         <div class="box">
             <div class="label">FULL NAME</div>
             <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b" required>
@@ -137,6 +113,7 @@ body{
             <input type="text" name="address" id="address" class="w-full outline-none border-b" required>
         </div>
 
+        <!-- BIRTH -->
         <div class="box">
 
             <div class="label">BIRTHDATE</div>
@@ -147,6 +124,7 @@ body{
 
         </div>
 
+        <!-- GENDER -->
         <div class="box">
 
             <div class="label">GENDER</div>
@@ -156,6 +134,7 @@ body{
 
         </div>
 
+        <!-- CIVIL -->
         <div class="box">
 
             <div class="label">CIVIL STATUS</div>
@@ -167,6 +146,7 @@ body{
 
         </div>
 
+        <!-- YOUTH -->
         <div class="box">
 
             <div class="label">YOUTH TYPE</div>
@@ -178,6 +158,7 @@ body{
 
         </div>
 
+        <!-- EDUCATION -->
         <div class="box">
 
             <div class="label">EDUCATIONAL ATTAINMENT</div>
@@ -194,6 +175,7 @@ body{
 
         </div>
 
+        <!-- EMPLOYMENT -->
         <div class="box">
 
             <div class="label">EMPLOYMENT STATUS</div>
@@ -204,33 +186,20 @@ body{
 
         </div>
 
-        <!-- 🔥 FIXED SK PARTICIPATION (NO NESTED BOX ERROR) -->
+        <!-- SK PARTICIPATION (RESTORED FULL) -->
         <div class="box">
 
             <div class="label">SK PARTICIPATION</div>
 
             <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
-
-            <label class="option">
-                <input type="radio" name="voter" value="Yes" required> Yes
-            </label>
-
-            <label class="option">
-                <input type="radio" name="voter" value="No"> No
-            </label>
+            <label class="option"><input type="radio" name="voter" value="Yes" required> Yes</label>
+            <label class="option"><input type="radio" name="voter" value="No"> No</label>
 
             <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
+            <label class="option"><input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes</label>
+            <label class="option"><input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No</label>
 
-            <label class="option">
-                <input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes
-            </label>
-
-            <label class="option">
-                <input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No
-            </label>
-
-            <!-- FIXED: NO hidden class (mobile-safe) -->
-            <div id="kk_times_box" style="display:none;" class="mt-2 border-t pt-2">
+            <div id="kk_times_box" class="hidden mt-2 border-t pt-2">
 
                 <p class="text-xs font-bold">If YES, how many times?</p>
 
@@ -242,24 +211,39 @@ body{
 
         </div>
 
+        <!-- PRIVACY ACT -->
+        <div class="box">
+
+            <div class="label">DATA PRIVACY NOTICE</div>
+
+            <p style="font-size:12px; color:#333; margin-top:5px;">
+                By submitting this form, you agree that your personal data will be collected and processed in accordance with the
+                <b>Data Privacy Act of 2012 (RA 10173)</b> for SK Dalagdag official use only.
+            </p>
+
+            <label class="option mt-2">
+                <input type="checkbox" id="privacyCheck">
+                I agree to the Data Privacy Policy
+            </label>
+
+        </div>
+
     </form>
 
 </div>
 
+<!-- BUTTONS -->
 <div class="p-3 no-print space-y-2 mt-4">
 
-<button type="button" onclick="submitToGoogle()" id="submitBtn"
-class="bg-green-600 text-white w-full p-3 font-bold rounded">
+<button type="button" onclick="submitToGoogle()" class="bg-green-600 text-white w-full p-3 font-bold rounded">
 SUBMIT
 </button>
 
-<button type="button" onclick="window.print()"
-class="bg-blue-600 text-white w-full p-3 font-bold rounded">
+<button type="button" onclick="window.print()" class="bg-blue-600 text-white w-full p-3 font-bold rounded">
 PRINT FORM
 </button>
 
-<button type="button" onclick="location.href='index.html'"
-class="bg-gray-500 text-white w-full p-2 rounded">
+<button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded">
 BACK TO DASHBOARD
 </button>
 
@@ -267,7 +251,8 @@ BACK TO DASHBOARD
 
 <script>
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyo1hxCrCvX6SyNrZSijPPYojN-JU9FteLtzCJAOYT_Knt2mGduNR1WpDMZuUNDcFkP/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxEbPX5_1jOB4T_hHTsTlInmWLmBIiW7zmslPfzuTMSes5rRBGPA9glAhlMj4lq-KvX/exec';
+
 let isRegistered = false;
 
 const form = document.getElementById("kkForm");
@@ -280,58 +265,16 @@ function calcAge(){
     }
 }
 
-/* FIXED TOGGLE (MOBILE SAFE) */
 function toggleTimes(show){
-    const box = document.getElementById("kk_times_box");
-
-    if(show){
-        box.style.display = "block";
-    } else {
-        box.style.display = "none";
-    }
+    document.getElementById("kk_times_box").classList.toggle("hidden", !show);
 }
 
-/* NAME CHECK (UNCHANGED LOGIC) */
-function checkUser(){
-
-    const name = document.getElementById("checkName").value;
-    const result = document.getElementById("checkResult");
-
-    if(!name){
-        result.innerText = "Enter name first.";
-        result.style.color = "red";
-        return;
-    }
-
-    fetch(`${scriptURL}?name=${encodeURIComponent(name)}`)
-    .then(res => res.text())
-    .then(data => {
-
-        data = data.trim();
-
-        if(data === "FOUND"){
-            result.innerText = "⚠ Already Registered!";
-            result.style.color = "red";
-            isRegistered = true;
-        } else {
-            result.innerText = "✔ Not Registered";
-            result.style.color = "green";
-            isRegistered = false;
-        }
-
-    })
-    .catch(() => {
-        result.innerText = "Error checking name.";
-        result.style.color = "red";
-    });
-
-}
-
-/* SUBMIT BLOCK */
 function submitToGoogle(){
 
-    if(isRegistered){
-        alert("You are already registered!");
+    const privacy = document.getElementById("privacyCheck");
+
+    if(!privacy.checked){
+        alert("Please agree to the Data Privacy Policy.");
         return;
     }
 
@@ -346,8 +289,6 @@ function submitToGoogle(){
         alert("Submitted successfully!");
         form.reset();
         isRegistered = false;
-        document.getElementById("checkResult").innerText = "";
-        document.getElementById("kk_times_box").style.display = "none";
     });
 
 }
