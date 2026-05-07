@@ -261,90 +261,87 @@ function toggleTimes(show){
 /* ✅ ONLY FIXED PDF PART */
 async function downloadAsPDF(){
 
-    const btn = document.getElementById("pdfBtn");
+    const btn =
+    document.getElementById("pdfBtn");
 
-    btn.innerText = "GENERATING...";
-    btn.disabled = true;
+    btn.innerText =
+    "GENERATING...";
+
+    btn.disabled =
+    true;
 
     try{
 
-        const element = document.getElementById("pdf-area");
+        const element =
+        document.getElementById("pdf-area");
 
-        const worker = html2pdf().set({
+        // small delay so mobile fully loads DOM
+        await new Promise(r => setTimeout(r, 800));
+
+        const worker =
+        html2pdf().set({
 
             margin:0.15,
+
             filename:"KK_Profiling_Form.pdf",
 
             image:{
                 type:"jpeg",
-                quality:0.7
+                quality:0.6
             },
 
             html2canvas:{
-                scale:0.7,   // 🔥 FIX FOR MOBILE CRASH
+
+                scale:0.55,   // 🔴 FIX: lower scale = prevents mobile crash
+
                 useCORS:true,
+
                 logging:false,
+
                 scrollY:0,
-                imageTimeout:20000
+
+                imageTimeout:20000,
+
+                removeContainer:true
+
             },
 
             jsPDF:{
+
                 unit:"mm",
+
                 format:"a4",
+
                 orientation:"portrait"
+
             }
 
         }).from(element);
 
         await worker.save();
 
-        btn.innerText = "DOWNLOAD PDF";
-        btn.disabled = false;
+        btn.innerText =
+        "DOWNLOAD PDF";
+
+        btn.disabled =
+        false;
 
     }
 
     catch(error){
 
-        alert("PDF failed on mobile. Try again or use laptop.");
+        alert(
+            "PDF failed on mobile. Device memory limit reached."
+        );
+
         console.error(error);
 
-        btn.innerText = "DOWNLOAD PDF";
-        btn.disabled = false;
+        btn.innerText =
+        "DOWNLOAD PDF";
+
+        btn.disabled =
+        false;
     }
-}
-
-function submitToGoogle(){
-
-    const btn = document.getElementById("submitBtn");
-
-    btn.innerText = "SENDING...";
-    btn.disabled = true;
-
-    fetch(scriptURL,{
-        method:"POST",
-        mode:"no-cors",
-        body:new FormData(form)
-    })
-    .then(()=>{
-
-        alert("Successfully sent to SK Database!");
-
-        btn.innerText = "SUBMIT";
-        btn.disabled = false;
-
-        form.reset();
-
-    })
-    .catch(err=>{
-
-        alert("Submit failed.");
-        console.error(err);
-
-        btn.innerText = "SUBMIT";
-        btn.disabled = false;
-
-    });
-
 }
 
 form.addEventListener("submit", e=>e.preventDefault());
