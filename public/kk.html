@@ -258,7 +258,7 @@ function toggleTimes(show){
     document.getElementById("kk_times_box").classList.toggle("hidden", !show);
 }
 
-/* ✅ FIXED PDF FUNCTION (MOBILE SAFE) */
+/* ✅ FIXED ONLY PDF SYNTAX */
 async function downloadAsPDF(){
 
     const btn = document.getElementById("pdfBtn");
@@ -281,10 +281,11 @@ async function downloadAsPDF(){
             },
 
             html2canvas:{
-                scale:1.2,
+                scale:0.8,
                 useCORS:true,
                 logging:false,
-                scrollY:0
+                scrollY:0,
+                imageTimeout:15000
             },
 
             jsPDF:{
@@ -295,7 +296,6 @@ async function downloadAsPDF(){
 
         }).from(element);
 
-        // ✅ FIX: direct save (works on mobile)
         await worker.save();
 
         btn.innerText = "DOWNLOAD PDF";
@@ -313,7 +313,6 @@ async function downloadAsPDF(){
     }
 }
 
-/* GOOGLE SHEETS */
 function submitToGoogle(){
 
     const btn = document.getElementById("submitBtn");
