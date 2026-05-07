@@ -1,25 +1,101 @@
 <div class="section">
-  <h2>Schedule of Events</h2>
+  <h2 class="title">Schedule of Events</h2>
 
-  <input type="date" id="calendar" onchange="showEvent()">
+  <div class="calendar-box">
+    <label class="label">Select Date</label>
+    <input type="date" id="calendar" onchange="showEvent()" class="calendar-input">
+  </div>
 
   <div id="eventDisplay" class="event-box">
-    To be announced
+    
+    <div class="status-badge">NO SCHEDULE AVAILABLE</div>
+
+    <p class="message">
+      Event schedules are currently being finalized by the SK Council.
+    </p>
+
+    <p class="note">
+      Please check back later for official announcements.
+    </p>
+
   </div>
 </div>
 
 <style>
+.section {
+  font-family: Arial;
+  padding: 10px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.calendar-box {
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.calendar-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
 .event-box {
   margin-top: 15px;
   padding: 15px;
   background: #fff;
   border-left: 5px solid #1e3a8a;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-block;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.message {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.note {
+  font-size: 12px;
+  color: #777;
 }
 </style>
 
 <script>
 function showEvent() {
-  document.getElementById("eventDisplay").innerText = "To be announced";
+  const display = document.getElementById("eventDisplay");
+
+  display.innerHTML = `
+    <div class="status-badge">NO SCHEDULE AVAILABLE</div>
+    <p class="message">Event schedules are currently being finalized by the SK Council.</p>
+    <p class="note">Please check back later for official announcements.</p>
+  `;
 }
 </script>

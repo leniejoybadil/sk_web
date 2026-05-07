@@ -1,26 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Event Registration</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<title>Event Registration</title>
+
+<style>
+/* ✅ TENTATIVE STYLE */
+.tentative {
+    position: relative;
+    opacity: 0.65;
+    filter: grayscale(0.4);
+}
+
+/* overlay label */
+.tentative::after {
+    content: "TENTATIVE / NOT ACTIVE YET";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0,0,0,0.65);
+    border-radius: 8px;
+}
+
+/* keep button readable under overlay */
+.tentative span {
+    position: relative;
+    z-index: -1;
+}
+</style>
 </head>
+
 <body class="bg-gray-100 p-3">
 
 <div class="max-w-md mx-auto">
     <h2 class="font-bold text-2xl mb-4 text-green-800 text-center">Event Registration</h2>
 
     <div class="grid gap-2">
-        <button onclick="openForm('KK Assembly 2026')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">KK Assembly 2026</button>
-        <button onclick="openForm('Linggo ng Kabataan 2026')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">Linggo ng Kabataan 2026</button>
-        <button onclick="openForm('Basketball Mosquito Division')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">23rd Araw ng Barangay Dalagdag Basketball League Mosquito Division</button>
-        <button onclick="openForm('Interpurok Basketball')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">23rd Araw ng Barangay Dalagdag Interpurok Basketball League</button>
-        <button onclick="openForm('Volleyball Tournament')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">23rd Araw ng Barangay Dalagdag Volleyball Tournament</button>
-        <button onclick="openForm('Sepak Takraw')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">23rd Araw ng Barangay Dalagdag Sepak Takraw Tournament</button>
-        <button onclick="openForm('Gardening Activity')" class="bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">Binhi ng Pag-asa: Gardening Activity</button>
+
+        <button onclick="openForm('KK Assembly 2026')" class="tentative bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">
+            KK Assembly 2026
+        </button>
+
+        <button onclick="openForm('Linggo ng Kabataan 2026')" class="tentative bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">
+            Linggo ng Kabataan 2026
+        </button>
+
+        <button onclick="openForm('Basketball Mosquito Division')" class="tentative bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">
+            23rd Araw ng Barangay Dalagdag Basketball League Mosquito Division
+        </button>
+
+        <button onclick="openForm('Interpurok Basketball')" class="tentative bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">
+            23rd Araw ng Barangay Dalagdag Interpurok Basketball League
+        </button>
+
+        <button onclick="openForm('Volleyball Tournament')" class="tentative bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">
+            23rd Araw ng Barangay Dalagdag Volleyball Tournament
+        </button>
+
+        <button onclick="openForm('Sepak Takraw')" class="tentative bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition text-sm text-left">
+            23rd Araw ng Barangay Dalagdag Sepak Takraw Tournament
+        </button>
+
+        <button onclick="openForm('Gardening Activity')" class="tentative bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg shadow transition">
+            Binhi ng Pag-asa: Gardening Activity
+        </button>
         
-        <button onclick="location.href='index.html'" class="mt-4 text-gray-600 text-center text-sm underline">Back to Dashboard</button>
+        <button onclick="location.href='index.html'" class="mt-4 text-gray-600 text-center text-sm underline">
+            Back to Dashboard
+        </button>
+
     </div>
 </div>
 
@@ -50,8 +105,12 @@
         </div>
 
         <div class="flex gap-2 mt-6">
-            <button id="submitBtn" onclick="submitForm()" class="bg-blue-700 hover:bg-blue-800 text-white flex-1 p-3 rounded-lg font-bold transition">Submit</button>
-            <button onclick="closeForm()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 flex-1 p-3 rounded-lg font-bold transition">Cancel</button>
+            <button id="submitBtn" onclick="submitForm()" class="bg-blue-700 hover:bg-blue-800 text-white flex-1 p-3 rounded-lg font-bold transition">
+                Submit
+            </button>
+            <button onclick="closeForm()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 flex-1 p-3 rounded-lg font-bold transition">
+                Cancel
+            </button>
         </div>
     </div>
 </div>
@@ -59,16 +118,15 @@
 <script>
 let selectedEvent = "";
 const scriptURL = "https://script.google.com/macros/s/AKfycbxUUzkl39HRMG1KwU3Y2ge05e8ezqr3Si7eCPhhCMBIaYkJusNsjJpghLbDP4gMQHo/exec";
+
 function openForm(eventName){
     selectedEvent = eventName;
     document.getElementById("eventTitle").innerText = eventName;
     document.getElementById("modal").classList.remove("hidden");
 
-    // Hide conditional sections by default
     document.getElementById("team").classList.add("hidden");
     document.getElementById("idSection").classList.add("hidden");
 
-    // Show Team for Sports
     if(eventName.includes("Basketball") || eventName.includes("Volleyball") || eventName.includes("Sepak Takraw")){
         if(!eventName.includes("Interpurok")) document.getElementById("team").classList.remove("hidden");
         document.getElementById("idSection").classList.remove("hidden");
