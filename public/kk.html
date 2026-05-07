@@ -96,6 +96,22 @@ body{
 
     </div>
 
+    <!-- CHECKER (UNCHANGED) -->
+    <div class="box">
+
+        <div class="label">ALREADY REGISTERED CHECKER</div>
+
+        <input type="text" id="checkName" placeholder="Full Name" class="w-full border-b outline-none mt-1">
+        <input type="date" id="checkBirth" class="w-full border mt-2 p-1">
+
+        <button type="button" onclick="checkUser()" class="bg-black text-white w-full mt-2 p-2 rounded">
+            CHECK REGISTRATION
+        </button>
+
+        <div id="checkResult" class="mt-2 font-bold text-sm"></div>
+
+    </div>
+
     <form id="kkForm" class="p-3">
 
         <div class="box">
@@ -227,8 +243,11 @@ BACK TO DASHBOARD
 
 <script>
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyEczCH2VKfLu8wXV-Lgs7o19iyZAx8bTaOWGywrhP_zIBHj_iz5HHA6pb6dVc1g8N2/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbx_pMtgzF7kO4w5Jkaa5sCItUaT2kHbj7_kiX4JUPeYUCgPgzQwkigvY6m6NCD20_A/exec';
 const form = document.getElementById("kkForm");
+
+/* 🔴 NEW: BLOCK FLAG */
+let isRegistered = false;
 
 function calcAge(){
     let b = new Date(document.getElementById("birthdate").value);
@@ -242,10 +261,47 @@ function toggleTimes(show){
     document.getElementById("kk_times_box").classList.toggle("hidden", !show);
 }
 
-form.addEventListener("submit", e=>e.preventDefault());
+/* CHECK USER (NOW SETS BLOCK FLAG) */
+function checkUser(){
 
-/* ✅ ONLY FIX ADDED BELOW */
-function submitToGoogle() {
+    const name = document.getElementById("checkName").value;
+    const birth = document.getElementById("checkBirth").value;
+    const result = document.getElementById("checkResult");
+
+    if(!name || !birth){
+        result.innerText = "Please fill name and birthdate.";
+        result.style.color = "red";
+        return;
+    }
+
+    fetch(`${scriptURL}?name=${encodeURIComponent(name)}&birth=${birth}`)
+    .then(res => res.text())
+    .then(data => {
+
+        if(data === "FOUND"){
+            result.innerText = "⚠ Already Registered!";
+            result.style.color = "red";
+            isRegistered = true; // 🚫 BLOCK SUBMIT
+        }else{
+            result.innerText = "✔ Not Registered";
+            result.style.color = "green";
+            isRegistered = false; // ✅ ALLOW
+        }
+
+    })
+    .catch(err => {
+        result.innerText = "Error checking data.";
+        result.style.color = "red";
+    });
+}
+
+/* SUBMIT (BLOCK IF REGISTERED) */
+function submitToGoogle(){
+
+    if(isRegistered){
+        alert("Submission blocked: already registered.");
+        return;
+    }
 
     const data = new FormData(form);
 
@@ -266,6 +322,8 @@ function submitToGoogle() {
     });
 
 }
+
+form.addEventListener("submit", e=>e.preventDefault());
 
 </script>
 
