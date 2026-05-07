@@ -100,8 +100,16 @@ body{
 
         <!-- FULL NAME -->
         <div class="box">
+
             <div class="label">FULL NAME</div>
             <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b" required>
+
+            <!-- 🔥 CHECKER ADDED HERE -->
+            <button type="button" onclick="checkUser()" class="bg-purple-600 text-white w-full mt-2 p-2 rounded">
+                CHECK IF ALREADY REGISTERED
+            </button>
+
+            <p id="checkResult" class="text-sm font-bold mt-1"></p>
 
             <div class="label mt-2">CONTACT NUMBER</div>
             <input type="text" name="contact" id="contact" class="w-full outline-none border-b" required>
@@ -186,7 +194,7 @@ body{
 
         </div>
 
-        <!-- SK PARTICIPATION (RESTORED FULL) -->
+        <!-- SK PARTICIPATION -->
         <div class="box">
 
             <div class="label">SK PARTICIPATION</div>
@@ -216,14 +224,13 @@ body{
 
             <div class="label">DATA PRIVACY NOTICE</div>
 
-            <p style="font-size:12px; color:#333; margin-top:5px;">
-                By submitting this form, you agree that your personal data will be collected and processed in accordance with the
-                <b>Data Privacy Act of 2012 (RA 10173)</b> for SK Dalagdag official use only.
+            <p style="font-size:12px;">
+                By submitting this form, you agree to the Data Privacy Act of 2012 (RA 10173) and allow SK Dalagdag to process your information.
             </p>
 
-            <label class="option mt-2">
+            <label class="option">
                 <input type="checkbox" id="privacyCheck">
-                I agree to the Data Privacy Policy
+                I agree
             </label>
 
         </div>
@@ -251,12 +258,11 @@ BACK TO DASHBOARD
 
 <script>
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxEbPX5_1jOB4T_hHTsTlInmWLmBIiW7zmslPfzuTMSes5rRBGPA9glAhlMj4lq-KvX/exec';
+const scriptURL = "https://script.google.com/macros/s/AKfycbwJYz1IUj7Wm8SZIgfJFXBFGq8myAg5mI3oQ_yMP_3-i1si16EfgxwnzjtJPTfHv4lG/exec";
 
 let isRegistered = false;
 
-const form = document.getElementById("kkForm");
-
+/* AGE */
 function calcAge(){
     let b = new Date(document.getElementById("birthdate").value);
     let t = new Date();
@@ -265,29 +271,64 @@ function calcAge(){
     }
 }
 
+/* KK TOGGLE */
 function toggleTimes(show){
     document.getElementById("kk_times_box").classList.toggle("hidden", !show);
 }
 
+/* 🔥 CHECK USER */
+function checkUser(){
+
+    const name = document.getElementById("fullname").value;
+    const result = document.getElementById("checkResult");
+
+    if(!name){
+        result.innerText = "Enter full name first";
+        return;
+    }
+
+    fetch(scriptURL + "?name=" + encodeURIComponent(name))
+    .then(res => res.text())
+    .then(data => {
+
+        if(data.trim() === "FOUND"){
+            result.innerText = "⚠ Already Registered";
+            result.style.color = "red";
+            isRegistered = true;
+        } else {
+            result.innerText = "✔ Not Registered";
+            result.style.color = "green";
+            isRegistered = false;
+        }
+
+    });
+
+}
+
+/* SUBMIT */
 function submitToGoogle(){
 
     const privacy = document.getElementById("privacyCheck");
 
     if(!privacy.checked){
-        alert("Please agree to the Data Privacy Policy.");
+        alert("Agree to Privacy Policy first");
         return;
     }
 
-    const data = new FormData(form);
+    if(isRegistered){
+        alert("Already registered!");
+        return;
+    }
+
+    const data = new FormData(document.getElementById("kkForm"));
 
     fetch(scriptURL, {
         method: "POST",
         body: data
     })
-    .then(res => res.text())
     .then(() => {
-        alert("Submitted successfully!");
-        form.reset();
+        alert("Submitted!");
+        document.getElementById("kkForm").reset();
         isRegistered = false;
     });
 
