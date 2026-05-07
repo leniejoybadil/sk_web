@@ -96,19 +96,28 @@ body{
 
     </div>
 
-    <!-- CHECKER (UNCHANGED) -->
-    <div class="box">
+    <!-- 🔥 NEW: SMART NAME CHECKER -->
+    <div class="p-3">
 
-        <div class="label">ALREADY REGISTERED CHECKER</div>
+        <div class="box">
 
-        <input type="text" id="checkName" placeholder="Full Name" class="w-full border-b outline-none mt-1">
-        <input type="date" id="checkBirth" class="w-full border mt-2 p-1">
+            <div class="label">Already Registered? (Check Name)</div>
 
-        <button type="button" onclick="checkUser()" class="bg-black text-white w-full mt-2 p-2 rounded">
-            CHECK REGISTRATION
-        </button>
+            <input type="text" id="checkName"
+                class="w-full border-b outline-none p-1"
+                placeholder="Enter full name">
 
-        <div id="checkResult" class="mt-2 font-bold text-sm"></div>
+            <button type="button"
+                onclick="checkUser()"
+                class="bg-purple-600 text-white w-full p-2 mt-2 rounded">
+
+                CHECK REGISTRATION
+
+            </button>
+
+            <div id="checkResult" class="text-sm mt-2 font-bold"></div>
+
+        </div>
 
     </div>
 
@@ -199,25 +208,8 @@ body{
 
             <div class="label">SK PARTICIPATION</div>
 
-            <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
-
             <label class="option"><input type="radio" name="voter" value="Yes" required> Yes</label>
             <label class="option"><input type="radio" name="voter" value="No"> No</label>
-
-            <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
-
-            <label class="option"><input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes</label>
-            <label class="option"><input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No</label>
-
-            <div id="kk_times_box" class="hidden mt-2 border-t pt-2">
-
-                <p class="text-xs font-bold">If YES, how many times?</p>
-
-                <label class="option"><input type="radio" name="times" value="1-2"> 1-2</label>
-                <label class="option"><input type="radio" name="times" value="3-5"> 3-5</label>
-                <label class="option"><input type="radio" name="times" value="More than 5"> More than 5</label>
-
-            </div>
 
         </div>
 
@@ -227,15 +219,18 @@ body{
 
 <div class="p-3 no-print space-y-2 mt-4">
 
-<button type="button" onclick="submitToGoogle()" class="bg-green-600 text-white w-full p-3 font-bold rounded">
+<button type="button" onclick="submitToGoogle()" id="submitBtn"
+class="bg-green-600 text-white w-full p-3 font-bold rounded">
 SUBMIT
 </button>
 
-<button type="button" onclick="window.print()" class="bg-blue-600 text-white w-full p-3 font-bold rounded">
+<button type="button" onclick="window.print()"
+class="bg-blue-600 text-white w-full p-3 font-bold rounded">
 PRINT FORM
 </button>
 
-<button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded">
+<button type="button" onclick="location.href='index.html'"
+class="bg-gray-500 text-white w-full p-2 rounded">
 BACK TO DASHBOARD
 </button>
 
@@ -243,11 +238,11 @@ BACK TO DASHBOARD
 
 <script>
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxyGULAXSgh08A7_pQWLhnlrug0X3B1iL9gKv5OZAaJp2joyJFe_OLj2guMFr9jiHwD/exec';
-const form = document.getElementById("kkForm");
+const scriptURL = 'https://script.google.com/macros/s/AKfycby_5esvYmGyhRuGKoQ2zdmjuOl5oB2d0xJHQnXR6OYwudPDCsnA1FQL79lLVMWbLE2O/exec';
 
-/* 🔴 NEW: BLOCK FLAG */
 let isRegistered = false;
+
+const form = document.getElementById("kkForm");
 
 function calcAge(){
     let b = new Date(document.getElementById("birthdate").value);
@@ -257,49 +252,41 @@ function calcAge(){
     }
 }
 
-function toggleTimes(show){
-    document.getElementById("kk_times_box").classList.toggle("hidden", !show);
-}
-
-/* CHECK USER (NOW SETS BLOCK FLAG) */
+/* 🔥 SMART NAME CHECKER */
 function checkUser(){
 
     const name = document.getElementById("checkName").value;
-    const birth = document.getElementById("checkBirth").value;
     const result = document.getElementById("checkResult");
 
-    if(!name || !birth){
-        result.innerText = "Please fill name and birthdate.";
+    if(!name){
+        result.innerText = "Enter a name first.";
         result.style.color = "red";
         return;
     }
 
-    fetch(`${scriptURL}?name=${encodeURIComponent(name)}&birth=${birth}`)
+    fetch(`${scriptURL}?name=${encodeURIComponent(name)}`)
     .then(res => res.text())
     .then(data => {
 
         if(data === "FOUND"){
             result.innerText = "⚠ Already Registered!";
             result.style.color = "red";
-            isRegistered = true; // 🚫 BLOCK SUBMIT
-        }else{
+            isRegistered = true;
+        } else {
             result.innerText = "✔ Not Registered";
             result.style.color = "green";
-            isRegistered = false; // ✅ ALLOW
+            isRegistered = false;
         }
 
-    })
-    .catch(err => {
-        result.innerText = "Error checking data.";
-        result.style.color = "red";
     });
+
 }
 
-/* SUBMIT (BLOCK IF REGISTERED) */
+/* BLOCK SUBMIT IF FOUND */
 function submitToGoogle(){
 
     if(isRegistered){
-        alert("Submission blocked: already registered.");
+        alert("You are already registered!");
         return;
     }
 
@@ -309,21 +296,15 @@ function submitToGoogle(){
         method: "POST",
         body: data
     })
-    .then(response => response.text())
-    .then(result => {
+    .then(res => res.text())
+    .then(() => {
         alert("Submitted successfully!");
         form.reset();
-        document.getElementById("age").value = "";
-        document.getElementById("kk_times_box").classList.add("hidden");
-    })
-    .catch(error => {
-        alert("Error submitting form!");
-        console.error(error);
+        isRegistered = false;
+        document.getElementById("checkResult").innerText = "";
     });
 
 }
-
-form.addEventListener("submit", e=>e.preventDefault());
 
 </script>
 
