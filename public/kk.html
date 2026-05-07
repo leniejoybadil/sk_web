@@ -230,7 +230,6 @@ body{
 SUBMIT
 </button>
 
-<!-- 🔥 REPLACED BUTTON -->
 <button type="button" onclick="window.print()" class="bg-blue-600 text-white w-full p-3 font-bold rounded">
 PRINT FORM
 </button>
@@ -256,6 +255,33 @@ function calcAge(){
 
 function toggleTimes(show){
     document.getElementById("kk_times_box").classList.toggle("hidden", !show);
+}
+
+/* ✅ ONLY ADDED (THIS WAS MISSING) */
+function submitToGoogle(){
+
+    const btn = document.getElementById("submitBtn");
+    btn.innerText = "SENDING...";
+    btn.disabled = true;
+
+    const formData = new FormData(form);
+
+    fetch(scriptURL, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        alert("Submitted successfully!");
+        form.reset();
+        btn.innerText = "SUBMIT";
+        btn.disabled = false;
+    })
+    .catch(error => {
+        alert("Submission failed!");
+        console.error(error);
+        btn.innerText = "SUBMIT";
+        btn.disabled = false;
+    });
 }
 
 form.addEventListener("submit", e=>e.preventDefault());
