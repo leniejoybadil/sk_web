@@ -38,7 +38,7 @@ body{
     min-height:100vh;
 }
 
-/* HERO */
+/* SLIDER */
 .slide{display:none;}
 .slide.active{display:block;}
 
@@ -46,23 +46,9 @@ body{
     height:220px;
 }
 
-@media(min-width:640px){
-    .hero-banner{
-        height:300px;
-    }
-}
-
-@media(min-width:1024px){
-    .hero-banner{
-        height:380px;
-    }
-}
-
-@media(min-width:1440px){
-    .hero-banner{
-        height:420px;
-    }
-}
+@media(min-width:640px){.hero-banner{height:300px;}}
+@media(min-width:1024px){.hero-banner{height:380px;}}
+@media(min-width:1440px){.hero-banner{height:420px;}}
 
 /* CARDS */
 .stats-card{
@@ -107,12 +93,10 @@ body{
         margin-left:0;
         width:100%;
     }
-
 }
 </style>
 </head>
 
-<!-- ONLY CHANGE: added id + hidden initially -->
 <body class="flex" id="page" style="display:none;">
 
 <!-- SIDEBAR -->
@@ -121,29 +105,17 @@ body{
     <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
 
         <div class="text-center w-full">
-            <h2 class="text-xl font-black tracking-tighter">
-                SK DALAGDAG
-            </h2>
-
-            <p class="text-[10px] opacity-70 uppercase tracking-widest">
-                Youth Portal
-            </p>
+            <h2 class="text-xl font-black tracking-tighter">SK DALAGDAG</h2>
+            <p class="text-[10px] opacity-70 uppercase tracking-widest">Youth Portal</p>
         </div>
 
-        <button onclick="toggleMenu()"
-        class="md:hidden text-2xl absolute right-4">
-            ✕
-        </button>
+        <button onclick="toggleMenu()" class="md:hidden text-2xl absolute right-4">✕</button>
 
     </div>
 
     <nav class="flex flex-col gap-2">
 
-        <a href="index.html"
-        class="px-4 py-3 rounded-lg bg-white text-green-800 font-bold">
-            📊 Dashboard
-        </a>
-
+        <a href="index.html" class="px-4 py-3 rounded-lg bg-white text-green-800 font-bold">📊 Dashboard</a>
         <a href="announcements.html">📢 Announcements</a>
         <a href="committees.html">👥 Committees</a>
         <a href="schedules.html">📅 Schedule</a>
@@ -153,14 +125,9 @@ body{
         <a href="suggestions.html">💡 Suggestions</a>
 
         <div class="pt-10">
-
-            <button onclick="logout()"
-            class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg">
-
+            <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg">
                 🚪 Logout
-
             </button>
-
         </div>
 
     </nav>
@@ -173,16 +140,11 @@ body{
     <!-- HEADER -->
     <header class="bg-white px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
 
-        <button onclick="toggleMenu()"
-        class="text-xl">
-            ☰
-        </button>
+        <button onclick="toggleMenu()" class="text-xl">☰</button>
 
         <h1 class="font-semibold">
             Main /
-            <span id="displayRole">
-                USER
-            </span>
+            <span id="displayRole">USER</span>
         </h1>
 
     </header>
@@ -197,75 +159,68 @@ body{
             <img src="intro.png" class="slide w-full h-full object-cover">
             <img src="bridge.png" class="slide w-full h-full object-cover">
 
-            <button onclick="changeSlide(-1)"
-            class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">
-                ❮
-            </button>
-
-            <button onclick="changeSlide(1)"
-            class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">
-                ❯
-            </button>
+            <button onclick="changeSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">❮</button>
+            <button onclick="changeSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">❯</button>
 
         </div>
 
-        <!-- BUTTONS -->
+        <!-- MAIN DASHBOARD BUTTONS -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
 
-            <div onclick="location.href='announcements.html'"
-            class="stats-card p-6 cursor-pointer">
-
+            <div onclick="location.href='announcements.html'" class="stats-card p-6 cursor-pointer">
                 <div class="card-icon bg-orange-500">📢</div>
                 <h3 class="mt-8 font-bold">Announcements</h3>
-
             </div>
 
-            <div onclick="location.href='committees.html'"
-            class="stats-card p-6 cursor-pointer">
-
+            <div onclick="location.href='committees.html'" class="stats-card p-6 cursor-pointer">
                 <div class="card-icon bg-[#795548]">👥</div>
                 <h3 class="mt-8 font-bold">Committees</h3>
-
             </div>
 
-            <div onclick="location.href='kk.html'"
-            class="stats-card p-6 cursor-pointer">
-
-                <div class="card-icon bg-green-600">📋</div>
-                <h3 class="mt-8 font-bold">KK Profiling</h3>
-
-            </div>
-
-            <div onclick="location.href='events.html'"
-            class="stats-card p-6 cursor-pointer">
-
-                <div class="card-icon bg-blue-600">🏆</div>
-                <h3 class="mt-8 font-bold">Events</h3>
-
-            </div>
-
-            <div onclick="location.href='schedules.html'"
-            class="stats-card p-6 cursor-pointer">
-
+            <div onclick="location.href='schedules.html'" class="stats-card p-6 cursor-pointer">
                 <div class="card-icon bg-amber-700">📅</div>
                 <h3 class="mt-8 font-bold">Schedule</h3>
-
             </div>
 
-            <div onclick="location.href='suggestions.html'"
-            class="stats-card p-6 cursor-pointer">
-
-                <div class="card-icon bg-red-600">💡</div>
-                <h3 class="mt-8 font-bold">Suggestions</h3>
-
+            <div onclick="location.href='events.html'" class="stats-card p-6 cursor-pointer">
+                <div class="card-icon bg-blue-600">🏆</div>
+                <h3 class="mt-8 font-bold">Events</h3>
             </div>
 
-            <div onclick="location.href='projects.html'"
-            class="stats-card p-6 cursor-pointer">
+            <div onclick="location.href='kk.html'" class="stats-card p-6 cursor-pointer">
+                <div class="card-icon bg-green-600">📋</div>
+                <h3 class="mt-8 font-bold">KK Profiling</h3>
+            </div>
 
+            <div onclick="location.href='projects.html'" class="stats-card p-6 cursor-pointer">
                 <div class="card-icon bg-purple-600">📁</div>
                 <h3 class="mt-8 font-bold">SK Projects 2026</h3>
+            </div>
 
+            <div onclick="location.href='suggestions.html'" class="stats-card p-6 cursor-pointer">
+                <div class="card-icon bg-red-600">💡</div>
+                <h3 class="mt-8 font-bold">Suggestions</h3>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CONTACT INFO -->
+    <div class="mt-12 bg-green-800 text-white rounded-t-2xl px-6 py-8">
+
+        <div class="grid md:grid-cols-3 gap-6 text-sm">
+
+            <div>
+                <h3 class="font-bold text-lg mb-2">SK DALAGDAG</h3>
+                <p>Empowering youth through leadership, service, and innovation.</p>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-lg mb-2">Contact Information</h3>
+                <p>📍 Barangay Dalagdag</p>
+                <p>📞 09946962921</p>
+                <p>✉ skdalagdag@gmail.com</p>
             </div>
 
         </div>
@@ -280,24 +235,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const role = sessionStorage.getItem("role");
 
-    // FIX: prevent dashboard flash
     if (!role || role === "null" || role === "undefined") {
         sessionStorage.removeItem("role");
         window.location.replace("login.html");
         return;
     }
 
-    // SHOW PAGE ONLY AFTER VALIDATION
     document.getElementById("page").style.display = "flex";
-
-    document.getElementById("displayRole").innerText =
-    role.toUpperCase();
+    document.getElementById("displayRole").innerText = role.toUpperCase();
 
 });
 
 function toggleMenu(){
-    document.getElementById("sidebar")
-    .classList.toggle("active");
+    document.getElementById("sidebar").classList.toggle("active");
 }
 
 function logout(){
@@ -308,28 +258,15 @@ function logout(){
 let index = 0;
 const slides = document.querySelectorAll(".slide");
 
-function showSlide(i){
-    slides.forEach(s=>s.classList.remove("active"));
-    slides[i].classList.add("active");
-}
-
 function changeSlide(n){
     index += n;
-
-    if(index >= slides.length){
-        index = 0;
-    }
-
-    if(index < 0){
-        index = slides.length - 1;
-    }
-
-    showSlide(index);
+    if(index >= slides.length) index = 0;
+    if(index < 0) index = slides.length - 1;
+    slides.forEach(s=>s.classList.remove("active"));
+    slides[index].classList.add("active");
 }
 
-setInterval(()=>{
-    changeSlide(1);
-},4000);
+setInterval(()=>changeSlide(1),4000);
 
 </script>
 
