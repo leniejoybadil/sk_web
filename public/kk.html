@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<!-- PDF SCRIPT REMOVED (NOT NEEDED ANYMORE) -->
 
 <title>KK Profiling Form</title>
 
@@ -231,8 +230,9 @@ body{
 SUBMIT
 </button>
 
-<button type="button" onclick="downloadAsPDF()" id="pdfBtn" class="bg-blue-600 text-white w-full p-3 font-bold rounded">
-DOWNLOAD PDF
+<!-- 🔥 REPLACED BUTTON -->
+<button type="button" onclick="window.print()" class="bg-blue-600 text-white w-full p-3 font-bold rounded">
+PRINT FORM
 </button>
 
 <button type="button" onclick="location.href='index.html'" class="bg-gray-500 text-white w-full p-2 rounded">
@@ -256,92 +256,6 @@ function calcAge(){
 
 function toggleTimes(show){
     document.getElementById("kk_times_box").classList.toggle("hidden", !show);
-}
-
-/* ✅ ONLY FIXED PDF PART */
-async function downloadAsPDF(){
-
-    const btn =
-    document.getElementById("pdfBtn");
-
-    btn.innerText =
-    "GENERATING...";
-
-    btn.disabled =
-    true;
-
-    try{
-
-        const element =
-        document.getElementById("pdf-area");
-
-        // small delay so mobile fully loads DOM
-        await new Promise(r => setTimeout(r, 800));
-
-        const worker =
-        html2pdf().set({
-
-            margin:0.15,
-
-            filename:"KK_Profiling_Form.pdf",
-
-            image:{
-                type:"jpeg",
-                quality:0.6
-            },
-
-            html2canvas:{
-
-                scale:0.55,   // 🔴 FIX: lower scale = prevents mobile crash
-
-                useCORS:true,
-
-                logging:false,
-
-                scrollY:0,
-
-                imageTimeout:20000,
-
-                removeContainer:true
-
-            },
-
-            jsPDF:{
-
-                unit:"mm",
-
-                format:"a4",
-
-                orientation:"portrait"
-
-            }
-
-        }).from(element);
-
-        await worker.save();
-
-        btn.innerText =
-        "DOWNLOAD PDF";
-
-        btn.disabled =
-        false;
-
-    }
-
-    catch(error){
-
-        alert(
-            "PDF failed on mobile. Device memory limit reached."
-        );
-
-        console.error(error);
-
-        btn.innerText =
-        "DOWNLOAD PDF";
-
-        btn.disabled =
-        false;
-    }
 }
 
 form.addEventListener("submit", e=>e.preventDefault());
