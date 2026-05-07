@@ -96,7 +96,7 @@ body{
 
     </div>
 
-    <!-- 🔥 NEW: SMART NAME CHECKER -->
+    <!-- 🔥 SMART NAME CHECKER (UNCHANGED) -->
     <div class="p-3">
 
         <div class="box">
@@ -204,56 +204,43 @@ body{
 
         </div>
 
+        <!-- 🔥 FIXED SK PARTICIPATION (NO NESTED BOX ERROR) -->
         <div class="box">
 
-            <div class="box">
+            <div class="label">SK PARTICIPATION</div>
 
-    <div class="label">SK PARTICIPATION</div>
+            <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
 
-    <!-- SK VOTER -->
-    <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
+            <label class="option">
+                <input type="radio" name="voter" value="Yes" required> Yes
+            </label>
 
-    <label class="option">
-        <input type="radio" name="voter" value="Yes" required> Yes
-    </label>
+            <label class="option">
+                <input type="radio" name="voter" value="No"> No
+            </label>
 
-    <label class="option">
-        <input type="radio" name="voter" value="No"> No
-    </label>
+            <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
 
+            <label class="option">
+                <input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes
+            </label>
 
-    <!-- KK ASSEMBLY -->
-    <p class="text-xs font-bold mt-2">Did you attend KK Assembly?</p>
+            <label class="option">
+                <input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No
+            </label>
 
-    <label class="option">
-        <input type="radio" name="assembly" value="Yes" onclick="toggleTimes(true)"> Yes
-    </label>
+            <!-- FIXED: NO hidden class (mobile-safe) -->
+            <div id="kk_times_box" style="display:none;" class="mt-2 border-t pt-2">
 
-    <label class="option">
-        <input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No
-    </label>
+                <p class="text-xs font-bold">If YES, how many times?</p>
 
+                <label class="option"><input type="radio" name="times" value="1-2"> 1-2</label>
+                <label class="option"><input type="radio" name="times" value="3-5"> 3-5</label>
+                <label class="option"><input type="radio" name="times" value="More than 5"> More than 5</label>
 
-    <!-- TIMES ATTENDED -->
-    <div id="kk_times_box" class="hidden mt-2 border-t pt-2">
+            </div>
 
-        <p class="text-xs font-bold">If YES, how many times?</p>
-
-        <label class="option">
-            <input type="radio" name="times" value="1-2"> 1-2
-        </label>
-
-        <label class="option">
-            <input type="radio" name="times" value="3-5"> 3-5
-        </label>
-
-        <label class="option">
-            <input type="radio" name="times" value="More than 5"> More than 5
-        </label>
-
-    </div>
-
-</div>
+        </div>
 
     </form>
 
@@ -280,7 +267,7 @@ BACK TO DASHBOARD
 
 <script>
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzDcCwpg2QbWacngPw8F54mVHF6OF9J-OWeSUfuqV03YQwOICY8GSPgagi9-cGpZAk1/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyZ0gKPKXK0pgZ73t2LP60n7b1MCtppLWDMpr-U5MpOal6ulE8adqEJJVrpIzjzF511/exec';
 let isRegistered = false;
 
 const form = document.getElementById("kkForm");
@@ -293,7 +280,19 @@ function calcAge(){
     }
 }
 
- function checkUser(){
+/* FIXED TOGGLE (MOBILE SAFE) */
+function toggleTimes(show){
+    const box = document.getElementById("kk_times_box");
+
+    if(show){
+        box.style.display = "block";
+    } else {
+        box.style.display = "none";
+    }
+}
+
+/* NAME CHECK (UNCHANGED LOGIC) */
+function checkUser(){
 
     const name = document.getElementById("checkName").value;
     const result = document.getElementById("checkResult");
@@ -327,7 +326,8 @@ function calcAge(){
     });
 
 }
-/* BLOCK SUBMIT IF FOUND */
+
+/* SUBMIT BLOCK */
 function submitToGoogle(){
 
     if(isRegistered){
@@ -347,6 +347,7 @@ function submitToGoogle(){
         form.reset();
         isRegistered = false;
         document.getElementById("checkResult").innerText = "";
+        document.getElementById("kk_times_box").style.display = "none";
     });
 
 }
