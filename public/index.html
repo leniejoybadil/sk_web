@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#16a34a">
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <title>SK Dalagdag | Dashboard</title>
@@ -99,38 +103,46 @@ body{
 
 <body class="flex" id="page" style="display:none;">
 
-<!-- SIDEBAR -->
+<!-- SIDEBAR (IMPROVED ONLY) -->
 <aside id="sidebar" class="sidebar shadow-2xl">
 
-    <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+    <!-- HEADER CONTAINER -->
+    <div class="bg-white/10 rounded-xl p-4 mb-5 flex items-center justify-between">
 
-        <div class="text-center w-full">
+        <div>
             <h2 class="text-xl font-black tracking-tighter">SK DALAGDAG</h2>
             <p class="text-[10px] opacity-70 uppercase tracking-widest">Youth Portal</p>
         </div>
 
-        <button onclick="toggleMenu()" class="md:hidden text-2xl absolute right-4">✕</button>
+        <button onclick="toggleMenu()" class="text-2xl bg-white/10 px-3 py-1 rounded-lg">
+            ☰
+        </button>
 
     </div>
 
-    <nav class="flex flex-col gap-2">
+    <!-- MENU CONTAINER -->
+    <div class="bg-white/5 rounded-xl p-3">
 
-        <a href="index.html" class="px-4 py-3 rounded-lg bg-white text-green-800 font-bold">📊 Dashboard</a>
-        <a href="announcements.html">📢 Announcements</a>
-        <a href="committees.html">👥 Committees</a>
-        <a href="schedules.html">📅 Schedule</a>
-        <a href="events.html">🏆 Events</a>
-        <a href="kk.html">📋 KK Profiling</a>
-        <a href="projects.html">📁 SK Projects 2026</a>
-        <a href="suggestions.html">💡 Suggestions</a>
+        <nav class="flex flex-col gap-2 text-sm">
 
-        <div class="pt-10">
-            <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg">
-                🚪 Logout
-            </button>
-        </div>
+            <a href="index.html" class="px-4 py-3 rounded-lg bg-white text-green-800 font-bold">📊 Dashboard</a>
+            <a href="announcements.html" class="px-3 py-2 rounded-lg hover:bg-white/10">📢 Announcements</a>
+            <a href="committees.html" class="px-3 py-2 rounded-lg hover:bg-white/10">👥 Committees</a>
+            <a href="schedules.html" class="px-3 py-2 rounded-lg hover:bg-white/10">📅 Schedule</a>
+            <a href="events.html" class="px-3 py-2 rounded-lg hover:bg-white/10">🏆 Events</a>
+            <a href="kk.html" class="px-3 py-2 rounded-lg hover:bg-white/10">📋 KK Profiling</a>
+            <a href="projects.html" class="px-3 py-2 rounded-lg hover:bg-white/10">📁 SK Projects 2026</a>
+            <a href="suggestions.html" class="px-3 py-2 rounded-lg hover:bg-white/10">💡 Suggestions</a>
 
-    </nav>
+        </nav>
+
+    </div>
+
+    <div class="pt-6">
+        <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg">
+            🚪 Logout
+        </button>
+    </div>
 
 </aside>
 
@@ -154,9 +166,9 @@ body{
 
         <!-- SLIDER -->
         <div class="hero-banner relative rounded-2xl overflow-hidden shadow-lg">
-
-            <img src="bg.png" class="slide active w-full h-full object-cover">
             <img src="intro.png" class="slide w-full h-full object-cover">
+            <img src="bg.png" class="slide active w-full h-full object-cover">
+            <img src="inside.png" class="slide w-full h-full object-cover">
             <img src="bridge.png" class="slide w-full h-full object-cover">
 
             <button onclick="changeSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">❮</button>
@@ -164,7 +176,7 @@ body{
 
         </div>
 
-        <!-- MAIN DASHBOARD BUTTONS -->
+        <!-- CARDS -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
 
             <div onclick="location.href='announcements.html'" class="stats-card p-6 cursor-pointer">
@@ -206,7 +218,7 @@ body{
 
     </div>
 
-    <!-- CONTACT INFO -->
+    <!-- CONTACT INFO (RESTORED) -->
     <div class="mt-12 bg-green-800 text-white rounded-t-2xl px-6 py-8">
 
         <div class="grid md:grid-cols-3 gap-6 text-sm">
@@ -267,6 +279,10 @@ function changeSlide(n){
 }
 
 setInterval(()=>changeSlide(1),4000);
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
 
 </script>
 

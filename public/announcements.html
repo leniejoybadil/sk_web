@@ -62,12 +62,21 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
 
 <script>
 
+/* =========================
+   ROLE CHECK (FIXED)
+========================= */
 const role = sessionStorage.getItem("role");
+const adminForm = document.getElementById("adminOnlyForm");
 
 if (role === "admin") {
-    document.getElementById("adminOnlyForm").classList.remove("hidden");
+    adminForm.classList.remove("hidden");
+} else {
+    adminForm.style.display = "none";
 }
 
+/* =========================
+   LOAD ANNOUNCEMENTS
+========================= */
 function loadAnnouncements() {
 
     let posts = JSON.parse(localStorage.getItem("announcements")) || [];
@@ -76,13 +85,13 @@ function loadAnnouncements() {
 
     feed.innerHTML = "";
 
-    /* 📢 IMPORTANT NEWS (ADDED) */
+    /* 📢 IMPORTANT NEWS */
     feed.innerHTML += `
     <div class="announcement-card bg-white p-5 rounded-xl shadow-sm">
         <h3 class="font-bold text-lg text-red-600">🚨 IMPORTANT NOTICE</h3>
         <img src="news.png" class="mt-3 rounded-lg w-full">
         <p class="text-sm text-gray-600 mt-2">
-            DALAGDAG is NOT YET SUBMITTED for KK PROFILING. All youth are strongly encouraged to complete and submit their registration to our SK DLAGDAG ONLINE PORTAL  as soon as possible.
+            DALAGDAG is NOT YET SUBMITTED for KK PROFILING. All youth are strongly encouraged to complete and submit their registration to our SK DALAGDAG ONLINE PORTAL as soon as possible.
         </p>
     </div>
     `;
@@ -115,8 +124,12 @@ function loadAnnouncements() {
     });
 }
 
+/* INIT */
 loadAnnouncements();
 
+/* =========================
+   POST ANNOUNCEMENT
+========================= */
 function postAnnouncement() {
 
     if (sessionStorage.getItem("role") !== "admin") {
@@ -147,7 +160,7 @@ function postAnnouncement() {
 
         posts.unshift(newPost);
 
-        localStorage.setItem("sk_announcements", JSON.stringify(posts));
+        localStorage.setItem("announcements", JSON.stringify(posts));
 
         location.reload();
     }

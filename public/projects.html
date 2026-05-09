@@ -22,7 +22,7 @@
         A documentation and community support initiative aimed at assisting students and residents with free printing services for academic and personal requirements.
       </p>
 
-      <!-- 🔥 ANIMATED GLOW BADGE (UPDATED) -->
+      <!-- GLOW BADGE -->
       <div class="badge active-glow">ONGOING PROJECT</div>
 
     </div>
@@ -60,22 +60,29 @@
   margin-bottom: 12px;
 }
 
-/* IMAGE */
+/* IMAGE CONTAINER (IMPROVED LOOK) */
 .image-container {
   position: relative;
+  padding: 10px;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
 }
 
+/* ✅ FIXED IMAGE (NO MORE ZOOM ON CP) */
 .project-img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  max-height: 240px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
 }
 
 /* OVERLAY */
 .overlay {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 14px;
+  left: 14px;
   background: rgba(0,0,0,0.6);
   color: white;
   font-size: 13px;
@@ -100,7 +107,7 @@
   line-height: 1.6;
 }
 
-/* BADGE BASE */
+/* BADGE */
 .badge {
   display: inline-block;
   margin-top: 12px;
@@ -110,7 +117,7 @@
   border-radius: 20px;
 }
 
-/* 🔥 ACTIVE GLOW BADGE */
+/* GLOW BADGE */
 .active-glow {
   background: #dcfce7;
   color: #166534;
@@ -149,7 +156,7 @@
   color: #b45309;
 }
 
-/* MOBILE */
+/* MOBILE IMPROVEMENT */
 @media (max-width: 600px) {
   .project-title { font-size: 21px; }
   .project-desc { font-size: 16px; }
