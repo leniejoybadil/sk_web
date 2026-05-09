@@ -98,13 +98,10 @@ body{
 
     <form id="kkForm" class="p-3">
 
-        <!-- FULL NAME -->
         <div class="box">
-
             <div class="label">FULL NAME</div>
             <input type="text" name="fullname" id="fullname" class="w-full outline-none border-b" required>
 
-            <!-- 🔥 CHECKER ADDED HERE -->
             <button type="button" onclick="checkUser()" class="bg-purple-600 text-white w-full mt-2 p-2 rounded">
                 CHECK IF ALREADY REGISTERED
             </button>
@@ -121,56 +118,38 @@ body{
             <input type="text" name="address" id="address" class="w-full outline-none border-b" required>
         </div>
 
-        <!-- BIRTH -->
         <div class="box">
-
             <div class="label">BIRTHDATE</div>
             <input type="date" name="birthdate" id="birthdate" class="w-full" onchange="calcAge()" required>
 
             <div class="label mt-2">AGE</div>
             <input type="text" name="age" id="age" class="w-full outline-none" readonly>
-
         </div>
 
-        <!-- GENDER -->
         <div class="box">
-
             <div class="label">GENDER</div>
-
             <label class="option"><input type="radio" name="gender" value="Male" required> Male</label>
             <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
-
         </div>
 
-        <!-- CIVIL -->
         <div class="box">
-
             <div class="label">CIVIL STATUS</div>
-
             <label class="option"><input type="radio" name="civil_status" value="Single" required> Single</label>
             <label class="option"><input type="radio" name="civil_status" value="Married"> Married</label>
             <label class="option"><input type="radio" name="civil_status" value="Widowed"> Widowed</label>
             <label class="option"><input type="radio" name="civil_status" value="Separated"> Separated</label>
-
         </div>
 
-        <!-- YOUTH -->
         <div class="box">
-
             <div class="label">YOUTH TYPE</div>
-
             <label class="option"><input type="radio" name="youth_type" value="In-School" required> In-School Youth</label>
             <label class="option"><input type="radio" name="youth_type" value="Out-of-School"> Out-of-School Youth</label>
             <label class="option"><input type="radio" name="youth_type" value="Working"> Working Youth</label>
             <label class="option"><input type="radio" name="youth_type" value="PWD"> PWD</label>
-
         </div>
 
-        <!-- EDUCATION -->
         <div class="box">
-
             <div class="label">EDUCATIONAL ATTAINMENT</div>
-
             <select name="education" class="w-full outline-none bg-transparent py-1">
                 <option>Elementary Level</option>
                 <option>Elementary Graduate</option>
@@ -180,23 +159,16 @@ body{
                 <option>College Graduate</option>
                 <option>Vocational Graduate</option>
             </select>
-
         </div>
 
-        <!-- EMPLOYMENT -->
         <div class="box">
-
             <div class="label">EMPLOYMENT STATUS</div>
-
             <label class="option"><input type="radio" name="employment" value="Employed" required> Employed</label>
             <label class="option"><input type="radio" name="employment" value="Not Employed"> Not Employed</label>
             <label class="option"><input type="radio" name="employment" value="Self-Employed"> Self-Employed</label>
-
         </div>
 
-        <!-- SK PARTICIPATION -->
         <div class="box">
-
             <div class="label">SK PARTICIPATION</div>
 
             <p class="text-xs font-bold mt-2">Registered SK Voter?</p>
@@ -208,31 +180,29 @@ body{
             <label class="option"><input type="radio" name="assembly" value="No" onclick="toggleTimes(false)"> No</label>
 
             <div id="kk_times_box" class="hidden mt-2 border-t pt-2">
-
                 <p class="text-xs font-bold">If YES, how many times?</p>
-
                 <label class="option"><input type="radio" name="times" value="1-2"> 1-2</label>
                 <label class="option"><input type="radio" name="times" value="3-5"> 3-5</label>
                 <label class="option"><input type="radio" name="times" value="More than 5"> More than 5</label>
-
             </div>
-
         </div>
 
-        <!-- PRIVACY ACT -->
         <div class="box">
-
             <div class="label">DATA PRIVACY NOTICE</div>
 
             <p style="font-size:12px;">
-                By submitting this form, you agree to the Data Privacy Act of 2012 (RA 10173) and allow SK Dalagdag to process your information.
+                By submitting this form, you agree to the Data Privacy Act of 2012 (RA 10173).
             </p>
 
             <label class="option">
                 <input type="checkbox" id="privacyCheck">
                 I agree
             </label>
+        </div>
 
+        <!-- 🔥 LOADING BAR -->
+        <div id="loadingBox" class="hidden w-full bg-gray-200 rounded mt-3 overflow-hidden">
+            <div id="loadingBar" class="bg-green-600 text-white text-xs text-center py-1" style="width:0%">0%</div>
         </div>
 
     </form>
@@ -261,8 +231,8 @@ BACK TO DASHBOARD
 const scriptURL = "https://script.google.com/macros/s/AKfycbwJYz1IUj7Wm8SZIgfJFXBFGq8myAg5mI3oQ_yMP_3-i1si16EfgxwnzjtJPTfHv4lG/exec";
 
 let isRegistered = false;
+let submitting = false;
 
-/* AGE */
 function calcAge(){
     let b = new Date(document.getElementById("birthdate").value);
     let t = new Date();
@@ -271,14 +241,11 @@ function calcAge(){
     }
 }
 
-/* KK TOGGLE */
 function toggleTimes(show){
     document.getElementById("kk_times_box").classList.toggle("hidden", !show);
 }
 
-/* 🔥 CHECK USER */
 function checkUser(){
-
     const name = document.getElementById("fullname").value;
     const result = document.getElementById("checkResult");
 
@@ -290,7 +257,6 @@ function checkUser(){
     fetch(scriptURL + "?name=" + encodeURIComponent(name))
     .then(res => res.text())
     .then(data => {
-
         if(data.trim() === "FOUND"){
             result.innerText = "⚠ Already Registered";
             result.style.color = "red";
@@ -300,38 +266,81 @@ function checkUser(){
             result.style.color = "green";
             isRegistered = false;
         }
-
     });
-
 }
 
-/* SUBMIT */
+/* 🔥 LOADING SUBMIT */
 function submitToGoogle(){
+
+    if(submitting) return;
+    submitting = true;
 
     const privacy = document.getElementById("privacyCheck");
 
     if(!privacy.checked){
         alert("Agree to Privacy Policy first");
+        submitting = false;
         return;
     }
 
     if(isRegistered){
         alert("Already registered!");
+        submitting = false;
         return;
     }
 
+    const btn = document.querySelector("button[onclick='submitToGoogle()']");
+    const loadingBox = document.getElementById("loadingBox");
+    const loadingBar = document.getElementById("loadingBar");
+
+    btn.disabled = true;
+    btn.innerText = "Submitting...";
+    loadingBox.classList.remove("hidden");
+
+    let progress = 0;
+
+    let interval = setInterval(() => {
+        if(progress < 90){
+            progress += Math.random() * 10;
+            loadingBar.style.width = progress + "%";
+            loadingBar.innerText = Math.floor(progress) + "%";
+        }
+    }, 120);
+
     const data = new FormData(document.getElementById("kkForm"));
 
-    fetch(scriptURL, {
-        method: "POST",
-        body: data
-    })
+    fetch(scriptURL, { method: "POST", body: data })
     .then(() => {
-        alert("Submitted!");
-        document.getElementById("kkForm").reset();
-        isRegistered = false;
-    });
+        clearInterval(interval);
 
+        loadingBar.style.width = "100%";
+        loadingBar.innerText = "100%";
+
+        setTimeout(() => {
+            alert("Submitted!");
+            document.getElementById("kkForm").reset();
+            isRegistered = false;
+
+            btn.disabled = false;
+            btn.innerText = "SUBMIT";
+
+            loadingBox.classList.add("hidden");
+            loadingBar.style.width = "0%";
+            loadingBar.innerText = "0%";
+
+            submitting = false;
+        }, 500);
+    })
+    .catch(() => {
+        clearInterval(interval);
+        alert("Error submitting!");
+
+        btn.disabled = false;
+        btn.innerText = "SUBMIT";
+        loadingBox.classList.add("hidden");
+
+        submitting = false;
+    });
 }
 
 </script>

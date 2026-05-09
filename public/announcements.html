@@ -62,18 +62,12 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
 
 <script>
 
-/* =========================
-   SESSION CHECK (ADMIN FORM)
-========================= */
 const role = sessionStorage.getItem("role");
 
 if (role === "admin") {
     document.getElementById("adminOnlyForm").classList.remove("hidden");
 }
 
-/* =========================
-   LOAD ANNOUNCEMENTS
-========================= */
 function loadAnnouncements() {
 
     let posts = JSON.parse(localStorage.getItem("announcements")) || [];
@@ -81,6 +75,17 @@ function loadAnnouncements() {
     const feed = document.getElementById("announcementFeed");
 
     feed.innerHTML = "";
+
+    /* 📢 IMPORTANT NEWS (ADDED) */
+    feed.innerHTML += `
+    <div class="announcement-card bg-white p-5 rounded-xl shadow-sm">
+        <h3 class="font-bold text-lg text-red-600">🚨 IMPORTANT NOTICE</h3>
+        <img src="news.png" class="mt-3 rounded-lg w-full">
+        <p class="text-sm text-gray-600 mt-2">
+            DALAGDAG is NOT YET SUBMITTED for KK PROFILING. All youth are strongly encouraged to complete and submit their registration to our SK DLAGDAG ONLINE PORTAL  as soon as possible.
+        </p>
+    </div>
+    `;
 
     /* 📰 DEFAULT NEWS */
     feed.innerHTML += `
@@ -110,12 +115,8 @@ function loadAnnouncements() {
     });
 }
 
-/* INIT */
 loadAnnouncements();
 
-/* =========================
-   POST ANNOUNCEMENT (ADMIN ONLY)
-========================= */
 function postAnnouncement() {
 
     if (sessionStorage.getItem("role") !== "admin") {
