@@ -111,9 +111,7 @@ body{
             <p class="text-[10px] opacity-70 uppercase tracking-widest">Youth Portal</p>
         </div>
 
-        <button onclick="toggleMenu()" class="text-2xl bg-white/10 px-3 py-1 rounded-lg">
-            ☰
-        </button>
+        <button onclick="toggleMenu()" class="text-2xl bg-white/10 px-3 py-1 rounded-lg">☰</button>
 
     </div>
 
@@ -145,89 +143,97 @@ body{
 <!-- MAIN -->
 <main class="main-content">
 
-    <header class="bg-white px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
+<header class="bg-white px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
 
-        <button onclick="toggleMenu()" class="text-xl">☰</button>
+    <button onclick="toggleMenu()" class="text-xl">☰</button>
 
-        <h1 class="font-semibold">
-            Main /
-            <span id="displayRole">USER</span>
-        </h1>
+    <h1 class="font-semibold">
+        Main /
+        <span id="displayRole">USER</span>
+    </h1>
 
-    </header>
+</header>
 
-    <div class="px-4 sm:px-6 lg:px-8 xl:px-10 py-6 max-w-7xl mx-auto">
+<div class="px-4 sm:px-6 lg:px-8 xl:px-10 py-6 max-w-7xl mx-auto">
 
-        <!-- SLIDER -->
-        <div class="hero-banner relative rounded-2xl overflow-hidden shadow-lg">
+    <!-- SLIDER -->
+    <div class="hero-banner relative rounded-2xl overflow-hidden shadow-lg">
 
-            <img src="bg.png" class="slide active">
-            <img src="intro.png" class="slide">
-            <img src="inside.png" class="slide">
-            <img src="bridge.png" class="slide">
+        <img src="bg.png" class="slide active">
+        <img src="intro.png" class="slide">
+        <img src="inside.png" class="slide">
+        <img src="bridge.png" class="slide">
 
-            <button onclick="changeSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">❮</button>
-            <button onclick="changeSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">❯</button>
+        <button onclick="changeSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">❮</button>
+        <button onclick="changeSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 text-white px-3 py-1 rounded">❯</button>
 
+    </div>
+
+    <!-- CARDS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
+
+        <div onclick="location.href='announcements.html'" class="stats-card p-6 cursor-pointer">
+            <div class="card-icon bg-orange-500">📢</div>
+            <h3 class="mt-8 font-bold">Announcements</h3>
         </div>
 
-        <!-- CARDS -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
+        <div onclick="location.href='committees.html'" class="stats-card p-6 cursor-pointer">
+            <div class="card-icon bg-[#795548]">👥</div>
+            <h3 class="mt-8 font-bold">Committees</h3>
+        </div>
 
-            <div onclick="location.href='announcements.html'" class="stats-card p-6 cursor-pointer">
-                <div class="card-icon bg-orange-500">📢</div>
-                <h3 class="mt-8 font-bold">Announcements</h3>
-            </div>
+        <div onclick="location.href='schedules.html'" class="stats-card p-6 cursor-pointer">
+            <div class="card-icon bg-amber-700">📅</div>
+            <h3 class="mt-8 font-bold">Schedule</h3>
+        </div>
 
-            <div onclick="location.href='committees.html'" class="stats-card p-6 cursor-pointer">
-                <div class="card-icon bg-[#795548]">👥</div>
-                <h3 class="mt-8 font-bold">Committees</h3>
-            </div>
+        <div onclick="location.href='events.html'" class="stats-card p-6 cursor-pointer">
+            <div class="card-icon bg-blue-600">🏆</div>
+            <h3 class="mt-8 font-bold">Events</h3>
+        </div>
 
-            <div onclick="location.href='schedules.html'" class="stats-card p-6 cursor-pointer">
-                <div class="card-icon bg-amber-700">📅</div>
-                <h3 class="mt-8 font-bold">Schedule</h3>
-            </div>
+        <div onclick="location.href='kk.html'" class="stats-card p-6 cursor-pointer">
+            <div class="card-icon bg-green-600">📋</div>
+            <h3 class="mt-8 font-bold">KK Profiling</h3>
+        </div>
 
-            <div onclick="location.href='events.html'" class="stats-card p-6 cursor-pointer">
-                <div class="card-icon bg-blue-600">🏆</div>
-                <h3 class="mt-8 font-bold">Events</h3>
-            </div>
+        <div onclick="location.href='projects.html'" class="stats-card p-6 cursor-pointer">
+            <div class="card-icon bg-purple-600">📁</div>
+            <h3 class="mt-8 font-bold">SK Projects 2026</h3>
+        </div>
 
-            <div onclick="location.href='kk.html'" class="stats-card p-6 cursor-pointer">
-                <div class="card-icon bg-green-600">📋</div>
-                <h3 class="mt-8 font-bold">KK Profiling</h3>
-            </div>
+        <div onclick="location.href='suggestions.html'" class="stats-card p-6 cursor-pointer">
+            <div class="card-icon bg-red-600">💡</div>
+            <h3 class="mt-8 font-bold">Suggestions</h3>
+        </div>
 
-            <div onclick="location.href='projects.html'" class="stats-card p-6 cursor-pointer">
-                <div class="card-icon bg-purple-600">📁</div>
-                <h3 class="mt-8 font-bold">SK Projects 2026</h3>
-            </div>
+    </div>
+</div>
 
-            <div onclick="location.href='suggestions.html'" class="stats-card p-6 cursor-pointer">
-                <div class="card-icon bg-red-600">💡</div>
-                <h3 class="mt-8 font-bold">Suggestions</h3>
-            </div>
+<!-- CONTACT (RESTORED) -->
+<div class="mt-12 bg-green-800 text-white rounded-t-2xl px-6 py-8">
 
+    <div class="grid md:grid-cols-3 gap-6 text-sm">
+
+        <div>
+            <h3 class="font-bold text-lg mb-2">SK DALAGDAG</h3>
+            <p>Empowering youth through leadership, service, and innovation.</p>
+        </div>
+
+        <div>
+            <h3 class="font-bold text-lg mb-2">Contact Information</h3>
+            <p>📍 Barangay Dalagdag</p>
+            <p>📞 09946962921</p>
+            <p>✉ skdalagdag@gmail.com</p>
         </div>
 
     </div>
 
+</div>
+
 <!-- INSTALL BUTTON -->
 <button id="installBtn" onclick="installApp()"
-style="
-position:fixed;
-bottom:20px;
-right:20px;
-background:#16a34a;
-color:white;
-padding:12px 16px;
-border-radius:50px;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
-z-index:9999;
-display:none;
-">
+style="position:fixed;bottom:20px;right:20px;background:#16a34a;color:white;padding:12px 16px;border-radius:50px;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,0.2);z-index:9999;display:none;">
 📲 Install App
 </button>
 
@@ -237,7 +243,48 @@ display:none;
 
 let deferredPrompt = null;
 
-// detect install prompt
+/* FIX LOGIN WHITE SCREEN */
+window.addEventListener("DOMContentLoaded", () => {
+    const role = sessionStorage.getItem("role");
+
+    if (!role) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    document.getElementById("page").style.display = "flex";
+    document.getElementById("displayRole").innerText = role.toUpperCase();
+});
+
+/* SIDEBAR */
+function toggleMenu(){
+    document.getElementById("sidebar").classList.toggle("active");
+}
+
+function logout(){
+    sessionStorage.removeItem("role");
+    window.location.replace("login.html");
+}
+
+/* SLIDER */
+let index = 0;
+const slides = document.querySelectorAll(".slide");
+
+function changeSlide(n){
+    index += n;
+    if(index >= slides.length) index = 0;
+    if(index < 0) index = slides.length - 1;
+    slides.forEach(s=>s.classList.remove("active"));
+    slides[index].classList.add("active");
+}
+
+setInterval(()=>changeSlide(1),4000);
+
+/* PWA INSTALL FIX */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
@@ -247,9 +294,8 @@ window.addEventListener("beforeinstallprompt", (e) => {
     }
 });
 
-// install click
-function installApp() {
-    if (!deferredPrompt) return;
+function installApp(){
+    if(!deferredPrompt) return;
 
     deferredPrompt.prompt();
 
@@ -259,21 +305,15 @@ function installApp() {
     });
 }
 
-// hide if already installed (IMPORTANT FIX)
-function hideInstallIfInstalled() {
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-    if (isStandalone) {
+/* HIDE IF INSTALLED */
+function hideInstall(){
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
         document.getElementById("installBtn").style.display = "none";
     }
 }
 
-window.addEventListener("appinstalled", () => {
-    document.getElementById("installBtn").style.display = "none";
-});
-
-// run on load
-window.addEventListener("load", hideInstallIfInstalled);
+window.addEventListener("appinstalled", hideInstall);
+window.addEventListener("load", hideInstall);
 
 </script>
 
