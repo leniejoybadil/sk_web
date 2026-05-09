@@ -4,21 +4,14 @@
 
   <div class="project-card">
 
-    <!-- IMAGE SLIDER -->
+    <!-- IMAGE SLIDER (ONLY 1 IMAGE) -->
     <div class="image-container">
 
       <div class="slider">
         <img src="free.png" class="slide-img active">
-        <img src="free2.png" class="slide-img">
-        <img src="free3.png" class="slide-img">
       </div>
 
-      <button class="nav left" onclick="moveSlide(-1)">❮</button>
-      <button class="nav right" onclick="moveSlide(1)">❯</button>
-
-      <div class="overlay">
-        <span>📌 Featured SK Project</span>
-      </div>
+      <div class="overlay">📌 Featured SK Project</div>
 
     </div>
 
@@ -33,10 +26,33 @@
 
       <div class="badge active-glow">ONGOING PROJECT</div>
 
+      <!-- REACTIONS -->
+      <div class="reactions">
+
+        <button onclick="react('like')">👍 Like <span id="likeCount">0</span></button>
+        <button onclick="react('wow')">😮 Wow <span id="wowCount">0</span></button>
+        <button onclick="react('love')">❤️ Love <span id="loveCount">0</span></button>
+        <button onclick="react('angry')">😡 Angry <span id="angryCount">0</span></button>
+
+      </div>
+
+      <!-- COMMENTS -->
+      <div class="comment-box">
+
+        <input id="nameInput" placeholder="Your name..." class="name-input">
+
+        <textarea id="commentInput" placeholder="Write a comment..."></textarea>
+
+        <button onclick="addComment()">Post</button>
+
+        <div id="commentList"></div>
+
+      </div>
+
     </div>
   </div>
 
-  <!-- NOTICE BOX (UPDATED) -->
+  <!-- NOTICE BOX -->
   <div class="notice-box">
 
     <div class="notice-title">📌 NOTICE</div>
@@ -52,7 +68,7 @@
 
 <style>
 .section {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   padding: 14px;
   background: #f5f7fb;
 }
@@ -71,47 +87,24 @@
   box-shadow: 0 12px 28px rgba(0,0,0,0.10);
 }
 
-/* IMAGE SLIDER */
+/* IMAGE CENTER FIX */
 .image-container {
   position: relative;
   background: #000;
   height: 240px;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.slider {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
+/* ONLY ONE IMAGE */
 .slide-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: none;
-}
-
-.slide-img.active {
+  object-fit: contain; /* no zoom */
   display: block;
+  background: #000;
 }
-
-/* NAV BUTTONS */
-.nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  font-size: 18px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.nav.left { left: 10px; }
-.nav.right { right: 10px; }
 
 /* OVERLAY */
 .overlay {
@@ -133,11 +126,10 @@
 .project-title {
   font-size: 20px;
   font-weight: 900;
-  margin-bottom: 8px;
 }
 
 .project-desc {
-  font-size: 16px;
+  font-size: 15px;
   color: #444;
   line-height: 1.6;
 }
@@ -146,75 +138,157 @@
 .badge {
   display: inline-block;
   margin-top: 12px;
-  font-size: 13px;
-  font-weight: bold;
   padding: 7px 12px;
   border-radius: 20px;
+  font-weight: bold;
 }
 
 .active-glow {
   background: #dcfce7;
   color: #166534;
-  animation: glowPulse 1.8s infinite ease-in-out;
+  animation: glow 1.8s infinite;
 }
 
-@keyframes glowPulse {
+@keyframes glow {
   0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
   50% { box-shadow: 0 0 14px 6px rgba(34,197,94,0.25); }
   100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
 }
 
-/* NOTICE BOX */
+/* REACTIONS */
+.reactions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.reactions button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 20px;
+  background: #f1f1f1;
+  cursor: pointer;
+}
+
+/* COMMENTS */
+.comment-box {
+  margin-top: 15px;
+}
+
+.name-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 6px;
+}
+
+.comment-box textarea {
+  width: 100%;
+  height: 60px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.comment-box button {
+  margin-top: 5px;
+  background: #16a34a;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 10px;
+}
+
+.comment {
+  background: #f9fafb;
+  padding: 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+}
+
+/* NOTICE */
 .notice-box {
   margin-top: 15px;
   padding: 16px;
   background: linear-gradient(135deg, #fff7ed, #ffedd5);
   border-left: 6px solid #f59e0b;
   border-radius: 14px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
 .notice-title {
   font-weight: 900;
-  font-size: 14px;
   color: #b45309;
-  margin-bottom: 6px;
-}
-
-.notice-box p {
-  font-size: 15px;
-  color: #444;
-  line-height: 1.5;
 }
 
 .highlight {
   font-weight: bold;
   color: #b45309;
 }
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .image-container {
-    height: 200px;
-  }
-}
 </style>
 
 <script>
-let current = 0;
-const slides = document.querySelectorAll(".slide-img");
 
-function showSlide(index) {
-  slides.forEach(s => s.classList.remove("active"));
-  slides[index].classList.add("active");
+/* REACTIONS */
+let reactions = JSON.parse(localStorage.getItem("reactions")) || {
+  like:0, wow:0, love:0, angry:0
+};
+
+function updateUI(){
+  document.getElementById("likeCount").innerText = reactions.like;
+  document.getElementById("wowCount").innerText = reactions.wow;
+  document.getElementById("loveCount").innerText = reactions.love;
+  document.getElementById("angryCount").innerText = reactions.angry;
 }
 
-function moveSlide(step) {
-  current += step;
-
-  if (current >= slides.length) current = 0;
-  if (current < 0) current = slides.length - 1;
-
-  showSlide(current);
+function react(type){
+  reactions[type]++;
+  localStorage.setItem("reactions", JSON.stringify(reactions));
+  updateUI();
 }
+
+updateUI();
+
+/* COMMENTS */
+function addComment(){
+
+  let name = document.getElementById("nameInput").value;
+  let text = document.getElementById("commentInput").value;
+
+  if(!name || !text){
+    alert("Please enter name and comment");
+    return;
+  }
+
+  let comments = JSON.parse(localStorage.getItem("comments")) || [];
+
+  comments.push({ name, text });
+
+  localStorage.setItem("comments", JSON.stringify(comments));
+
+  document.getElementById("commentInput").value = "";
+
+  loadComments();
+}
+
+function loadComments(){
+
+  let comments = JSON.parse(localStorage.getItem("comments")) || [];
+  let list = document.getElementById("commentList");
+
+  list.innerHTML = "";
+
+  comments.forEach(c => {
+    list.innerHTML += `
+      <div class="comment">
+        <b>👤 ${c.name}</b><br>
+        💬 ${c.text}
+      </div>
+    `;
+  });
+}
+
+loadComments();
+
 </script>

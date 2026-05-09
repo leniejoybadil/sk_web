@@ -335,6 +335,17 @@ function installApp() {
     });
 }
 
+// Hide install button if already installed (PWA mode)
+window.addEventListener("appinstalled", () => {
+    document.getElementById("installBtn").style.display = "none";
+    console.log("App installed successfully");
+});
+
+// EXTRA FIX: if already running as installed app
+if (window.matchMedia('(display-mode: standalone)').matches) {
+    document.getElementById("installBtn").style.display = "none";
+}
+
 </script>
 
 </body>
