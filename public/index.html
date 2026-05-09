@@ -43,7 +43,13 @@ body{
 }
 
 /* SLIDER */
-.slide{display:none;}
+.slide{
+    display:none;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+}
 .slide.active{display:block;}
 
 .hero-banner{
@@ -103,10 +109,9 @@ body{
 
 <body class="flex" id="page" style="display:none;">
 
-<!-- SIDEBAR (IMPROVED ONLY) -->
+<!-- SIDEBAR -->
 <aside id="sidebar" class="sidebar shadow-2xl">
 
-    <!-- HEADER CONTAINER -->
     <div class="bg-white/10 rounded-xl p-4 mb-5 flex items-center justify-between">
 
         <div>
@@ -120,7 +125,6 @@ body{
 
     </div>
 
-    <!-- MENU CONTAINER -->
     <div class="bg-white/5 rounded-xl p-3">
 
         <nav class="flex flex-col gap-2 text-sm">
@@ -149,7 +153,6 @@ body{
 <!-- MAIN -->
 <main class="main-content">
 
-    <!-- HEADER -->
     <header class="bg-white px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
 
         <button onclick="toggleMenu()" class="text-xl">☰</button>
@@ -161,13 +164,13 @@ body{
 
     </header>
 
-    <!-- CONTENT -->
     <div class="px-4 sm:px-6 lg:px-8 xl:px-10 py-6 max-w-7xl mx-auto">
 
         <!-- SLIDER -->
         <div class="hero-banner relative rounded-2xl overflow-hidden shadow-lg">
-            <img src="intro.png" class="slide w-full h-full object-cover">
+
             <img src="bg.png" class="slide active w-full h-full object-cover">
+            <img src="intro.png" class="slide w-full h-full object-cover">
             <img src="inside.png" class="slide w-full h-full object-cover">
             <img src="bridge.png" class="slide w-full h-full object-cover">
 
@@ -218,7 +221,6 @@ body{
 
     </div>
 
-    <!-- CONTACT INFO (RESTORED) -->
     <div class="mt-12 bg-green-800 text-white rounded-t-2xl px-6 py-8">
 
         <div class="grid md:grid-cols-3 gap-6 text-sm">
@@ -238,6 +240,24 @@ body{
         </div>
 
     </div>
+
+<!-- INSTALL BUTTON -->
+<button id="installBtn" onclick="installApp()"
+style="
+position:fixed;
+bottom:20px;
+right:20px;
+background:#16a34a;
+color:white;
+padding:12px 16px;
+border-radius:50px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+z-index:9999;
+display:none;
+">
+📲 Install App
+</button>
 
 </main>
 
@@ -282,6 +302,37 @@ setInterval(()=>changeSlide(1),4000);
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
+}
+
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById("installBtn").style.display = "block";
+});
+
+// fallback fix
+setTimeout(() => {
+    const btn = document.getElementById("installBtn");
+    if (!deferredPrompt) {
+        btn.style.display = "block";
+        btn.innerText = "📲 Install App (Open Chrome)";
+    }
+}, 5000);
+
+function installApp() {
+    if (!deferredPrompt) {
+        alert("Install not available. Use Chrome and refresh.");
+        return;
+    }
+
+    deferredPrompt.prompt();
+
+    deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        document.getElementById("installBtn").style.display = "none";
+    });
 }
 
 </script>

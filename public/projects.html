@@ -4,13 +4,22 @@
 
   <div class="project-card">
 
-    <!-- IMAGE SECTION -->
+    <!-- IMAGE SLIDER -->
     <div class="image-container">
-      <img src="free.png" class="project-img">
+
+      <div class="slider">
+        <img src="free.png" class="slide-img active">
+        <img src="free2.png" class="slide-img">
+        <img src="free3.png" class="slide-img">
+      </div>
+
+      <button class="nav left" onclick="moveSlide(-1)">❮</button>
+      <button class="nav right" onclick="moveSlide(1)">❯</button>
 
       <div class="overlay">
         <span>📌 Featured SK Project</span>
       </div>
+
     </div>
 
     <!-- CONTENT -->
@@ -22,16 +31,21 @@
         A documentation and community support initiative aimed at assisting students and residents with free printing services for academic and personal requirements.
       </p>
 
-      <!-- GLOW BADGE -->
       <div class="badge active-glow">ONGOING PROJECT</div>
 
     </div>
   </div>
 
-  <div class="notice">
-    <strong>NOTICE:</strong>
-    Other SK projects for 2026 are currently being discussed, reviewed, and are
-    <span class="highlight">subject to finalization and approval</span>.
+  <!-- NOTICE BOX (UPDATED) -->
+  <div class="notice-box">
+
+    <div class="notice-title">📌 NOTICE</div>
+
+    <p>
+      Other SK projects for 2026 are currently being discussed, reviewed, and are
+      <span class="highlight">subject to finalization and approval</span>.
+    </p>
+
   </div>
 
 </div>
@@ -43,12 +57,10 @@
   background: #f5f7fb;
 }
 
-/* TITLE */
 .title {
   font-size: 24px;
   font-weight: 900;
   margin-bottom: 14px;
-  color: #111;
 }
 
 /* CARD */
@@ -57,32 +69,55 @@
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 12px 28px rgba(0,0,0,0.10);
-  margin-bottom: 12px;
 }
 
-/* IMAGE CONTAINER (IMPROVED LOOK) */
+/* IMAGE SLIDER */
 .image-container {
   position: relative;
-  padding: 10px;
-  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  background: #000;
+  height: 240px;
+  overflow: hidden;
 }
 
-/* ✅ FIXED IMAGE (NO MORE ZOOM ON CP) */
-.project-img {
+.slider {
   width: 100%;
-  max-height: 240px;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+  height: 100%;
+  position: relative;
 }
+
+.slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.slide-img.active {
+  display: block;
+}
+
+/* NAV BUTTONS */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nav.left { left: 10px; }
+.nav.right { right: 10px; }
 
 /* OVERLAY */
 .overlay {
   position: absolute;
-  bottom: 14px;
-  left: 14px;
+  bottom: 12px;
+  left: 12px;
   background: rgba(0,0,0,0.6);
   color: white;
   font-size: 13px;
@@ -117,38 +152,39 @@
   border-radius: 20px;
 }
 
-/* GLOW BADGE */
 .active-glow {
   background: #dcfce7;
   color: #166534;
   animation: glowPulse 1.8s infinite ease-in-out;
 }
 
-/* GLOW ANIMATION */
 @keyframes glowPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(34,197,94,0.5);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 14px 6px rgba(34,197,94,0.25);
-    transform: scale(1.03);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(34,197,94,0);
-    transform: scale(1);
-  }
+  0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+  50% { box-shadow: 0 0 14px 6px rgba(34,197,94,0.25); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
 }
 
-/* NOTICE */
-.notice {
+/* NOTICE BOX */
+.notice-box {
   margin-top: 15px;
-  padding: 14px;
+  padding: 16px;
   background: linear-gradient(135deg, #fff7ed, #ffedd5);
-  border-left: 5px solid #f59e0b;
+  border-left: 6px solid #f59e0b;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.notice-title {
+  font-weight: 900;
+  font-size: 14px;
+  color: #b45309;
+  margin-bottom: 6px;
+}
+
+.notice-box p {
   font-size: 15px;
   color: #444;
-  border-radius: 12px;
+  line-height: 1.5;
 }
 
 .highlight {
@@ -156,9 +192,29 @@
   color: #b45309;
 }
 
-/* MOBILE IMPROVEMENT */
+/* MOBILE */
 @media (max-width: 600px) {
-  .project-title { font-size: 21px; }
-  .project-desc { font-size: 16px; }
+  .image-container {
+    height: 200px;
+  }
 }
 </style>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll(".slide-img");
+
+function showSlide(index) {
+  slides.forEach(s => s.classList.remove("active"));
+  slides[index].classList.add("active");
+}
+
+function moveSlide(step) {
+  current += step;
+
+  if (current >= slides.length) current = 0;
+  if (current < 0) current = slides.length - 1;
+
+  showSlide(current);
+}
+</script>
