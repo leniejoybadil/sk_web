@@ -1,315 +1,134 @@
-<div class="section">
+<div class="max-w-md mx-auto bg-gray-100 font-sans min-h-screen p-3">
 
-  <!-- TITLE BOX -->
-  <div class="title-box">
-    📁 SK PROJECT 2026
-  </div>
+    <!-- TITLE BOX -->
+    <div class="bg-green-700 text-white text-center p-4 rounded-2xl shadow-lg mb-4">
+        <h1 class="text-2xl font-black tracking-wide">
+            📁 SK PROJECT 2026
+        </h1>
+    </div>
 
-  <!-- PROJECT CARD -->
-  <div class="project-card">
 
-    <!-- IMAGE BOX -->
-    <div class="image-box">
+    <!-- PROJECT BOX -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
 
-      <img src="free.png" class="project-img">
+        <!-- IMAGE BOX -->
+        <div class="bg-black p-4 flex justify-center items-center h-64">
 
-      <div class="overlay">
-        📌 Featured SK Project
-      </div>
+            <img src="free.png"
+            class="max-h-full max-w-full object-contain rounded-2xl shadow-lg">
+
+        </div>
+
+
+        <!-- INFO -->
+        <div class="bg-[#1e3a8a] p-5 text-white">
+
+            <h2 class="text-xl font-black text-blue-300 uppercase mb-3">
+                SK FREE PRINTING
+            </h2>
+
+            <div class="text-xs font-bold mb-4">
+                PROJECT STATUS:
+                <span class="text-green-400">
+                    ● ONGOING PROJECT
+                </span>
+            </div>
+
+            <p class="text-sm leading-relaxed opacity-90">
+                A documentation and community support initiative aimed at
+                assisting students and residents with free printing services
+                for academic and personal requirements.
+            </p>
+
+        </div>
 
     </div>
 
-    <!-- CONTENT -->
-    <div class="content">
 
-      <h3 class="project-title">SK FREE PRINTING</h3>
+    <!-- NOTICE -->
+    <div class="mt-4 p-4 border-l-4 border-orange-500 bg-orange-50 rounded-xl shadow">
 
-      <p class="project-desc">
-        A documentation and community support initiative aimed at assisting students
-        and residents with free printing services for academic and personal requirements.
-      </p>
+        <p class="text-sm text-orange-800">
 
-      <div class="badge active-glow">
-        ONGOING PROJECT
-      </div>
+            📌 <b>NOTICE:</b>
 
+            Other SK projects for 2026 are currently being discussed,
+            reviewed, and are subject to finalization and approval.
 
-      <!-- REACTIONS -->
-      <div class="reactions">
-
-        <button onclick="react('like')">
-          👍 <span id="likeCount">0</span>
-        </button>
-
-        <button onclick="react('wow')">
-          😮 <span id="wowCount">0</span>
-        </button>
-
-        <button onclick="react('love')">
-          ❤️ <span id="loveCount">0</span>
-        </button>
-
-        <button onclick="react('angry')">
-          😡 <span id="angryCount">0</span>
-        </button>
-
-      </div>
-
-
-      <!-- COMMENTS -->
-      <div class="comment-box">
-
-        <input
-        id="nameInput"
-        class="name-input"
-        placeholder="Your name...">
-
-        <textarea
-        id="commentInput"
-        placeholder="Write a comment..."></textarea>
-
-        <button onclick="addComment()">
-          Post
-        </button>
-
-        <div id="commentList"></div>
-
-      </div>
+        </p>
 
     </div>
 
-  </div>
+
+    <!-- FEEDBACK -->
+    <div class="mt-4 bg-white rounded-2xl shadow-lg p-4">
+
+        <h3 class="font-bold mb-3">
+            Project Feedback
+        </h3>
 
 
-  <!-- NOTICE -->
-  <div class="notice-box">
+        <!-- REACTIONS -->
+        <div class="flex flex-wrap gap-2 mb-4">
 
-    <div class="notice-title">
-      📌 NOTICE
+            <button onclick="react('like')"
+            class="bg-gray-100 px-3 py-2 rounded-full">
+
+                👍 <span id="likeCount">0</span>
+
+            </button>
+
+
+            <button onclick="react('love')"
+            class="bg-gray-100 px-3 py-2 rounded-full">
+
+                ❤️ <span id="loveCount">0</span>
+
+            </button>
+
+
+            <button onclick="react('wow')"
+            class="bg-gray-100 px-3 py-2 rounded-full">
+
+                😮 <span id="wowCount">0</span>
+
+            </button>
+
+
+            <button onclick="react('angry')"
+            class="bg-gray-100 px-3 py-2 rounded-full">
+
+                😡 <span id="angryCount">0</span>
+
+            </button>
+
+        </div>
+
+
+        <!-- COMMENTS -->
+        <input id="nameInput"
+        placeholder="Your name..."
+        class="w-full border rounded-xl p-3 mb-2">
+
+
+        <textarea id="commentInput"
+        placeholder="Write a comment..."
+        class="w-full border rounded-xl p-3 mb-2"></textarea>
+
+
+        <button onclick="addComment()"
+        class="bg-green-600 text-white px-4 py-2 rounded-xl">
+
+            Post
+
+        </button>
+
+
+        <div id="commentList" class="mt-4"></div>
+
     </div>
-
-    <p>
-      Other SK projects for 2026 are currently being discussed,
-      reviewed, and are
-      <span class="highlight">
-        subject to finalization and approval.
-      </span>
-    </p>
-
-  </div>
 
 </div>
-
-
-<style>
-
-.section{
-  font-family:Arial;
-  background:#f5f7fb;
-  padding:14px;
-}
-
-
-/* TITLE */
-.title-box{
-  background:#166534;
-  color:white;
-  padding:14px;
-  border-radius:16px;
-  font-size:22px;
-  font-weight:900;
-  margin-bottom:15px;
-  text-align:center;
-}
-
-
-/* CARD */
-.project-card{
-  background:white;
-  border-radius:20px;
-  overflow:hidden;
-  box-shadow:0 12px 28px rgba(0,0,0,.08);
-}
-
-
-/* IMAGE BOX */
-.image-box{
-  position:relative;
-  height:280px;
-  background:#111;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  padding:20px;
-}
-
-
-/* PHONE STYLE IMAGE */
-.project-img{
-
-  width:220px;
-  height:220px;
-
-  object-fit:contain;
-
-  background:white;
-
-  border-radius:30px;
-
-  padding:10px;
-
-  box-shadow:0 8px 20px rgba(0,0,0,.2);
-}
-
-
-.overlay{
-  position:absolute;
-  bottom:12px;
-  left:12px;
-
-  background:rgba(0,0,0,.6);
-  color:white;
-
-  padding:6px 12px;
-  border-radius:20px;
-
-  font-size:13px;
-}
-
-
-/* CONTENT */
-.content{
-  padding:16px;
-}
-
-.project-title{
-  font-size:22px;
-  font-weight:900;
-}
-
-.project-desc{
-  margin-top:8px;
-  color:#444;
-  line-height:1.6;
-  font-size:15px;
-}
-
-
-/* BADGE */
-.badge{
-  display:inline-block;
-  margin-top:12px;
-
-  padding:7px 12px;
-
-  border-radius:20px;
-  font-weight:bold;
-}
-
-.active-glow{
-  background:#dcfce7;
-  color:#166534;
-}
-
-
-/* REACTIONS */
-.reactions{
-  margin-top:16px;
-
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.reactions button{
-
-  border:none;
-
-  background:#f3f4f6;
-
-  padding:8px 12px;
-
-  border-radius:20px;
-
-  cursor:pointer;
-
-  font-weight:bold;
-}
-
-
-/* COMMENTS */
-.comment-box{
-  margin-top:16px;
-}
-
-.name-input,
-textarea{
-
-  width:100%;
-
-  padding:10px;
-
-  border-radius:10px;
-
-  border:1px solid #ddd;
-
-  margin-bottom:8px;
-}
-
-textarea{
-  height:70px;
-}
-
-.comment-box button{
-
-  background:#16a34a;
-  color:white;
-
-  border:none;
-
-  padding:8px 16px;
-
-  border-radius:10px;
-}
-
-.comment{
-
-  margin-top:8px;
-
-  background:#f9fafb;
-
-  padding:10px;
-
-  border-radius:10px;
-}
-
-
-/* NOTICE */
-.notice-box{
-
-  margin-top:16px;
-
-  background:#ffedd5;
-
-  border-left:6px solid orange;
-
-  padding:16px;
-
-  border-radius:14px;
-}
-
-.notice-title{
-  font-weight:900;
-}
-
-.highlight{
-  font-weight:bold;
-  color:#92400e;
-}
-
-</style>
 
 
 
@@ -317,57 +136,68 @@ textarea{
 
 /* REACTION SYSTEM */
 
-let reactions = JSON.parse(
-localStorage.getItem("projectReactions")
-) || {
+let reactions =
+JSON.parse(localStorage.getItem("projectReactions")) || {
 
-  like:0,
-  wow:0,
-  love:0,
-  angry:0
+    like:0,
+    love:0,
+    wow:0,
+    angry:0
+
 };
 
 
-let myReaction = localStorage.getItem(
-"myProjectReaction"
-);
+let userReaction =
+localStorage.getItem("userReaction");
 
 
-function updateUI(){
+function updateCounts(){
 
-  likeCount.innerText = reactions.like;
-  wowCount.innerText = reactions.wow;
-  loveCount.innerText = reactions.love;
-  angryCount.innerText = reactions.angry;
+    document.getElementById("likeCount").innerText =
+    reactions.like;
+
+    document.getElementById("loveCount").innerText =
+    reactions.love;
+
+    document.getElementById("wowCount").innerText =
+    reactions.wow;
+
+    document.getElementById("angryCount").innerText =
+    reactions.angry;
+
 }
 
 
 function react(type){
 
-  if(myReaction){
+    if(userReaction){
 
-    reactions[myReaction]--;
-  }
+        alert("You already reacted.");
 
-  reactions[type]++;
+        return;
 
-  myReaction = type;
+    }
 
-  localStorage.setItem(
-  "myProjectReaction",
-  type
-  );
+    reactions[type]++;
 
-  localStorage.setItem(
-  "projectReactions",
-  JSON.stringify(reactions)
-  );
+    localStorage.setItem(
+        "projectReactions",
+        JSON.stringify(reactions)
+    );
 
-  updateUI();
+    localStorage.setItem(
+        "userReaction",
+        type
+    );
+
+    userReaction = type;
+
+    updateCounts();
+
 }
 
 
-updateUI();
+updateCounts();
 
 
 
@@ -375,71 +205,85 @@ updateUI();
 
 function addComment(){
 
-  const name =
-  nameInput.value.trim();
+    let name =
+    document.getElementById("nameInput").value;
 
-  const text =
-  commentInput.value.trim();
-
-  if(!name || !text){
-
-    alert("Enter name and comment");
-
-    return;
-  }
+    let text =
+    document.getElementById("commentInput").value;
 
 
-  let comments = JSON.parse(
-  localStorage.getItem("projectComments")
-  ) || [];
+    if(!name || !text){
+
+        alert("Enter name and comment.");
+
+        return;
+
+    }
 
 
-  comments.push({
-    name,
-    text
-  });
+    let comments =
+    JSON.parse(
+        localStorage.getItem("projectComments")
+    ) || [];
 
 
-  localStorage.setItem(
-  "projectComments",
-  JSON.stringify(comments)
-  );
+    comments.push({
+
+        name:name,
+        text:text
+
+    });
 
 
-  nameInput.value="";
-  commentInput.value="";
+    localStorage.setItem(
+
+        "projectComments",
+
+        JSON.stringify(comments)
+
+    );
 
 
-  loadComments();
+    document.getElementById("commentInput").value="";
+
+
+    loadComments();
+
 }
 
 
 
 function loadComments(){
 
-  let comments = JSON.parse(
-  localStorage.getItem("projectComments")
-  ) || [];
+    let comments =
+    JSON.parse(
+        localStorage.getItem("projectComments")
+    ) || [];
 
 
-  commentList.innerHTML = "";
+    let list =
+    document.getElementById("commentList");
 
 
-  comments.forEach(c=>{
+    list.innerHTML = "";
 
-    commentList.innerHTML += `
 
-      <div class="comment">
+    comments.forEach(c=>{
 
-        <b>👤 ${c.name}</b>
-        <br>
+        list.innerHTML += `
 
-        💬 ${c.text}
+            <div class="bg-gray-100 p-3 rounded-xl mt-2">
 
-      </div>
+                <b>👤 ${c.name}</b>
 
-    `;
-  });
+                <p>${c.text}</p>
+
+            </div>
+
+        `;
+
+    });
+
 }
 
 
