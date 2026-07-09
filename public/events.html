@@ -188,12 +188,19 @@ function openForm(event){
     const group = document.getElementById("groupName");
     const purok = document.getElementById("purok");
 
+    // Hide both first
     group.classList.add("hidden");
-    purok.classList.remove("hidden");
+    purok.classList.add("hidden");
 
-    if(event.includes(" Giant Volleyball Game") || event.includes("Tagisan ng Talino") || event.includes("SK DALAGDAG GOT TALENT")){
+    // Only these events use PUROK
+    if(
+        event === "Interpurok Chess" ||
+        event === "Snake and Ladders"
+    ){
+        purok.classList.remove("hidden");
+    }else{
+        // All other events use GROUP NAME
         group.classList.remove("hidden");
-        purok.classList.add("hidden");
     }
 }
 
@@ -210,7 +217,17 @@ function submitForm(){
     const groupName = document.getElementById("groupName").value;
     const btn = document.getElementById("submitBtn");
 
-    if(!name || !age || !file){
+    // Validation
+if(
+    selectedEvent === "Interpurok Chess" ||
+    selectedEvent === "Snake and Ladders"
+){
+    if(!name || !age || purok === "Select Purok"){
+        alert("Please complete all required fields");
+        return;
+    }
+}else{
+    if(!name || !age || !groupName){
         alert("Please complete all required fields");
         return;
     }
