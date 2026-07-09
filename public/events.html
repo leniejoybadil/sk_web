@@ -161,6 +161,8 @@ button{
         <input id="groupName" placeholder="Group Name" 
         class="border p-2 w-full mb-2 hidden rounded">
 
+        <input id="file" type="file" class="border p-2 w-full mb-2 rounded">
+
         <button id="submitBtn" onclick="submitForm()" 
         class="bg-blue-700 text-white w-full p-2 rounded hover:bg-blue-800 transition">
             Submit
@@ -187,10 +189,12 @@ function openForm(event){
 
     const group = document.getElementById("groupName");
     const purok = document.getElementById("purok");
+    const fileInput=document.getElementById("file");
 
-    // Hide both first
+    // Hide/show
     group.classList.add("hidden");
     purok.classList.add("hidden");
+    fileInput.classList.remove("hidden");
 
     // Only these events use PUROK
     if(
@@ -198,6 +202,7 @@ function openForm(event){
         event === "Snake and Ladders"
     ){
         purok.classList.remove("hidden");
+        group.classList.add("hidden");
     }else{
         // All other events use GROUP NAME
         group.classList.remove("hidden");
@@ -216,21 +221,23 @@ function submitForm(){
     const purok = document.getElementById("purok").value;
     const groupName = document.getElementById("groupName").value;
     const btn = document.getElementById("submitBtn");
+    const file=document.getElementById("file").files[0];
 
     // Validation
 if(
     selectedEvent === "Interpurok Chess" ||
     selectedEvent === "Snake and Ladders"
 ){
-    if(!name || !age || purok === "Select Purok"){
+    if(!name || !age || purok === "Select Purok" || !file){
         alert("Please complete all required fields");
         return;
     }
 }else{
-    if(!name || !age || !groupName){
+    if(!name || !age || !groupName || !file){
         alert("Please complete all required fields");
         return;
     }
+}
 
     btn.innerText = "Submitting...";
     btn.disabled = true;
