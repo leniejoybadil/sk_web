@@ -78,31 +78,43 @@ button{
 
     <!-- TITLE -->
     <h2 class="text-3xl font-bold text-center text-green-300 mb-6 float">
-        🏀 Event Registration
+         Event Registration
     </h2>
 
     <!-- BUTTONS -->
     <div class="grid gap-3">
 
-        <button onclick="openForm('Interpurok Basketball League')" 
+        <button onclick="openForm('Giant Volleyball Game')" 
         class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-            Interpurok Basketball League (18 Above)
+            Giant Volleyball Game
         </button>
 
-        <button onclick="openForm('Interpurok Billiards')" 
+        <button onclick="openForm('Mobile Legends: Bang Bang')" 
         class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-            Interpurok Billiards
+           Mobile Legends: Bang Bang
         </button>
 
-        <button onclick="openForm('Volleyball Tournament')" 
+        <button onclick="openForm('Tagisan ng Talino')" 
         class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-            Volleyball Tournament
+            Tagisan ng Talino
         </button>
 
-        <button onclick="openForm('Sepak Takraw Tournament')" 
+        <button onclick="openForm('Interpurok Chess')" 
         class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-            Sepak Takraw Tournament
+            Interpurok Chess
         </button>
+
+        <button onclick="openForm('Snake and Ladders')" 
+        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
+            Snake and Ladders
+        </button>
+
+         <button onclick="openForm('SK DALAGDAG GOT TALENT')" 
+        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
+           SK DALAGDAG GOT TALENT
+        </button>
+
+
 
     </div>
 
@@ -149,12 +161,6 @@ button{
         <input id="groupName" placeholder="Group Name" 
         class="border p-2 w-full mb-2 hidden rounded">
 
-        <input type="file" id="validid" accept="image/*" class="w-full mb-3 border p-2 rounded">
-
-        <p class="text-xs text-red-500 mb-2">
-            *Valid ID is required to submit
-        </p>
-
         <button id="submitBtn" onclick="submitForm()" 
         class="bg-blue-700 text-white w-full p-2 rounded hover:bg-blue-800 transition">
             Submit
@@ -185,7 +191,7 @@ function openForm(event){
     group.classList.add("hidden");
     purok.classList.remove("hidden");
 
-    if(event.includes("Volleyball") || event.includes("Takraw")){
+    if(event.includes(" Giant Volleyball Game") || event.includes("Tagisan ng Talino") || event.includes("SK DALAGDAG GOT TALENT")){
         group.classList.remove("hidden");
         purok.classList.add("hidden");
     }
@@ -202,11 +208,10 @@ function submitForm(){
     const age = document.getElementById("age").value;
     const purok = document.getElementById("purok").value;
     const groupName = document.getElementById("groupName").value;
-    const file = document.getElementById("validid").files[0];
     const btn = document.getElementById("submitBtn");
 
     if(!name || !age || !file){
-        alert("Please complete all required fields and upload Valid ID.");
+        alert("Please complete all required fields");
         return;
     }
 
@@ -223,8 +228,6 @@ function submitForm(){
         formData.append("age", age);
         formData.append("purok", purok || "N/A");
         formData.append("groupName", groupName || "N/A");
-        formData.append("validid", base64);
-        formData.append("filename", filename);
         formData.append("mimeType", type);
 
         fetch(scriptURL, {method:"POST", body:formData})
