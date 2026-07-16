@@ -4,362 +4,209 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
+
 <title>Event Registration</title>
 
 <style>
+
 body{
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at top,#064e3b,#0f172a);
-    color:white;
-    margin:0;
-    padding:0;
+    font-family:Arial,sans-serif;
+    background:radial-gradient(circle at top,#065f46,#0f172a);
     display:flex;
     justify-content:center;
+    align-items:center;
     min-height:100vh;
-    overflow-x:hidden;
+    color:white;
+    margin:0;
 }
 
-/* Container */
 .container{
     width:100%;
     max-width:520px;
-    padding:18px;
+    padding:20px;
 }
 
-/* Floating title */
-@keyframes floaty{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-8px);}
-    100%{transform:translateY(0);}
+.title{
+    text-align:center;
+    font-size:35px;
+    font-weight:bold;
+    margin-bottom:30px;
+    color:#6ee7b7;
 }
 
-.float{
-    animation:floaty 3s ease-in-out infinite;
-}
+.card{
 
-/* Loader */
-.animate-ball{
-    animation:bounce 1s infinite;
-}
+background:rgba(255,255,255,.08);
 
-/* Blur */
-#modal,
-#seatModal{
-    backdrop-filter:blur(8px);
-}
-
-/* Inputs */
-input,
-select{
-    outline:none;
-    transition:.25s;
-}
-
-input:focus,
-select:focus{
-    border-color:#10b981;
-    box-shadow:0 0 0 3px rgba(16,185,129,.25);
-}
-
-/* Buttons */
-button{
-    transition:.25s;
-}
-
-/* Mobile */
-@media(max-width:600px){
-.container{
-padding:12px;
-}
-}
-
-/* ======================================================
-                SEAT RESERVATION DESIGN
-====================================================== */
-
-.table-card{
-
-background:white;
+backdrop-filter:blur(18px);
 
 border-radius:22px;
 
-padding:20px;
+padding:25px;
 
-display:flex;
-
-flex-direction:column;
-
-justify-content:flex-start;
-
-box-shadow:0 12px 30px rgba(0,0,0,.15);
-
-border:3px solid #d1fae5;
-
-height:100%;
-
-}
-.table-title{
-
-font-size:22px;
-
-font-weight:bold;
-
-color:#047857;
-
-text-align:center;
-
-margin-bottom:15px;
-
-letter-spacing:1px;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
 
 }
 
-.seat-grid{
-
-display:grid;
-
-grid-template-columns:repeat(5,50px);
-
-justify-content:center;
-
-gap:10px;
-
-}
-
-/* =======================
-CHAIR
-======================= */
-.seat{
-
-width:50px;
-
-height:50px;
-
-border-radius:50%;
-
-border:none;
-
-cursor:pointer;
-
-font-weight:bold;
-
-font-size:15px;
-
-color:white;
-
-background:linear-gradient(145deg,#22c55e,#16a34a);
-
-box-shadow:
-0 8px 18px rgba(0,0,0,.25),
-inset 0 2px 5px rgba(255,255,255,.25);
-
-transition:.25s;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-position:relative;
-
-}
-
-.seat::before{
-
-content:"🪑";
-
-position:absolute;
-
-top:5px;
-
-font-size:13px;
-
-}
-
-.seat:hover{
-
-transform:translateY(-6px) scale(1.08);
-
-box-shadow:
-0 15px 30px rgba(0,0,0,.35);
-
-}
-
-.seat.selected{
-
-background:linear-gradient(145deg,#2563eb,#1d4ed8);
-
-box-shadow:
-0 0 18px rgba(37,99,235,.8);
-
-}
-
-.seat.reserved{
-
-background:linear-gradient(145deg,#dc2626,#991b1b);
-
-cursor:not-allowed;
-
-opacity:.9;
-
-box-shadow:none;
-
-}
-
-.seat.reserved::before{
-
-content:"🔒";
-
-}
-
-/* Stage */
-
-.stage{
-
-width:100%;
-
-padding:20px;
-
-margin-bottom:35px;
-
-text-align:center;
-
-font-size:30px;
-
-font-weight:bold;
-
-letter-spacing:3px;
-
-border-radius:20px;
-
-background:linear-gradient(90deg,#dc2626,#f59e0b,#dc2626);
-
-color:white;
-
-box-shadow:0 10px 30px rgba(0,0,0,.35);
-
-border:4px solid gold;
-
-}
-
-/* Legend */
-
-.legend{
-
-display:flex;
-
-justify-content:center;
-
-flex-wrap:wrap;
-
-gap:18px;
-
-margin:25px 0;
-
-font-weight:bold;
-
-}
-
-.legend div{
-
-display:flex;
-
-align-items:center;
-
-gap:8px;
-
-background:#f3f4f6;
-
-padding:10px 18px;
-
-border-radius:30px;
-
-color:#111827;
-
-box-shadow:0 5px 12px rgba(0,0,0,.1);
-
-}
-
-/* Selected Card */
-
-.selected-card{
-
-background:#ecfdf5;
-
-border:2px solid #10b981;
-
-padding:20px;
-
-border-radius:18px;
-
-margin-top:25px;
-
-color:#065f46;
-
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-
-}
-
-.selected-card h3{
-
-font-size:22px;
-
-margin-bottom:12px;
-
-}
-
-/* Confirm Button */
-
-.confirm-btn{
+.eventBtn{
 
 width:100%;
 
 padding:16px;
 
+margin-bottom:15px;
+
 border:none;
 
-border-radius:15px;
+border-radius:16px;
 
 font-size:18px;
 
 font-weight:bold;
 
-color:white;
-
 cursor:pointer;
 
-background:linear-gradient(to right,#16a34a,#059669);
+color:white;
 
-margin-top:18px;
+background:linear-gradient(135deg,#059669,#10b981);
 
 transition:.3s;
 
 }
 
-.confirm-btn:hover{
+.eventBtn:hover{
 
-transform:translateY(-3px);
+transform:translateY(-4px);
 
 box-shadow:0 12px 25px rgba(16,185,129,.4);
 
 }
 
-/* Close Button */
-
-.close-btn{
+.seatBtn{
 
 width:100%;
 
-padding:15px;
+padding:18px;
 
-margin-top:12px;
+margin-top:8px;
 
 border:none;
 
-border-radius:15px;
+border-radius:16px;
 
-background:#d1d5db;
+font-size:19px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+background:linear-gradient(135deg,#f59e0b,#dc2626);
+
+color:white;
+
+transition:.3s;
+
+}
+
+.seatBtn:hover{
+
+transform:scale(1.03);
+
+}
+
+.back{
+
+display:block;
+
+text-align:center;
+
+margin-top:25px;
+
+color:#d1d5db;
+
+text-decoration:none;
+
+}
+
+.back:hover{
+
+color:white;
+
+}
+
+.modal{
+
+position:fixed;
+
+inset:0;
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+background:rgba(0,0,0,.65);
+
+backdrop-filter:blur(5px);
+
+z-index:999;
+
+}
+
+.modal-content{
+
+background:white;
+
+color:black;
+
+padding:25px;
+
+border-radius:20px;
+
+width:95%;
+
+max-width:420px;
+
+}
+
+.modal input{
+
+width:100%;
+
+padding:12px;
+
+margin-bottom:12px;
+
+border:1px solid #d1d5db;
+
+border-radius:12px;
+
+}
+
+.modal input:focus{
+
+outline:none;
+
+border-color:#10b981;
+
+box-shadow:0 0 0 3px rgba(16,185,129,.2);
+
+}
+
+.submit{
+
+width:100%;
+
+padding:14px;
+
+background:#059669;
+
+color:white;
+
+border:none;
+
+border-radius:12px;
 
 font-weight:bold;
 
@@ -367,273 +214,101 @@ cursor:pointer;
 
 }
 
-.close-btn:hover{
+.cancel{
 
-background:#9ca3af;
+width:100%;
 
-}
+padding:14px;
 
-/* Scrollbar */
+margin-top:10px;
 
-::-webkit-scrollbar{
+background:#d1d5db;
 
-width:8px;
+border:none;
 
-}
+border-radius:12px;
 
-::-webkit-scrollbar-thumb{
-
-background:#10b981;
-
-border-radius:20px;
-
-}
-#tablesContainer{
-
-display:grid;
-
-grid-template-columns:repeat(2,minmax(350px,1fr));
-
-gap:25px;
-
-align-items:start;
+cursor:pointer;
 
 }
 
-@media(max-width:900px){
-
-#tablesContainer{
-
-grid-template-columns:1fr;
-
-}
-
-}
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <!-- TITLE -->
-    <h2 class="text-3xl font-bold text-center text-green-300 mb-6 float">
-         Event Registration
-    </h2>
+<h1 class="title">
+🎮 Event Registration
+</h1>
 
-    <!-- BUTTONS -->
-    <div class="grid gap-3">
+<div class="card">
 
+<button class="eventBtn"
+onclick="openForm('Mobile Legends: Bang Bang')">
+🎮 Mobile Legends
+</button>
 
-        <button onclick="openForm('Mobile Legends: Bang Bang')" 
-        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-           Mobile Legends: Bang Bang
-        </button>
+<button class="eventBtn"
+onclick="openForm('Tagisan ng Talino')">
+🧠 Tagisan ng Talino
+</button>
 
-        <button onclick="openForm('Tagisan ng Talino')" 
-        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-            Tagisan ng Talino
-        </button>
+<button class="eventBtn"
+onclick="openForm('SK DALAGDAG GOT TALENT')">
+🎤 SK Got Talent
+</button>
 
-         <button onclick="openForm('SK DALAGDAG GOT TALENT')" 
-        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-           SK DALAGDAG GOT TALENT
-        </button>
-
-        <button onclick="openSeatReservation()"
-class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white font-bold rounded-xl shadow-xl hover:scale-105 transition">
-
+<button class="seatBtn"
+onclick="location.href='seatreservation.html'">
 🪑 Seat Reservation
-
 </button>
 
-
-    </div>
-
-    <!-- BACK -->
-    <button onclick="location.href='index.html'" 
-    class="mt-5 text-gray-300 underline w-full">
-        Back to Dashboard
-    </button>
+<a href="index.html" class="back">
+← Back to Dashboard
+</a>
 
 </div>
 
-<!-- LOADER -->
-<div id="loader" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-    <div class="text-center">
-        <img src="https://cdn-icons-png.flaticon.com/512/889/889455.png"
-             class="w-16 animate-ball mx-auto">
-        <p class="text-white mt-3 font-semibold">Submitting...</p>
-    </div>
 </div>
 
-<!-- MODAL -->
-<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center p-3">
+<div class="modal" id="modal">
 
-    <div class="bg-white text-black p-6 rounded-2xl w-full max-w-md shadow-2xl mx-2">
+<div class="modal-content">
 
-        <h3 id="eventTitle" class="font-bold text-xl mb-4 text-green-700"></h3>
-
-        <input id="name" placeholder="Full Name" class="border p-2 w-full mb-2 rounded">
-        <input id="age" type="number" placeholder="Age" class="border p-2 w-full mb-2 rounded">
-
-        <select id="purok" class="border p-2 w-full mb-2 rounded">
-            <option disabled selected>Select Purok</option>
-            <option>Purok 1</option>
-            <option>Purok 2</option>
-            <option>Purok 3</option>
-            <option>Purok 4</option>
-            <option>Purok 5</option>
-            <option>Purok 6</option>
-            <option>Purok 7</option>
-            <option>Purok 8</option>
-            <option>Purok 9</option>
-        </select>
-
-        <input id="groupName" placeholder="Group Name" 
-        class="border p-2 w-full mb-2 hidden rounded">
-
-        <input id="file" type="file" class="border p-2 w-full mb-2 rounded">
-
-        <button id="submitBtn" onclick="submitForm()" 
-        class="bg-blue-700 text-white w-full p-2 rounded hover:bg-blue-800 transition">
-            Submit
-        </button>
-
-        <button onclick="closeForm()" 
-        class="bg-gray-300 text-black w-full p-2 rounded mt-2 hover:bg-gray-400">
-            Cancel
-        </button>
-
-    </div>
-</div>
-
-<!-- ===========================
-SEAT RESERVATION MODAL
-=========================== -->
-
-<div id="seatModal"
-class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 p-4">
-
-<div class="bg-white rounded-3xl shadow-2xl w-full max-w-7xl max-h-[90vh] overflow-y-auto"></div>
-<!-- HEADER -->
-
-<div class="bg-gradient-to-r from-green-700 via-emerald-600 to-green-700 text-white p-6 rounded-t-3xl"></div>
-<h2 class="text-3xl font-bold text-center">
-
-🪑 SEAT RESERVATION
-
-</h2>
-
-<p class="text-center text-green-100">
-
-Linggo ng Kabataan 2026
-
-</p>
-
-</div>
-
-<div class="p-6">
+<h2 id="eventTitle"
+class="text-2xl font-bold text-green-700 mb-5"></h2>
 
 <input
-id="seatName"
-placeholder="Full Name"
-class="border-2 border-green-500 rounded-xl p-3 w-full mb-3">
+id="name"
+placeholder="Full Name">
 
 <input
-id="seatAge"
-placeholder="Age"
+id="age"
 type="number"
-class="border-2 border-green-500 rounded-xl p-3 w-full mb-4">
+placeholder="Age">
 
-<div class="legend">
+<input
+id="groupName"
+placeholder="Group Name">
 
-<div>
-
-🟢 Available
-
-</div>
-
-<div>
-
-🔵 Selected
-
-</div>
-
-<div>
-
-🔴 Reserved
-
-</div>
-
-</div>
-
-<div class="stage">
-
-🎭 MAIN STAGE
-
-</div>
-
-<div id="tablesContainer">
-
-</div>
-
-<div
-class="bg-green-50 rounded-xl mt-6 p-5">
-
-<h3 class="font-bold text-xl">
-
-Selected Seat
-
-</h3>
-
-<p>
-
-Table :
-
-<span id="selectedTable">
-
-None
-
-</span>
-
-</p>
-
-<p>
-
-Chair :
-
-<span id="selectedChair">
-
-None
-
-</span>
-
-</p>
+<input
+id="file"
+type="file">
 
 <button
-
-onclick="reserveSeat()"
-
-class="mt-5 bg-gradient-to-r from-green-600 to-emerald-500 text-white w-full p-4 rounded-xl font-bold hover:scale-105 transition">
-
-🪑 CONFIRM RESERVATION
-
+class="submit"
+onclick="submitForm()">
+Submit Registration
 </button>
 
 <button
-
-onclick="closeSeatReservation()"
-
-class="mt-3 bg-gray-300 w-full p-4 rounded-xl">
-
-Close
-
+class="cancel"
+onclick="closeForm()">
+Cancel
 </button>
-
-</div>
-
-</div>
 
 </div>
 
@@ -641,319 +316,94 @@ Close
 
 <script>
 
-let selectedEvent = "";
+let selectedEvent="";
 
-const scriptURL =
-"https://script.google.com/macros/s/AKfycbxJNjFrsC1uedPyijilwNHN-rJnoQB-UXJffMuagMeMtBbnRv4Kv5qPmZ3tZmzKD41rVw/exec";
-
-const seatURL="https://script.google.com/macros/s/AKfycbxTTrrvuN7eodz0lU44GFlqNL6Skdjq6djcv81kElKdlz4_Fy9gZck_ncFuXnVrm82bng/exec";
-
-let selectedSeat=null;
-
-let selectedTable=null;
-
-let reservedSeats=[];
+const scriptURL="https://script.google.com/macros/s/AKfycbxJNjFrsC1uedPyijilwNHN-rJnoQB-UXJffMuagMeMtBbnRv4Kv5qPmZ3tZmzKD41rVw/exec";
 
 function openForm(event){
-    selectedEvent = event;
-    document.getElementById("eventTitle").innerText = event;
-    document.getElementById("modal").classList.remove("hidden");
 
-    const group = document.getElementById("groupName");
-    const purok = document.getElementById("purok");
-    const fileInput=document.getElementById("file");
+selectedEvent=event;
 
-    // Hide/show
-    group.classList.add("hidden");
-    purok.classList.add("hidden");
-    fileInput.classList.remove("hidden");
+document.getElementById("eventTitle").innerHTML=event;
 
-    // Only these events use PUROK
-    if(
-        event === "Interpurok Chess" ||
-        event === "Snake and Ladders"
-    ){
-        purok.classList.remove("hidden");
-        group.classList.add("hidden");
-    }else{
-        // All other events use GROUP NAME
-        group.classList.remove("hidden");
-    }
+document.getElementById("modal").style.display="flex";
+
 }
 
 function closeForm(){
-    document.getElementById("modal").classList.add("hidden");
-}
 
-function openSeatReservation(){
-
-document.getElementById("seatModal").classList.remove("hidden");
-
-generateTables();
-
-loadReservedSeats();
+document.getElementById("modal").style.display="none";
 
 }
 
-function closeSeatReservation(){
+function submitForm(){
 
-document.getElementById("seatModal").classList.add("hidden");
+const name=document.getElementById("name").value;
 
-}
+const age=document.getElementById("age").value;
 
-function generateTables(){
+const group=document.getElementById("groupName").value;
 
-const container = document.getElementById("tablesContainer");
+const file=document.getElementById("file").files[0];
 
-container.innerHTML="";
+if(!name||!age||!group||!file){
 
-let chairNumber=1;
+alert("Please complete all fields.");
 
-for(let table=1; table<=10; table++){
-
-    const card=document.createElement("div");
-
-    card.className="table-card";
-
-    card.innerHTML=`
-        <div class="table-title">
-            🟩 TABLE ${table}
-        </div>
-
-        <div class="seat-grid" id="table${table}">
-        </div>
-    `;
-
-    container.appendChild(card);
-
-    const grid=card.querySelector(".seat-grid");
-
-    for(let i=1;i<=10;i++){
-
-        const seat=document.createElement("button");
-
-        seat.className="seat";
-
-        seat.innerHTML=chairNumber;
-
-        seat.dataset.table=table;
-
-        seat.dataset.chair=chairNumber;
-
-        seat.onclick=function(){
-
-            if(this.classList.contains("reserved")) return;
-
-            document.querySelectorAll(".seat.selected").forEach(btn=>{
-                btn.classList.remove("selected");
-            });
-
-            this.classList.add("selected");
-
-            selectedSeat=this.dataset.chair;
-
-            selectedTable=this.dataset.table;
-
-            document.getElementById("selectedChair").innerText=selectedSeat;
-
-            document.getElementById("selectedTable").innerText="Table "+selectedTable;
-
-        };
-
-        grid.appendChild(seat);
-
-        chairNumber++;
-
-    }
+return;
 
 }
 
-}
+const btn=document.querySelector(".submit");
 
-async function loadReservedSeats(){
+btn.disabled=true;
 
-try{
+btn.innerHTML="Submitting...";
 
-const response=await fetch(seatURL);
+const reader=new FileReader();
 
-const data=await response.json();
+reader.onload=e=>{
 
-reservedSeats=data;
+const formData=new URLSearchParams();
 
-document.querySelectorAll(".seat").forEach(btn=>{
+formData.append("event",selectedEvent);
 
-    const table=btn.dataset.table;
+formData.append("name",name);
 
-    const chair=btn.dataset.chair;
+formData.append("age",age);
 
-    const found=reservedSeats.find(r=>
+formData.append("groupName",group);
 
-        r.table=="Table "+table &&
+formData.append("mimeType",file.type);
 
-        String(r.chair)==String(chair)
+formData.append("file",e.target.result.split(",")[1]);
 
-    );
+fetch(scriptURL,{
+method:"POST",
+body:formData
+})
+.then(()=>{
 
-    if(found){
+alert("Successfully Registered!");
 
-        btn.classList.add("reserved");
+location.reload();
 
-    }
+})
+.catch(()=>{
+
+alert("Submission failed.");
+
+btn.disabled=false;
+
+btn.innerHTML="Submit Registration";
 
 });
 
-}catch(e){
+};
 
-console.log(e);
-
-}
+reader.readAsDataURL(file);
 
 }
-
-async function reserveSeat(){
-
-    const name = document.getElementById("seatName").value.trim();
-    const age = document.getElementById("seatAge").value.trim();
-
-    if(name==""){
-        alert("Please enter your Full Name.");
-        return;
-    }
-
-    if(age==""){
-        alert("Please enter your Age.");
-        return;
-    }
-
-    if(selectedSeat==null){
-        alert("Please select a seat.");
-        return;
-    }
-
-    const btn=document.querySelector(".seat.selected");
-
-    if(btn){
-        btn.disabled=true;
-        btn.innerHTML="...";
-    }
-
-    const formData=new URLSearchParams();
-
-    formData.append("name",name);
-    formData.append("age",age);
-    formData.append("table","Table "+selectedTable);
-    formData.append("chair",selectedSeat);
-    formData.append("event","Linggo ng Kabataan 2026");
-
-    try{
-
-        const response=await fetch(seatURL,{
-            method:"POST",
-            body:formData
-        });
-
-        const result=await response.text();
-
-        if(result=="SUCCESS"){
-
-            alert("🎉 Seat Reserved Successfully!");
-
-            closeSeatReservation();
-
-            selectedSeat=null;
-            selectedTable=null;
-
-            document.getElementById("selectedChair").innerText="None";
-            document.getElementById("selectedTable").innerText="None";
-
-            document.getElementById("seatName").value="";
-            document.getElementById("seatAge").value="";
-
-        }else if(result=="TAKEN"){
-
-            alert("❌ Sorry! This seat has already been reserved.");
-
-            loadReservedSeats();
-
-        }else{
-
-            alert(result);
-
-        }
-
-    }catch(err){
-
-        console.log(err);
-
-        alert("Unable to connect to the server.");
-
-    }
-
-}
-/* SUBMIT */
-function submitForm(){
-
-    const name = document.getElementById("name").value;
-    const age = document.getElementById("age").value;
-    const purok = document.getElementById("purok").value;
-    const groupName = document.getElementById("groupName").value;
-    const btn = document.getElementById("submitBtn");
-    const file=document.getElementById("file").files[0];
-
-    // Validation
-if(
-    selectedEvent === "Interpurok Chess" ||
-    selectedEvent === "Snake and Ladders"
-){
-    if(!name || !age || purok === "Select Purok" || !file){
-        alert("Please complete all required fields");
-        return;
-    }
-}else{
-    if(!name || !age || !groupName || !file){
-        alert("Please complete all required fields");
-        return;
-    }
-}
-
-    btn.innerText = "Submitting...";
-    btn.disabled = true;
-
-    document.getElementById("loader").classList.remove("hidden");
-
-    function send(base64, filename, type){
-
-        const formData = new URLSearchParams();
-        formData.append("event", selectedEvent);
-        formData.append("name", name);
-        formData.append("age", age);
-        formData.append("purok", purok || "N/A");
-        formData.append("groupName", groupName || "N/A");
-        formData.append("mimeType", type);
-
-        fetch(scriptURL, {method:"POST", body:formData})
-        .then(() => {
-            document.getElementById("loader").classList.add("hidden");
-            alert("Successfully Registered!");
-            location.reload();
-        })
-        .catch(() => {
-            document.getElementById("loader").classList.add("hidden");
-            alert("Error submitting.");
-            btn.innerText = "Submit";
-            btn.disabled = false;
-        });
-    }
-
-    const reader = new FileReader();
-    reader.onload = e => {
-        const base64 = e.target.result.split(",")[1];
-        send(base64, file.name, file.type);
-    };
-    reader.readAsDataURL(file);
-}
-
-
 
 </script>
 

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nostalgia Fest 2026 Seat Reservation</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+<style>
+
+body{
+    background:#111827;
+    font-family:'Segoe UI',sans-serif;
+}
+
+
+/* CHAIR */
+
+.chair{
+
+    width:34px;
+    height:34px;
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:11px;
+    font-weight:bold;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.available{
+    background:#22c55e;
+}
+
+
+.selected{
+    background:#2563eb;
+    transform:scale(1.15);
+}
+
+
+.reserved{
+    background:#ef4444;
+    cursor:not-allowed;
+}
+
+
+
+/* TABLE DESIGN */
+
+
+.table-area{
+
+    background:#E8D8B9;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    width:330px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+
+.row{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+
+
+.middle{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:15px;
+
+}
+
+
+
+.side{
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+
+.rectangle-table{
+
+    width:170px;
+
+    height:95px;
+
+    background:#B8865B;
+
+    border-radius:12px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    color:white;
+
+    font-weight:bold;
+
+    font-size:15px;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+
+<body class="text-white">
+
+
+<div class="max-w-6xl mx-auto p-5">
+
+
+<h1 class="text-4xl font-bold text-center">
+
+🎮 NOSTALGIA FEST 2026
+
+</h1>
+
+
+<p class="text-center text-gray-300 mb-8">
+
+Linggo ng Kabataan | Seat Reservation
+
+</p>
+
+
+
+
+<div class="bg-yellow-400 text-black text-center py-4 rounded-xl font-bold mb-8">
+
+🎭 STAGE
+
+</div>
+
+
+
+
+
+<div class="flex justify-center gap-5 mb-8">
+
+
+<span>🟢 Available</span>
+
+<span>🔵 Selected</span>
+
+<span>🔴 Reserved</span>
+
+
+</div>
+
+
+
+
+
+<div id="tables"
+
+class="grid md:grid-cols-2 gap-10 justify-items-center">
+
+</div>
+
+
+
+
+
+
+
+<div class="bg-gray-800 max-w-md mx-auto mt-10 p-6 rounded-xl">
+
+
+<h2 class="text-xl font-bold mb-4">
+
+👤 Reservation Details
+
+</h2>
+
+
+
+<input id="name"
+
+class="w-full p-3 mb-3 rounded text-black"
+
+placeholder="Full Name">
+
+
+
+<input id="age"
+
+type="number"
+
+class="w-full p-3 mb-3 rounded text-black"
+
+placeholder="Age">
+
+
+
+<p>
+
+Selected Seat:
+
+<span id="selectedSeat" class="font-bold">
+
+None
+
+</span>
+
+</p>
+
+
+
+
+<button onclick="reserveSeat()"
+
+class="bg-blue-600 w-full mt-4 py-3 rounded-xl font-bold">
+
+✅ RESERVE SEAT
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+const scriptURL =
+"https://script.google.com/macros/s/AKfycbxTTrrvuN7eodz0lU44GFlqNL6Skdjq6djcv81kElKdlz4_Fy9gZck_ncFuXnVrm82bng/exec";
+
+
+
+let seatNumber=1;
+
+let selectedChair=null;
+
+
+
+const container=document.getElementById("tables");
+
+
+
+
+
+function createChair(num){
+
+
+let chair=document.createElement("div");
+
+
+chair.className="chair available";
+
+
+chair.innerHTML=String(num).padStart(2,"0");
+
+
+chair.dataset.seat=num;
+
+
+
+chair.onclick=function(){
+
+
+if(this.classList.contains("reserved")) return;
+
+
+
+document.querySelectorAll(".chair")
+.forEach(c=>{
+
+c.classList.remove("selected");
+
+});
+
+
+
+this.classList.add("selected");
+
+
+selectedChair=this.dataset.seat;
+
+
+document.getElementById("selectedSeat").innerHTML=
+
+"Seat "+String(selectedChair).padStart(2,"0");
+
+
+}
+
+
+
+return chair;
+
+
+}
+
+
+
+
+
+
+// CREATE 10 TABLES
+
+
+for(let tableNo=1; tableNo<=10; tableNo++){
+
+
+
+let area=document.createElement("div");
+
+area.className="table-area";
+
+
+
+
+
+// TOP 4 CHAIRS
+
+
+let top=document.createElement("div");
+
+top.className="row";
+
+
+
+for(let i=0;i<4;i++){
+
+top.appendChild(createChair(seatNumber++));
+
+}
+
+
+
+
+
+
+// MIDDLE LEFT + TABLE + RIGHT
+
+
+let middle=document.createElement("div");
+
+middle.className="middle";
+
+
+
+let left=document.createElement("div");
+
+left.className="side";
+
+left.appendChild(createChair(seatNumber++));
+
+
+
+
+
+let table=document.createElement("div");
+
+table.className="rectangle-table";
+
+table.innerHTML="TABLE<br>"+tableNo;
+
+
+
+
+
+let right=document.createElement("div");
+
+right.className="side";
+
+right.appendChild(createChair(seatNumber++));
+
+
+
+
+
+middle.appendChild(left);
+
+middle.appendChild(table);
+
+middle.appendChild(right);
+
+
+
+
+
+
+
+// BOTTOM 4 CHAIRS
+
+
+let bottom=document.createElement("div");
+
+bottom.className="row";
+
+
+
+for(let i=0;i<4;i++){
+
+bottom.appendChild(createChair(seatNumber++));
+
+}
+
+
+
+
+
+
+
+area.appendChild(top);
+
+area.appendChild(middle);
+
+area.appendChild(bottom);
+
+
+
+container.appendChild(area);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function reserveSeat(){
+
+
+
+let name=document.getElementById("name").value;
+
+let age=document.getElementById("age").value;
+
+
+
+if(!selectedChair){
+
+alert("Please select a seat.");
+
+return;
+
+}
+
+
+
+if(!name || !age){
+
+alert("Please complete your details.");
+
+return;
+
+}
+
+
+
+
+
+fetch(scriptURL,{
+
+method:"POST",
+
+mode:"no-cors",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+name:name,
+
+age:age,
+
+seat:selectedChair,
+
+event:"Nostalgia Fest 2026"
+
+})
+
+
+});
+
+
+
+
+
+
+let chair=document.querySelector(
+
+'.chair[data-seat="'+selectedChair+'"]'
+
+);
+
+
+
+chair.classList.remove("selected");
+
+chair.classList.add("reserved");
+
+
+
+
+alert(
+
+"✅ Reservation Complete!\n\n"+
+
+"Name: "+name+
+
+"\nSeat: "+selectedChair
+
+);
+
+
+
+
+
+document.getElementById("name").value="";
+
+document.getElementById("age").value="";
+
+
+document.getElementById("selectedSeat").innerHTML="None";
+
+
+selectedChair=null;
+
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
