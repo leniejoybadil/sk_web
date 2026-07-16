@@ -79,20 +79,25 @@ padding:12px;
 
 .table-card{
 
-background:rgba(255,255,255,.96);
+background:white;
 
-border-radius:25px;
+border-radius:22px;
 
-padding:18px;
+padding:20px;
 
-margin-bottom:25px;
+display:flex;
 
-box-shadow:0 15px 35px rgba(0,0,0,.18);
+flex-direction:column;
+
+justify-content:flex-start;
+
+box-shadow:0 12px 30px rgba(0,0,0,.15);
 
 border:3px solid #d1fae5;
 
-}
+height:100%;
 
+}
 .table-title{
 
 font-size:22px;
@@ -113,23 +118,22 @@ letter-spacing:1px;
 
 display:grid;
 
-grid-template-columns:repeat(5,1fr);
+grid-template-columns:repeat(5,50px);
 
-gap:14px;
+justify-content:center;
 
-justify-items:center;
+gap:10px;
 
 }
 
 /* =======================
 CHAIR
 ======================= */
-
 .seat{
 
-width:60px;
+width:50px;
 
-height:60px;
+height:50px;
 
 border-radius:50%;
 
@@ -213,25 +217,29 @@ content:"🔒";
 
 .stage{
 
-background:linear-gradient(to right,#1f2937,#111827);
+width:100%;
 
-color:white;
+padding:20px;
 
-font-size:26px;
-
-font-weight:bold;
+margin-bottom:35px;
 
 text-align:center;
 
-padding:18px;
+font-size:30px;
 
-border-radius:18px;
+font-weight:bold;
 
-margin-bottom:30px;
+letter-spacing:3px;
 
-letter-spacing:2px;
+border-radius:20px;
 
-box-shadow:0 8px 25px rgba(0,0,0,.35);
+background:linear-gradient(90deg,#dc2626,#f59e0b,#dc2626);
+
+color:white;
+
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+
+border:4px solid gold;
 
 }
 
@@ -380,6 +388,27 @@ background:#10b981;
 border-radius:20px;
 
 }
+#tablesContainer{
+
+display:grid;
+
+grid-template-columns:repeat(2,minmax(350px,1fr));
+
+gap:25px;
+
+align-items:start;
+
+}
+
+@media(max-width:900px){
+
+#tablesContainer{
+
+grid-template-columns:1fr;
+
+}
+
+}
 </style>
 </head>
 
@@ -486,12 +515,10 @@ SEAT RESERVATION MODAL
 <div id="seatModal"
 class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 p-4">
 
-<div class="bg-white rounded-3xl shadow-2xl w-full max-w-6xl h-[90vh] overflow-y-auto">
-
+<div class="bg-white rounded-3xl shadow-2xl w-full max-w-7xl max-h-[90vh] overflow-y-auto"></div>
 <!-- HEADER -->
 
-<div class="sticky top-0 bg-gradient-to-r from-green-700 via-emerald-600 to-green-700 text-white p-6 rounded-t-3xl">
-
+<div class="bg-gradient-to-r from-green-700 via-emerald-600 to-green-700 text-white p-6 rounded-t-3xl"></div>
 <h2 class="text-3xl font-bold text-center">
 
 🪑 SEAT RESERVATION
@@ -541,10 +568,9 @@ class="border-2 border-green-500 rounded-xl p-3 w-full mb-4">
 
 </div>
 
-<div
-class="bg-gray-100 rounded-xl p-3 mb-5 text-center font-bold text-xl">
+<div class="stage">
 
-🎤 STAGE
+🎭 MAIN STAGE
 
 </div>
 
