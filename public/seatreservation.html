@@ -25,6 +25,7 @@ body{
 
     width:34px;
     height:34px;
+
     border-radius:50%;
 
     display:flex;
@@ -61,8 +62,8 @@ body{
 
 
 
-/* TABLE DESIGN */
 
+/* TABLE */
 
 .table-area{
 
@@ -114,8 +115,6 @@ body{
 
     display:flex;
 
-    align-items:center;
-
 }
 
 
@@ -132,9 +131,9 @@ body{
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
+
+    justify-content:center;
 
     text-align:center;
 
@@ -142,7 +141,32 @@ body{
 
     font-weight:bold;
 
-    font-size:15px;
+}
+
+
+
+/* RESERVED LIST */
+
+.reserved-card{
+
+    background:#1f2937;
+
+    border-radius:15px;
+
+    padding:20px;
+
+}
+
+
+.reserved-item{
+
+    background:#374151;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:10px;
 
 }
 
@@ -150,14 +174,14 @@ body{
 
 </style>
 
-</head>
 
+</head>
 
 
 <body class="text-white">
 
 
-<div class="max-w-6xl mx-auto p-5">
+<div class="max-w-7xl mx-auto p-5">
 
 
 <h1 class="text-4xl font-bold text-center">
@@ -176,6 +200,7 @@ Linggo ng Kabataan | Seat Reservation
 
 
 
+
 <div class="bg-yellow-400 text-black text-center py-4 rounded-xl font-bold mb-8">
 
 🎭 STAGE
@@ -188,12 +213,31 @@ Linggo ng Kabataan | Seat Reservation
 
 <div class="flex justify-center gap-5 mb-8">
 
-
 <span>🟢 Available</span>
 
 <span>🔵 Selected</span>
 
 <span>🔴 Reserved</span>
+
+</div>
+
+
+
+
+
+<div class="grid md:grid-cols-3 gap-8">
+
+
+<!-- TABLE AREA -->
+
+<div class="md:col-span-2">
+
+
+<div id="tables"
+
+class="grid md:grid-cols-2 gap-10 justify-items-center">
+
+</div>
 
 
 </div>
@@ -202,9 +246,28 @@ Linggo ng Kabataan | Seat Reservation
 
 
 
-<div id="tables"
+<!-- RESERVED LIST -->
 
-class="grid md:grid-cols-2 gap-10 justify-items-center">
+<div class="reserved-card">
+
+
+<h2 class="text-xl font-bold mb-5">
+
+📋 RESERVED SEATS
+
+</h2>
+
+
+
+<div id="reservedList">
+
+Loading...
+
+</div>
+
+
+</div>
+
 
 </div>
 
@@ -225,11 +288,14 @@ class="grid md:grid-cols-2 gap-10 justify-items-center">
 
 
 
+
 <input id="name"
 
 class="w-full p-3 mb-3 rounded text-black"
 
 placeholder="Full Name">
+
+
 
 
 
@@ -240,6 +306,8 @@ type="number"
 class="w-full p-3 mb-3 rounded text-black"
 
 placeholder="Age">
+
+
 
 
 
@@ -258,6 +326,7 @@ None
 
 
 
+
 <button onclick="reserveSeat()"
 
 class="bg-blue-600 w-full mt-4 py-3 rounded-xl font-bold">
@@ -271,83 +340,86 @@ class="bg-blue-600 w-full mt-4 py-3 rounded-xl font-bold">
 </div>
 
 
+
+
 </div>
-
-
-
-
-
-
-
 
 <script>
 
+
 const scriptURL =
-"https://script.google.com/macros/s/AKfycbx2UVvjqKWtEejSi-7J7Jni__rTfuECe8XCwAJQWPFuYGmpvwqIo14yEiVfmFpdQpKP3g/exec";
-
-let seatNumber=1;
-
-let selectedChair=null;
+"https://script.google.com/macros/s/AKfycby70x9s8vjRC7zkAMMoyT8y7m5IfCdNcAvCRJZjtXw0bEFvBZgkHux8RRJ-Fx7TFPkDfg/exec";
 
 
 
-const container=document.getElementById("tables");
+let seatNumber = 1;
+
+let selectedChair = null;
+
+
+const container = document.getElementById("tables");
 
 
 
 
+
+// CREATE CHAIR
 
 function createChair(num){
 
 
-let chair=document.createElement("div");
+    let chair = document.createElement("div");
 
 
-chair.className="chair available";
+    chair.className = "chair available";
 
 
-chair.innerHTML=String(num).padStart(2,"0");
+    chair.innerHTML = String(num).padStart(2,"0");
 
 
-chair.dataset.seat=num;
-
-
-
-chair.onclick=function(){
-
-
-if(this.classList.contains("reserved")) return;
+    chair.dataset.seat = num;
 
 
 
-document.querySelectorAll(".chair")
-.forEach(c=>{
 
-c.classList.remove("selected");
-
-});
+    chair.onclick = function(){
 
 
-
-this.classList.add("selected");
-
-
-selectedChair=this.dataset.seat;
+        if(this.classList.contains("reserved")){
+            return;
+        }
 
 
-document.getElementById("selectedSeat").innerHTML=
 
-"Seat "+String(selectedChair).padStart(2,"0");
+        document.querySelectorAll(".chair")
+        .forEach(c=>{
 
+            c.classList.remove("selected");
+
+        });
+
+
+
+        this.classList.add("selected");
+
+
+        selectedChair = this.dataset.seat;
+
+
+
+        document.getElementById("selectedSeat").innerHTML =
+        "Seat " + String(selectedChair).padStart(2,"0");
+
+
+
+    };
+
+
+
+    return chair;
 
 }
 
-
-
-return chair;
-
-
-}
 
 
 
@@ -356,31 +428,125 @@ return chair;
 
 // CREATE 10 TABLES
 
-
 for(let tableNo=1; tableNo<=10; tableNo++){
 
 
 
-let area=document.createElement("div");
-
-area.className="table-area";
+    let area=document.createElement("div");
 
 
-
-
-
-// TOP 4 CHAIRS
-
-
-let top=document.createElement("div");
-
-top.className="row";
+    area.className="table-area";
 
 
 
-for(let i=0;i<4;i++){
 
-top.appendChild(createChair(seatNumber++));
+    // TOP 4 CHAIRS
+
+    let top=document.createElement("div");
+
+    top.className="row";
+
+
+
+    for(let i=0;i<4;i++){
+
+        top.appendChild(createChair(seatNumber++));
+
+    }
+
+
+
+
+
+
+    // MIDDLE
+
+    let middle=document.createElement("div");
+
+
+    middle.className="middle";
+
+
+
+    let left=document.createElement("div");
+
+    left.className="side";
+
+    left.appendChild(createChair(seatNumber++));
+
+
+
+
+
+    let table=document.createElement("div");
+
+
+    table.className="rectangle-table";
+
+
+    table.innerHTML="TABLE<br>"+tableNo;
+
+
+
+
+
+
+    let right=document.createElement("div");
+
+    right.className="side";
+
+
+    right.appendChild(createChair(seatNumber++));
+
+
+
+
+
+    middle.appendChild(left);
+
+    middle.appendChild(table);
+
+    middle.appendChild(right);
+
+
+
+
+
+
+
+    // BOTTOM 4 CHAIRS
+
+    let bottom=document.createElement("div");
+
+
+    bottom.className="row";
+
+
+
+    for(let i=0;i<4;i++){
+
+
+        bottom.appendChild(createChair(seatNumber++));
+
+
+    }
+
+
+
+
+
+
+    area.appendChild(top);
+
+    area.appendChild(middle);
+
+    area.appendChild(bottom);
+
+
+
+    container.appendChild(area);
+
+
 
 }
 
@@ -389,50 +555,9 @@ top.appendChild(createChair(seatNumber++));
 
 
 
-// MIDDLE LEFT + TABLE + RIGHT
+// LOAD RESERVED WHEN PAGE OPENS
 
-
-let middle=document.createElement("div");
-
-middle.className="middle";
-
-
-
-let left=document.createElement("div");
-
-left.className="side";
-
-left.appendChild(createChair(seatNumber++));
-
-
-
-
-
-let table=document.createElement("div");
-
-table.className="rectangle-table";
-
-table.innerHTML="TABLE<br>"+tableNo;
-
-
-
-
-
-let right=document.createElement("div");
-
-right.className="side";
-
-right.appendChild(createChair(seatNumber++));
-
-
-
-
-
-middle.appendChild(left);
-
-middle.appendChild(table);
-
-middle.appendChild(right);
+loadReservedSeats();
 
 
 
@@ -440,18 +565,66 @@ middle.appendChild(right);
 
 
 
-// BOTTOM 4 CHAIRS
 
 
-let bottom=document.createElement("div");
-
-bottom.className="row";
+function loadReservedSeats(){
 
 
 
-for(let i=0;i<4;i++){
+fetch(scriptURL)
 
-bottom.appendChild(createChair(seatNumber++));
+.then(response=>response.json())
+
+
+.then(data=>{
+
+
+
+let list=document.getElementById("reservedList");
+
+
+list.innerHTML="";
+
+
+
+
+if(data.length===0){
+
+list.innerHTML="No reserved seats yet.";
+
+return;
+
+}
+
+
+
+
+
+
+data.forEach(item=>{
+
+
+
+// TURN CHAIR RED
+
+
+let seat=document.querySelector(
+
+'.chair[data-seat="'+item.seat+'"]'
+
+);
+
+
+
+
+if(seat){
+
+
+seat.classList.remove("available");
+
+
+seat.classList.add("reserved");
+
 
 }
 
@@ -461,19 +634,52 @@ bottom.appendChild(createChair(seatNumber++));
 
 
 
-area.appendChild(top);
-
-area.appendChild(middle);
-
-area.appendChild(bottom);
+// SHOW NAME LIST
 
 
+list.innerHTML += `
 
-container.appendChild(area);
 
+<div class="reserved-item">
+
+
+🔴 Seat ${String(item.seat).padStart(2,"0")}
+
+<br>
+
+👤 ${item.name}
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+})
+
+
+.catch(error=>{
+
+
+console.log(error);
+
+
+document.getElementById("reservedList").innerHTML=
+
+"Unable to load reservations.";
+
+
+});
 
 
 }
+
 
 
 
@@ -489,27 +695,38 @@ function reserveSeat(){
 
 let name=document.getElementById("name").value;
 
+
 let age=document.getElementById("age").value;
+
+
 
 
 
 if(!selectedChair){
 
+
 alert("Please select a seat.");
+
 
 return;
 
+
 }
+
 
 
 
 if(!name || !age){
 
+
 alert("Please complete your details.");
+
 
 return;
 
+
 }
+
 
 
 
@@ -517,31 +734,42 @@ return;
 
 fetch(scriptURL,{
 
+
 method:"POST",
+
 
 mode:"no-cors",
 
+
 headers:{
 
+
 "Content-Type":"application/json"
+
 
 },
 
 
 body:JSON.stringify({
 
+
 name:name,
+
 
 age:age,
 
+
 seat:selectedChair,
 
+
 event:"Nostalgia Fest 2026"
+
 
 })
 
 
 });
+
 
 
 
@@ -556,9 +784,13 @@ let chair=document.querySelector(
 
 
 
+
 chair.classList.remove("selected");
 
+
 chair.classList.add("reserved");
+
+
 
 
 
@@ -577,7 +809,10 @@ alert(
 
 
 
+
+
 document.getElementById("name").value="";
+
 
 document.getElementById("age").value="";
 
@@ -585,7 +820,18 @@ document.getElementById("age").value="";
 document.getElementById("selectedSeat").innerHTML="None";
 
 
+
 selectedChair=null;
+
+
+
+// Refresh list
+
+setTimeout(()=>{
+
+loadReservedSeats();
+
+},1000);
 
 
 
