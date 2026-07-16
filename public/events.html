@@ -8,66 +8,377 @@
 
 <style>
 body{
-    font-family: Arial;
-    background: radial-gradient(circle at top, #064e3b, #0f172a);
-    color: white;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top,#064e3b,#0f172a);
+    color:white;
+    margin:0;
+    padding:0;
+    display:flex;
+    justify-content:center;
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
-/* container */
+/* Container */
 .container{
-    width: 100%;
-    max-width: 520px;
-    padding: 18px;
+    width:100%;
+    max-width:520px;
+    padding:18px;
 }
 
-/* floating title */
-@keyframes floaty {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0px); }
+/* Floating title */
+@keyframes floaty{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+    100%{transform:translateY(0);}
 }
 
-.float {
-    animation: floaty 3s ease-in-out infinite;
+.float{
+    animation:floaty 3s ease-in-out infinite;
 }
 
-/* loader bounce */
-.animate-ball {
-    animation: bounce 1s infinite;
+/* Loader */
+.animate-ball{
+    animation:bounce 1s infinite;
 }
 
-/* modal blur effect */
-#modal{
-    backdrop-filter: blur(6px);
+/* Blur */
+#modal,
+#seatModal{
+    backdrop-filter:blur(8px);
 }
 
-/* inputs polish */
-input, select{
-    outline: none;
-    transition: 0.2s;
+/* Inputs */
+input,
+select{
+    outline:none;
+    transition:.25s;
 }
 
-input:focus, select:focus{
-    border-color: #10b981;
-    box-shadow: 0 0 0 2px rgba(16,185,129,0.3);
+input:focus,
+select:focus{
+    border-color:#10b981;
+    box-shadow:0 0 0 3px rgba(16,185,129,.25);
 }
 
-/* buttons spacing fix */
+/* Buttons */
 button{
-    transition: 0.25s ease;
+    transition:.25s;
 }
 
-/* mobile spacing */
-@media (max-width: 600px){
-    .container{
-        padding: 12px;
-    }
+/* Mobile */
+@media(max-width:600px){
+.container{
+padding:12px;
+}
+}
+
+/* ======================================================
+                SEAT RESERVATION DESIGN
+====================================================== */
+
+.table-card{
+
+background:rgba(255,255,255,.96);
+
+border-radius:25px;
+
+padding:18px;
+
+margin-bottom:25px;
+
+box-shadow:0 15px 35px rgba(0,0,0,.18);
+
+border:3px solid #d1fae5;
+
+}
+
+.table-title{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#047857;
+
+text-align:center;
+
+margin-bottom:15px;
+
+letter-spacing:1px;
+
+}
+
+.seat-grid{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:14px;
+
+justify-items:center;
+
+}
+
+/* =======================
+CHAIR
+======================= */
+
+.seat{
+
+width:60px;
+
+height:60px;
+
+border-radius:50%;
+
+border:none;
+
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:15px;
+
+color:white;
+
+background:linear-gradient(145deg,#22c55e,#16a34a);
+
+box-shadow:
+0 8px 18px rgba(0,0,0,.25),
+inset 0 2px 5px rgba(255,255,255,.25);
+
+transition:.25s;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+position:relative;
+
+}
+
+.seat::before{
+
+content:"🪑";
+
+position:absolute;
+
+top:5px;
+
+font-size:13px;
+
+}
+
+.seat:hover{
+
+transform:translateY(-6px) scale(1.08);
+
+box-shadow:
+0 15px 30px rgba(0,0,0,.35);
+
+}
+
+.seat.selected{
+
+background:linear-gradient(145deg,#2563eb,#1d4ed8);
+
+box-shadow:
+0 0 18px rgba(37,99,235,.8);
+
+}
+
+.seat.reserved{
+
+background:linear-gradient(145deg,#dc2626,#991b1b);
+
+cursor:not-allowed;
+
+opacity:.9;
+
+box-shadow:none;
+
+}
+
+.seat.reserved::before{
+
+content:"🔒";
+
+}
+
+/* Stage */
+
+.stage{
+
+background:linear-gradient(to right,#1f2937,#111827);
+
+color:white;
+
+font-size:26px;
+
+font-weight:bold;
+
+text-align:center;
+
+padding:18px;
+
+border-radius:18px;
+
+margin-bottom:30px;
+
+letter-spacing:2px;
+
+box-shadow:0 8px 25px rgba(0,0,0,.35);
+
+}
+
+/* Legend */
+
+.legend{
+
+display:flex;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:18px;
+
+margin:25px 0;
+
+font-weight:bold;
+
+}
+
+.legend div{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+background:#f3f4f6;
+
+padding:10px 18px;
+
+border-radius:30px;
+
+color:#111827;
+
+box-shadow:0 5px 12px rgba(0,0,0,.1);
+
+}
+
+/* Selected Card */
+
+.selected-card{
+
+background:#ecfdf5;
+
+border:2px solid #10b981;
+
+padding:20px;
+
+border-radius:18px;
+
+margin-top:25px;
+
+color:#065f46;
+
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+
+}
+
+.selected-card h3{
+
+font-size:22px;
+
+margin-bottom:12px;
+
+}
+
+/* Confirm Button */
+
+.confirm-btn{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:15px;
+
+font-size:18px;
+
+font-weight:bold;
+
+color:white;
+
+cursor:pointer;
+
+background:linear-gradient(to right,#16a34a,#059669);
+
+margin-top:18px;
+
+transition:.3s;
+
+}
+
+.confirm-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 12px 25px rgba(16,185,129,.4);
+
+}
+
+/* Close Button */
+
+.close-btn{
+
+width:100%;
+
+padding:15px;
+
+margin-top:12px;
+
+border:none;
+
+border-radius:15px;
+
+background:#d1d5db;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.close-btn:hover{
+
+background:#9ca3af;
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#10b981;
+
+border-radius:20px;
+
 }
 </style>
 </head>
@@ -84,10 +395,6 @@ button{
     <!-- BUTTONS -->
     <div class="grid gap-3">
 
-        <button onclick="openForm('Giant Volleyball Game')" 
-        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-            Giant Volleyball Game
-        </button>
 
         <button onclick="openForm('Mobile Legends: Bang Bang')" 
         class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
@@ -99,21 +406,17 @@ button{
             Tagisan ng Talino
         </button>
 
-        <button onclick="openForm('Interpurok Chess')" 
-        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-            Interpurok Chess
-        </button>
-
-        <button onclick="openForm('Snake and Ladders')" 
-        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
-            Snake and Ladders
-        </button>
-
          <button onclick="openForm('SK DALAGDAG GOT TALENT')" 
         class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-700 text-white font-semibold shadow-md hover:shadow-xl hover:scale-[1.03] transition-all">
            SK DALAGDAG GOT TALENT
         </button>
 
+        <button onclick="openSeatReservation()"
+class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white font-bold rounded-xl shadow-xl hover:scale-105 transition">
+
+🪑 Seat Reservation
+
+</button>
 
 
     </div>
@@ -176,11 +479,154 @@ button{
     </div>
 </div>
 
+<!-- ===========================
+SEAT RESERVATION MODAL
+=========================== -->
+
+<div id="seatModal"
+class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 p-4">
+
+<div class="bg-white rounded-3xl shadow-2xl w-full max-w-6xl h-[90vh] overflow-y-auto">
+
+<!-- HEADER -->
+
+<div class="sticky top-0 bg-gradient-to-r from-green-700 via-emerald-600 to-green-700 text-white p-6 rounded-t-3xl">
+
+<h2 class="text-3xl font-bold text-center">
+
+🪑 SEAT RESERVATION
+
+</h2>
+
+<p class="text-center text-green-100">
+
+Linggo ng Kabataan 2026
+
+</p>
+
+</div>
+
+<div class="p-6">
+
+<input
+id="seatName"
+placeholder="Full Name"
+class="border-2 border-green-500 rounded-xl p-3 w-full mb-3">
+
+<input
+id="seatAge"
+placeholder="Age"
+type="number"
+class="border-2 border-green-500 rounded-xl p-3 w-full mb-4">
+
+<div class="legend">
+
+<div>
+
+🟢 Available
+
+</div>
+
+<div>
+
+🔵 Selected
+
+</div>
+
+<div>
+
+🔴 Reserved
+
+</div>
+
+</div>
+
+<div
+class="bg-gray-100 rounded-xl p-3 mb-5 text-center font-bold text-xl">
+
+🎤 STAGE
+
+</div>
+
+<div id="tablesContainer">
+
+</div>
+
+<div
+class="bg-green-50 rounded-xl mt-6 p-5">
+
+<h3 class="font-bold text-xl">
+
+Selected Seat
+
+</h3>
+
+<p>
+
+Table :
+
+<span id="selectedTable">
+
+None
+
+</span>
+
+</p>
+
+<p>
+
+Chair :
+
+<span id="selectedChair">
+
+None
+
+</span>
+
+</p>
+
+<button
+
+onclick="reserveSeat()"
+
+class="mt-5 bg-gradient-to-r from-green-600 to-emerald-500 text-white w-full p-4 rounded-xl font-bold hover:scale-105 transition">
+
+🪑 CONFIRM RESERVATION
+
+</button>
+
+<button
+
+onclick="closeSeatReservation()"
+
+class="mt-3 bg-gray-300 w-full p-4 rounded-xl">
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 <script>
 
 let selectedEvent = "";
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbxJNjFrsC1uedPyijilwNHN-rJnoQB-UXJffMuagMeMtBbnRv4Kv5qPmZ3tZmzKD41rVw/exec";
+const scriptURL =
+"https://script.google.com/macros/s/AKfycbxJNjFrsC1uedPyijilwNHN-rJnoQB-UXJffMuagMeMtBbnRv4Kv5qPmZ3tZmzKD41rVw/exec";
+
+const seatURL="https://script.google.com/macros/s/AKfycbxTTrrvuN7eodz0lU44GFlqNL6Skdjq6djcv81kElKdlz4_Fy9gZck_ncFuXnVrm82bng/exec";
+
+let selectedSeat=null;
+
+let selectedTable=null;
+
+let reservedSeats=[];
 
 function openForm(event){
     selectedEvent = event;
@@ -213,6 +659,211 @@ function closeForm(){
     document.getElementById("modal").classList.add("hidden");
 }
 
+function openSeatReservation(){
+
+document.getElementById("seatModal").classList.remove("hidden");
+
+generateTables();
+
+loadReservedSeats();
+
+}
+
+function closeSeatReservation(){
+
+document.getElementById("seatModal").classList.add("hidden");
+
+}
+
+function generateTables(){
+
+const container = document.getElementById("tablesContainer");
+
+container.innerHTML="";
+
+let chairNumber=1;
+
+for(let table=1; table<=10; table++){
+
+    const card=document.createElement("div");
+
+    card.className="table-card";
+
+    card.innerHTML=`
+        <div class="table-title">
+            🟩 TABLE ${table}
+        </div>
+
+        <div class="seat-grid" id="table${table}">
+        </div>
+    `;
+
+    container.appendChild(card);
+
+    const grid=card.querySelector(".seat-grid");
+
+    for(let i=1;i<=10;i++){
+
+        const seat=document.createElement("button");
+
+        seat.className="seat";
+
+        seat.innerHTML=chairNumber;
+
+        seat.dataset.table=table;
+
+        seat.dataset.chair=chairNumber;
+
+        seat.onclick=function(){
+
+            if(this.classList.contains("reserved")) return;
+
+            document.querySelectorAll(".seat.selected").forEach(btn=>{
+                btn.classList.remove("selected");
+            });
+
+            this.classList.add("selected");
+
+            selectedSeat=this.dataset.chair;
+
+            selectedTable=this.dataset.table;
+
+            document.getElementById("selectedChair").innerText=selectedSeat;
+
+            document.getElementById("selectedTable").innerText="Table "+selectedTable;
+
+        };
+
+        grid.appendChild(seat);
+
+        chairNumber++;
+
+    }
+
+}
+
+}
+
+async function loadReservedSeats(){
+
+try{
+
+const response=await fetch(seatURL);
+
+const data=await response.json();
+
+reservedSeats=data;
+
+document.querySelectorAll(".seat").forEach(btn=>{
+
+    const table=btn.dataset.table;
+
+    const chair=btn.dataset.chair;
+
+    const found=reservedSeats.find(r=>
+
+        r.table=="Table "+table &&
+
+        String(r.chair)==String(chair)
+
+    );
+
+    if(found){
+
+        btn.classList.add("reserved");
+
+    }
+
+});
+
+}catch(e){
+
+console.log(e);
+
+}
+
+}
+
+async function reserveSeat(){
+
+    const name = document.getElementById("seatName").value.trim();
+    const age = document.getElementById("seatAge").value.trim();
+
+    if(name==""){
+        alert("Please enter your Full Name.");
+        return;
+    }
+
+    if(age==""){
+        alert("Please enter your Age.");
+        return;
+    }
+
+    if(selectedSeat==null){
+        alert("Please select a seat.");
+        return;
+    }
+
+    const btn=document.querySelector(".seat.selected");
+
+    if(btn){
+        btn.disabled=true;
+        btn.innerHTML="...";
+    }
+
+    const formData=new URLSearchParams();
+
+    formData.append("name",name);
+    formData.append("age",age);
+    formData.append("table","Table "+selectedTable);
+    formData.append("chair",selectedSeat);
+    formData.append("event","Linggo ng Kabataan 2026");
+
+    try{
+
+        const response=await fetch(seatURL,{
+            method:"POST",
+            body:formData
+        });
+
+        const result=await response.text();
+
+        if(result=="SUCCESS"){
+
+            alert("🎉 Seat Reserved Successfully!");
+
+            closeSeatReservation();
+
+            selectedSeat=null;
+            selectedTable=null;
+
+            document.getElementById("selectedChair").innerText="None";
+            document.getElementById("selectedTable").innerText="None";
+
+            document.getElementById("seatName").value="";
+            document.getElementById("seatAge").value="";
+
+        }else if(result=="TAKEN"){
+
+            alert("❌ Sorry! This seat has already been reserved.");
+
+            loadReservedSeats();
+
+        }else{
+
+            alert(result);
+
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+        alert("Unable to connect to the server.");
+
+    }
+
+}
 /* SUBMIT */
 function submitForm(){
 
@@ -275,6 +926,8 @@ if(
     };
     reader.readAsDataURL(file);
 }
+
+
 
 </script>
 
